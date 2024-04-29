@@ -1,106 +1,77 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view />
+  <q-layout view="hHh lpR fFf" class="degraded-background">
+    <div class="box-home">
+      <BoxHome></BoxHome>
+    </div>
+    <q-page-container class="row">
+      <q-header class="col-12 flex justify-start">
+        <Navbar></Navbar>
+      </q-header>
+      <div class="content-home row col-12">
+        <div class="rows col-6 flex column flex justify-center" style="z-index: 1;">
+          <div>
+            <span style="font-size: 60px; padding: 0; margin: 0" class="text-h1 text-white">Mudanzas y fletes</span>
+          </div>
+          <div>
+            <q-btn size="18px" style="background-color: #000;">
+              <span style="color: white;">¿Cómo funciona?</span>
+            </q-btn>
+          </div>
+          <div class="q-my-md">
+            <span style="font-size: 30px" class="text-subtitle2 text-white">
+              Encuentra el Mejor Servicio de Flete y Mudanza Fácilmente</span>
+          </div>
+        </div>
+        <div class="col-6 flex q-px-md flex items-center justify-end">
+          <FormRequest></FormRequest>
+        </div>
+      </div>
     </q-page-container>
   </q-layout>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+<script>
+import Navbar from "../components/NavbarMain.vue"
+import FormRequest from "./partials/FormRequest.vue"
+import BoxHome from "./partials/BoxHome.vue"
+export default {
+  name: "PageIndex",
+  components: {
+    Navbar,
+    FormRequest,
+    BoxHome
+  },
+  setup() {
+    return {
 
-defineOptions({
-  name: 'MainLayout'
-})
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    };
   }
-]
-
-const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
+};
 </script>
+
+<style scoped>
+.degraded-background {
+  background: var(--background);
+  min-height: 100vh;
+  padding: 2% 8%;
+}
+
+.q-page-container {
+  padding: 0px 10px !important;
+}
+
+.q-header {
+  background: none !important;
+  position: relative;
+}
+
+.content-home {
+  position: relative;
+  min-height: 80vh;
+}
+
+.box-home {
+  position: absolute;
+  /* z-index: 10; */
+}
+</style>

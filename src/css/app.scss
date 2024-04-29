@@ -1,1 +1,14 @@
 // app global css in SCSS form
+:root {
+  // --background: linear-gradient(to bottom right, #88abc2, #4f0027);
+  // --background: linear-gradient(to bottom right, #d383b0, #4a0c44);
+  --background: linear-gradient(to bottom right, #941461, #4a0c44);
+  --homeText: white;
+}
+
+@font-face {
+  font-family: "vollkorn";
+  src: url("../assets/fonts/Vollkorn.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
