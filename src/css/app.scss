@@ -2,7 +2,8 @@
 :root {
   // --background: linear-gradient(to bottom right, #88abc2, #4f0027);
   // --background: linear-gradient(to bottom right, #d383b0, #4a0c44);
-  --background: linear-gradient(to bottom right, #941461, #4a0c44);
+  // --background: linear-gradient(to bottom right, #941461, #4a0c44);
+  --background: linear-gradient(to bottom right, #1758a3, #2d0929);
   --homeText: white;
 }
 
@@ -11,4 +12,29 @@
   src: url("../assets/fonts/Vollkorn.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+}
+
+.inputBox .q-field__control {
+  color: var(--homeText);
+}
+
+.inputBox .q-field__label {
+  color: var(--homeText);
+}
+
+.q-field--labeled .q-field__native,
+.q-field--labeled .q-field__prefix,
+.q-field--labeled .q-field__suffix,
+.q-field__input {
+  color: var(--homeText);
+  font-size: 1em;
+}
+
+.transparent-background .q-field__inner {
+  background-color: transparent;
+  background: none;
+}
+.q-select__dropdown-icon {
+  color: white;
+  padding: 10px;
 }

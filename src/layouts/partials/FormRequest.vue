@@ -5,18 +5,28 @@
     <span></span>
     <q-form id="signupForm" @submit="onSubmit" @reset="onReset" class="row q-pa-xl">
       <h2>Realizar viaje</h2>
-      <q-input class="inputBox col-12" v-model="placeOfOrigin" label="¿Lugar de origen?"
-        placeholder="Número de casa, calle" :dense="dense">
+      <q-select class="inputBox col-12" label="¿Lugar de origen?" v-model="placeOfOrigin" :options="locationOptions"
+        use-input @filter="filterDestinations" :placeholder="originPlaceholder" :dense="dense" transition-show="scale"
+        transition-hide="scale">
         <template v-slot:prepend>
-          <q-icon class="q-px-sm iconForm" name="my_location"></q-icon>
+          <q-icon color="white" class="q-px-sm iconForm" name="my_location"></q-icon>
         </template>
-      </q-input>
-      <q-input class="inputBox col-12" v-model="placeOfDestination" label="¿Lugar de destino?"
-        placeholder="Número de casa, calle" :dense="dense">
+        <template v-if="placeOfOrigin" v-slot:append>
+          <q-icon color="white" name="cancel" @click.stop.prevent="placeOfOrigin = null"
+            class="cursor-pointer"></q-icon>
+        </template>
+      </q-select>
+      <q-select class="inputBox col-12" label="¿Lugar de destino?" v-model="placeOfDestination"
+        :options="locationOptions" use-input @filter="filterDestinations" :placeholder="destinationPlaceholder"
+        :dense="dense" transition-show="scale" transition-hide="scale">
         <template v-slot:prepend>
-          <q-icon class="q-px-sm iconForm" name="place"></q-icon>
+          <q-icon color="white" class="q-px-sm iconForm" name="place"></q-icon>
         </template>
-      </q-input>
+        <template v-if="placeOfDestination" v-slot:append>
+          <q-icon color="white" name="cancel" @click.stop.prevent="placeOfDestination = null"
+            class="cursor-pointer"></q-icon>
+        </template>
+      </q-select>
       <q-input filled v-model="serviceDate" class="inputBox col-12" label="Fecha y hora"
         placeholder="Ingresa la fecha y hora del servicio">
         <template v-slot:prepend>
@@ -42,7 +52,7 @@
           </q-icon>
         </template>
       </q-input>
-      <q-input class="inputBox col-12" v-model="placeOfDestination" label="Tu número de teléfono"
+      <q-input class="inputBox col-12" v-model="number" label="Tu número de teléfono"
         placeholder="Número de telefono personal" :dense="dense">
         <template v-slot:prepend>
           <q-icon class="q-px-sm iconForm" name="smartphone"></q-icon>
@@ -56,24 +66,55 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import * as HomeService from 'src/services/home/HomePageServices.js'
 
 const serviceDate = ref(null)
 const placeOfOrigin = ref(null)
-const placeOfDestination = ref(null)
+const placeOfDestination = ref('')
+const originPlaceholder = ref('Ciudad, colonia, calle, número de casa')
+const destinationPlaceholder = ref('Ciudad, colonia, calle, número de casa')
+const locationOptions = ref([])
+const number = ref('')
 const dense = ref(false)
 
-function onSubmit() {
-  console.log('submit')
+function onReset() {
+  serviceDate.value = null
 }
 
-function onReset() {
-  date.value = false
+function filterDestinations(val, update) {
+  update(async () => {
+    if (val === '') {
+      locationOptions.value = [];
+      return
+    }
+    try {
+      locationOptions.value = await HomeService.getPlacePredictions(val);
+    } catch (error) {
+      console.log(error)
+    }
+  });
 }
+
+watch(placeOfDestination, (newVallue) => {
+  if (newVallue === null) {
+    destinationPlaceholder.value = 'Ciudad, colonia, calle, número de casa'
+  } else {
+    destinationPlaceholder.value = ''
+  }
+})
+
+watch(placeOfOrigin, (newVallue) => {
+  if (newVallue === null) {
+    originPlaceholder.value = 'Ciudad, colonia, calle, número de casa'
+  } else {
+    originPlaceholder.value = ''
+  }
+})
+
 </script>
 
-<style>
-/* FORM */
+<style scoped>
 .container {
   position: relative;
   width: 80%;
@@ -94,11 +135,11 @@ function onReset() {
   width: 100%;
   height: 100%;
   background: repeating-conic-gradient(from var(--a),
-      #ca3d90 0%,
-      #ca3d90 10%,
+      #3daeca 0%,
+      #3daeca 10%,
       transparent 10%,
       transparent 80%,
-      #ca3d90 100%);
+      #3daeca 100%);
   border-radius: 20px;
   animation: animate 2.5s linear infinite;
 }
@@ -178,8 +219,6 @@ form h2 {
   border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(0, 0, 0, 0.15);
   border-radius: 5px;
-  font-size: 0.85em;
-  color: var(--homeText);
 }
 
 .submit {
@@ -187,24 +226,25 @@ form h2 {
   cursor: pointer;
   width: 70%;
   font-size: 1.5em;
-  background-color: #000;
+  background-color: #000c0c;
   border-radius: 10px;
   padding: 10px;
   border: 1px solid #ccc;
 }
 
-.inputBox .q-field__control {
-  color: var(--homeText);
-}
+@media only screen and (min-width: 300px) and (max-width: 599px) {
+  form h2 {
+    font-size: 1.4em;
+  }
 
-.inputBox .q-field__label {
-  color: var(--homeText);
-}
+  .container {
+    height: 565px;
+  }
 
-.q-field--labeled .q-field__native,
-.q-field--labeled .q-field__prefix,
-.q-field--labeled .q-field__suffix {
-  color: var(--homeText);
-  font-size: 1.4em;
+  .inputBox .q-field__label {
+    font-size: 0.7em !important;
+  }
+
+
 }
 </style>

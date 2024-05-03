@@ -7,50 +7,63 @@
       <div class="face left"></div>
       <div class="face top"></div>
       <div class="face bottom"></div>
-      <div class="lid"></div> <!-- Tapa de la caja -->
     </div>
   </div>
 </template>
+
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 export default {
   setup() {
     const cube = ref(null);
-    let angleX = 0, angleY = 0; // Ángulos para la rotación en dos ejes
-    let posX = 0, posY = 0; // Posiciones iniciales
-    let dx = 5, dy = 5; // Incrementos de movimiento
+    let angleY = 0; // Ángulo para la rotación en el eje Y
+    let posX = 50, posY = 50; // Posiciones iniciales (ajustadas para que no empiece en el borde)
+    let dx = getRandomSpeed(), dy = getRandomSpeed(); // Velocidades iniciales
+
+    function getRandomSpeed() {
+      return Math.floor(Math.random() * 20 - 10) || 5; // Asegurarse de que la velocidad no sea 0
+    }
 
     function updateAnimation() {
-      requestAnimationFrame(updateAnimation); // Animación continua con requestAnimationFrame
+      requestAnimationFrame(updateAnimation);
 
       const scene = document.querySelector('.scene');
       if (!scene || !cube.value) return;
 
-      // Actualizar ángulos y posición
-      angleX = (angleX + 1) % 360;
-      angleY = (angleY + 1) % 360;
+      // Actualizar ángulo en el eje Y
+      angleY += 1; // Aumentar en 3 grados cada frame para una rotación suave y continua
+
       posX += dx;
       posY += dy;
 
-      // Revertir la dirección al llegar a los bordes del contenedor
-      if (posX <= 0 || posX >= scene.clientWidth - cube.value.clientWidth) dx = -dx;
-      if (posY <= 0 || posY >= scene.clientHeight - cube.value.clientHeight) dy = -dy;
+      // Ajustar los límites considerando el tamaño del cubo
+      let maxX = scene.clientWidth - cube.value.clientWidth;
+      let maxY = scene.clientHeight - cube.value.clientHeight;
+
+      // Revertir la dirección al llegar a los bordes del contenedor y aplicar corrección si es necesario
+      if (posX <= 0 || posX >= maxX) {
+        dx = -dx;
+        posX = posX <= 0 ? 0 : maxX; // Corregir posición para mantener dentro del contenedor
+      }
+      if (posY <= 0 || posY >= maxY) {
+        dy = -dy;
+        posY = posY <= 0 ? 0 : maxY; // Corregir posición para mantener dentro del contenedor
+      }
+
+      // Cambiar aleatoriamente las direcciones en intervalos regulares
+      if (Math.random() < 0.1) { // 10% de probabilidad de cambio aleatorio de dirección
+        dx = getRandomSpeed();
+        dy = getRandomSpeed();
+      }
 
       // Aplicar transformaciones al cubo
-      cube.value.style.transform = `translate(${posX}px, ${posY}px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-
-      // Ajustar la tapa para que siga al cubo
-      const lid = cube.value.querySelector('.lid');
-      if (lid) {
-        lid.style.transform = `translateZ(125px) rotateX(${angleX - 90}deg)`;
-      }
+      cube.value.style.transform = `translate(${posX}px, ${posY}px) rotateY(${angleY}deg)`;
     }
 
     onMounted(() => {
-      requestAnimationFrame(updateAnimation); // Iniciar la animación
+      requestAnimationFrame(updateAnimation);
     });
-
 
     return { cube };
   }
@@ -59,17 +72,16 @@ export default {
 
 <style scoped>
 .scene {
-  width: 90vw;
-  height: 90vh;
+  width: 84vw;
+  height: 100vh;
   position: relative;
   /* background-color: brown; */
   overflow: hidden;
 }
 
 .cube {
-  padding: 100px;
-  width: 500px;
-  height: 500px;
+  width: 200px;
+  height: 200px;
   position: absolute;
   transform-style: preserve-3d;
   transition: transform 2s linear;
@@ -106,5 +118,13 @@ export default {
 
 .bottom {
   transform: rotateX(-90deg) translateZ(25px);
+}
+
+@media only screen and (min-width: 300px) and (max-width: 599px) {
+  .scene {
+    height: 100vh;
+    /* background-color: rgb(126, 211, 14); */
+  }
+
 }
 </style>
