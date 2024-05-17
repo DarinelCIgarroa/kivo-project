@@ -3,8 +3,7 @@
     <div class="flex justify-start col-6 logo">
       <span class="text-h4 text-white">𝓚𝓲𝓿𝓸</span>
     </div>
-    <div class="flex justify-end col-6">
-      <q-btn class="menu-button" @click="toggleMenu" round color="none" icon="fa-solid fa-bars"></q-btn>
+    <div class="content-nav flex justify-end col-6">
       <nav>
         <ul class="nav-menu flex justify-end">
           <li class="nav-item"><a href="#home" class="nav-link">Inicio</a></li>
@@ -41,14 +40,14 @@ function toggleMenu() {
 .nav-container {
   background: none !important;
   width: 100%;
-  padding: 20px 10px;
-  background-color: black;
+  /* padding: 20px 10px; */
+  background-color: rgb(5, 110, 155);
 }
 
 .nav-menu {
   list-style: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin: 0;
   padding: 0;
 }
@@ -73,7 +72,7 @@ function toggleMenu() {
 }
 
 .nav-link:hover {
-  color: #ae1067;
+  color: #000000;
 }
 
 .menu-button {
@@ -81,16 +80,47 @@ function toggleMenu() {
 }
 
 @media only screen and (min-width: 300px) and (max-width: 768px) {
-  .menu-button {
-    display: block;
-  }
-}
 
-@media only screen and (min-width: 601px) and (max-width: 768px) {
-
-  /* Estilos para teléfonos en horizontal y tablets pequeñas */
   .nav-container {
-    padding: 20px 10px;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(to bottom right, #2d0929, #1758a3) !important;
+  }
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    padding: 20px;
+    width: 100%;
+    /* background-color: red; */
+  }
+
+  .logo span {
+    font-size: 1.5em;
+  }
+
+  .content-nav {
+    display: flex;
+    width: 100%;
+    height: 70%;
+    /* background-color: aqua; */
+  }
+
+  .content-nav nav {
+    /* background: yellow; */
+    width: 100%;
+  }
+
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  .nav-menu li a {
+    font-size: 2em;
   }
 
 }

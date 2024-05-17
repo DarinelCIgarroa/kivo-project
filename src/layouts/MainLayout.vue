@@ -1,64 +1,46 @@
 <template>
-  <q-layout view="hHh lpR fFf" class="degraded-background">
-    <div class="box-home">
-      <BoxHome></BoxHome>
-    </div>
+  <q-layout view="hHh lpR fFf">
+    <!-- <BoxHome></BoxHome> -->
     <q-page-container class="row">
-      <q-header class="col-12 flex justify-start">
+      <div class="header-mobile">
+        <!-- <div class="flex justify-start col-6 logo">
+          <span class="text-h4 text-white">𝓚𝓲𝓿𝓸</span>
+        </div>
+        <q-btn class="menu-button" @click="toggleMenu" round color="none" icon="fa-solid fa-bars"></q-btn> -->
+      </div>
+      <q-header class="col-12 flex justify-start" :class="{ 'header-open-menu ': isMenuOpen, 'q-header': !isMenuOpen }">
         <Navbar></Navbar>
       </q-header>
-      <div class="content-home row col-12">
-        <div class="rows col-xs-12 col-sm-12 col-md-6 column flex justify-center" style="z-index: 1;">
-          <div class="service-title">
-            <span style="font-size: 60px; padding: 0; margin: 0" class="text-h1 text-white">Mudanzas y fletes</span>
-          </div>
-          <div class="how-it-works-button">
-            <q-btn size="18px" style="background-color: #000c0c;" rounded>
-              <span style="color: white;">¿Cómo funciona?</span>
-            </q-btn>
-          </div>
-          <div class="promotional-text q-my-md">
-            <span style="font-size: 30px" class="text-subtitle2 text-white">
-              Encuentra el Mejor Servicio de Flete y Mudanza Fácilmente</span>
-          </div>
-        </div>
-        <div class="content-formRequest col-xs-12 col-sm-12 col-md-6 flex items-center justify-end">
-          <FormRequest></FormRequest>
-        </div>
-      </div>
+      <router-view></router-view>
     </q-page-container>
   </q-layout>
 </template>
 
-<script>
+<script setup>
 import Navbar from "../components/NavbarMain.vue"
-import FormRequest from "./partials/FormRequest.vue"
 import BoxHome from "./partials/BoxHome.vue"
-export default {
-  name: "PageIndex",
-  components: {
-    Navbar,
-    FormRequest,
-    BoxHome
-  },
-  setup() {
-    return {
+import { ref } from "vue"
 
-    };
-  }
-};
+const isMenuOpen = ref(false)
+function toggleMenu() {
+  console.log('toggleMenu');
+  isMenuOpen.value = !isMenuOpen.value
+}
 </script>
 
 <style scoped>
-.degraded-background {
+.q-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background: var(--background);
-  min-height: 100vh;
-  padding: 2% 8%;
-  background-color: rgb(9, 135, 51);
 }
 
 .q-page-container {
-  padding: 0px 10px !important;
+  width: 90%;
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .q-header {
@@ -66,88 +48,33 @@ export default {
   position: relative;
 }
 
-.content-home {
-  position: relative;
-  min-height: 80vh;
-  /* background-color: burlywood; */
-}
-
-.box-home {
-  position: absolute;
-  /* z-index: 10; */
-}
-
-@media only screen and (min-width: 300px) and (max-width: 599px) {
-  .promotional-text {
-    margin-top: 1em;
-  }
-
-  .box-home {
-    height: 99%;
-    background-color: cadetblue;
-    /* z-index: 10; */
-  }
-}
-
 @media only screen and (max-width: 600px) {
-
-  /* Teléfonos móviles (en posición vertical) */
-  .content-formRequest {
-    margin-top: 2em;
-    justify-content: center;
+  .header-mobile {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 4;
   }
 
-  .promotional-text,
-  .service-title,
-  .how-it-works-button {
-    text-align: center;
+  .q-header {
+    position: absolute;
+    display: flex;
+    transform: translateX(150%);
+    transition: background-color 0.5s ease, transform 0.5s ease;
+    z-index: 2;
   }
 
-  .promotional-text {
-    margin-top: 2em;
-  }
-}
-
-@media only screen and (min-width: 601px) and (max-width: 768px) {
-
-  /* Estilos para teléfonos en horizontal y tablets pequeñas */
-  .degraded-background {
-    padding: 2% 5%;
+  .header-open-menu {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    transform: translateX(120%);
   }
 
-  .content-formRequest {
-    margin-top: 2em;
-    justify-content: center;
-  }
-
-  .promotional-text,
-  .service-title,
-  .how-it-works-button {
-    text-align: center;
-  }
-
-  .promotional-text {
-    margin-top: 2em;
-  }
-}
-
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-
-  /* Estilos para tablets */
-
-  .content-formRequest {
-    margin-top: 2em;
-    justify-content: center;
-  }
-
-  .promotional-text,
-  .service-title,
-  .how-it-works-button {
-    text-align: center;
-  }
-
-  .promotional-text {
-    margin-top: 2em;
+  .q-header-mobile {
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

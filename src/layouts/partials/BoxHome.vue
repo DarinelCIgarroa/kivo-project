@@ -1,5 +1,5 @@
 <template>
-  <div class="scene">
+  <div class="box-home">
     <div class="cube" ref="cube">
       <div class="face front"></div>
       <div class="face back"></div>
@@ -21,45 +21,44 @@ export default {
     let posX = 50, posY = 50; // Posiciones iniciales (ajustadas para que no empiece en el borde)
     let dx = getRandomSpeed(), dy = getRandomSpeed(); // Velocidades iniciales
 
-    function getRandomSpeed() {
-      return Math.floor(Math.random() * 20 - 10) || 5; // Asegurarse de que la velocidad no sea 0
-    }
-
     function updateAnimation() {
       requestAnimationFrame(updateAnimation);
 
-      const scene = document.querySelector('.scene');
-      if (!scene || !cube.value) return;
+      const boxHome = document.querySelector('.box-home');
+      if (!boxHome || !cube.value) return;
 
-      // Actualizar ángulo en el eje Y
-      angleY += 1; // Aumentar en 3 grados cada frame para una rotación suave y continua
+      angleY += 2; // Continuar con la rotación en el eje Y
 
       posX += dx;
       posY += dy;
 
-      // Ajustar los límites considerando el tamaño del cubo
-      let maxX = scene.clientWidth - cube.value.clientWidth;
-      let maxY = scene.clientHeight - cube.value.clientHeight;
+      let maxX = boxHome.clientWidth - cube.value.clientWidth;
+      let maxY = boxHome.clientHeight - cube.value.clientHeight;
 
-      // Revertir la dirección al llegar a los bordes del contenedor y aplicar corrección si es necesario
       if (posX <= 0 || posX >= maxX) {
-        dx = -dx;
-        posX = posX <= 0 ? 0 : maxX; // Corregir posición para mantener dentro del contenedor
+        dx = -getRandomSpeed(true); // Cambios más bruscos al rebotar horizontalmente
+        posX = posX <= 0 ? 0 : maxX;
       }
       if (posY <= 0 || posY >= maxY) {
-        dy = -dy;
-        posY = posY <= 0 ? 0 : maxY; // Corregir posición para mantener dentro del contenedor
+        dy = -getRandomSpeed(true); // Cambios más bruscos al rebotar verticalmente
+        posY = posY <= 0 ? 0 : maxY;
       }
 
-      // Cambiar aleatoriamente las direcciones en intervalos regulares
-      if (Math.random() < 0.1) { // 10% de probabilidad de cambio aleatorio de dirección
+      // Cambio aleatorio de dirección y velocidad con una alta probabilidad
+      if (Math.random() < 0.5) { // 50% de probabilidad de cambio
         dx = getRandomSpeed();
         dy = getRandomSpeed();
       }
 
-      // Aplicar transformaciones al cubo
       cube.value.style.transform = `translate(${posX}px, ${posY}px) rotateY(${angleY}deg)`;
     }
+
+    function getRandomSpeed(forceBrusque = false) {
+      // Velocidades más variadas y bruscas si es necesario
+      let baseSpeed = forceBrusque ? 20 : 10; // Base speed más alta para cambios más bruscos
+      return Math.random() < 0.5 ? -(Math.random() * baseSpeed + 10) : (Math.random() * baseSpeed + 10);
+    }
+
 
     onMounted(() => {
       requestAnimationFrame(updateAnimation);
@@ -71,17 +70,16 @@ export default {
 </script>
 
 <style scoped>
-.scene {
-  width: 84vw;
+.box-home {
+  position: absolute;
+  /* background: rgb(99, 13, 196); */
+  width: 100%;
   height: 100vh;
-  position: relative;
-  /* background-color: brown; */
-  overflow: hidden;
 }
 
 .cube {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   position: absolute;
   transform-style: preserve-3d;
   transition: transform 2s linear;
@@ -118,13 +116,5 @@ export default {
 
 .bottom {
   transform: rotateX(-90deg) translateZ(25px);
-}
-
-@media only screen and (min-width: 300px) and (max-width: 599px) {
-  .scene {
-    height: 100vh;
-    /* background-color: rgb(126, 211, 14); */
-  }
-
 }
 </style>
