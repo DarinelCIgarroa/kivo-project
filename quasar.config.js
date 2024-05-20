@@ -46,6 +46,15 @@ module.exports = configure(function (/* ctx */) {
       },
 
       vueRouterMode: "hash", // available values: 'hash', 'history'
+
+      extendViteConf(viteConf) {
+        viteConf.resolve = viteConf.resolve || {};
+        viteConf.resolve.alias = {
+          ...viteConf.resolve.alias,
+          "@": path.resolve(__dirname, "./src"),
+        };
+      },
+
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
