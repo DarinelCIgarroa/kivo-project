@@ -10,7 +10,8 @@ const routes = [
       { path: "home", component: () => import("pages/IndexPage.vue") },
       {
         path: "home-search-service",
-        component: () => import("components/HomeSearchService.vue"),
+        component: () =>
+          import("src/components/searchService/HomeSearchService.vue"),
       },
     ],
   },

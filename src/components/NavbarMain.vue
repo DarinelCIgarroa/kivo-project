@@ -1,7 +1,7 @@
 <template>
   <div class="nav-container row col-12">
     <div class="flex justify-start col-6 logo">
-      <span class="text-h4 text-white">𝓚𝓲𝓿𝓸</span>
+      <span class="text-h4 text-white">Kivo</span>
     </div>
     <div class="content-nav flex justify-end col-6">
       <nav>
@@ -33,15 +33,11 @@ function toggleMenu() {
 </script>
 
 <style scoped>
-.logo span {
-  font-family: "Pacifico-Regular";
-}
-
 .nav-container {
   background: none !important;
   width: 100%;
   /* padding: 20px 10px; */
-  background-color: rgb(5, 110, 155);
+  /* background-color: rgb(5, 110, 155); */
 }
 
 .nav-menu {
@@ -54,10 +50,6 @@ function toggleMenu() {
 
 .nav-menu li {
   padding: 8px;
-}
-
-.nav-menu li a {
-  font-family: "vollkorn";
 }
 
 .nav-item {

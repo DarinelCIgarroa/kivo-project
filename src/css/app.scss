@@ -1,17 +1,12 @@
-// app global css in SCSS form
 :root {
-  // --background: linear-gradient(to bottom right, #88abc2, #4f0027);
-  // --background: linear-gradient(to bottom right, #d383b0, #4a0c44);
-  // --background: linear-gradient(to bottom right, #941461, #4a0c44);
-  --background: linear-gradient(to bottom right, #1758a3, #2d0929);
-  --homeText: white;
-}
 
-@font-face {
-  font-family: "vollkorn";
-  src: url("../assets/fonts/Vollkorn.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+  --background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+  // --background: linear-gradient(to bottom right, #ffffff, #dfe9f3);
+
+
+
+  --homeText: white;
+  --font-default: src: url("../assets/fonts/Roboto-Medium.ttf") format("truetype");
 }
 
 .inputBox .q-field__control {

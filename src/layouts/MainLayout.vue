@@ -3,10 +3,6 @@
     <!-- <BoxHome></BoxHome> -->
     <q-page-container class="row">
       <div class="header-mobile">
-        <!-- <div class="flex justify-start col-6 logo">
-          <span class="text-h4 text-white">𝓚𝓲𝓿𝓸</span>
-        </div>
-        <q-btn class="menu-button" @click="toggleMenu" round color="none" icon="fa-solid fa-bars"></q-btn> -->
       </div>
       <q-header class="col-12 flex justify-start" :class="{ 'header-open-menu ': isMenuOpen, 'q-header': !isMenuOpen }">
         <Navbar></Navbar>
@@ -23,17 +19,20 @@ import { ref } from "vue"
 
 const isMenuOpen = ref(false)
 function toggleMenu() {
-  console.log('toggleMenu');
   isMenuOpen.value = !isMenuOpen.value
 }
 </script>
 
-<style scoped>
+<style>
+body {
+  font-family: var(--font-default);
+}
+
 .q-layout {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   background: var(--background);
 }
 
@@ -49,6 +48,7 @@ function toggleMenu() {
 }
 
 @media only screen and (max-width: 600px) {
+
   .header-mobile {
     width: 100%;
     display: flex;

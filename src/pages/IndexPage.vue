@@ -1,12 +1,12 @@
 <template>
   <q-page class="flex flex-center content-home row col-12">
-    <div class="rows col-xs-12 col-sm-12 col-md-6 column flex justify-center" style="z-index: 1;">
+    <div class="content-information rows col-xs-12 col-sm-12 col-md-6 column flex justify-center" style="z-index: 1;">
       <div class="service-title">
         <span style="font-size: 60px; padding: 0; margin: 0" class="text-h1 text-white">Mudanzas y fletes</span>
       </div>
       <div class="how-it-works-button">
-        <q-btn size="18px" style="background-color: #000c0c;" rounded>
-          <span style="color: white;">¿Cómo funciona?</span>
+        <q-btn size="18px" color="info" class="how-does-work">
+          <span class="text-white">¿Cómo funciona?</span>
         </q-btn>
       </div>
       <div class="promotional-text q-my-md">
@@ -31,16 +31,38 @@ defineOptions({
 .content-home {
   padding: 20px;
   min-height: 80vh !important;
-  /* background-color: burlywood; */
 }
 
-@media only screen and (min-width: 300px) and (max-width: 599px) {
+.how-it-works-button .q-btn {
+  border: 0.5px solid #fff;
+  transition: 0.5s;
+
+}
+
+.how-it-works-button .q-btn:hover {
+  border-radius: 20px;
+}
+
+
+/* @media only screen and (min-width: 300px) and (max-width: 599px) {
   .promotional-text {
     margin-top: 1em;
   }
-}
+} */
 
 @media only screen and (max-width: 600px) {
+  .content-home {
+    display: flex;
+    flex-direction: column;
+    width: 100vh;
+    /* background: red */
+  }
+
+  .content-information {
+    /* background: blue; */
+    height: 50vh;
+  }
+
   .content-formRequest {
     margin-top: 2em;
     justify-content: center;
@@ -53,7 +75,7 @@ defineOptions({
   }
 
   .promotional-text {
-    margin-top: 2em;
+    margin-top: 3em;
   }
 }
 

@@ -12,16 +12,19 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary: #1758a3;
-$secondary: #2d0929;
-$accent: #040404;
+$primary: #0f2027; /* Color azul oscuro profundo, ideal para elementos dominantes y barras de navegación */
+$secondary: #203a43; /* Un tono de azul medio, bueno para fondos de secciones o barras laterales */
+$accent: #2c5364; /* Azul más claro, perfecto para destacar elementos interactivos o importantes */
 
-$dark: #1d1d1d;
-$dark-page: #121212;
+$dark: #121212; /* Un gris casi negro, excelente para texto o componentes en un fondo claro */
+$darkPage: #19232d; /* Un azul muy oscuro, proporciona un fondo sutil y elegante para páginas completas */
 
-$positive: #21ba45;
-$negative: #c10015;
-$info: #31ccec;
-$warning: #f2c037;
-
-$body-font-family: "vollkorn";
+$positive: #4caf50; /* Verde vibrante, útil para indicar éxito o confirmaciones */
+$negative: #f44336; /* Rojo intenso, ideal para alertas o errores */
+$info: #028ecf61; /* Azul brillante, excelente para información relevante o tips */
+$warning: #ffc107; /* Amarillo, utilizado para advertencias o precauciones */
+$btnPrimary: #808000;
+$btnPrimary2: #00a36c;
+$btnPrimary3: #98fb98;
+$btnPrimary4: #228b22;
+$btnPrimary5: #008080;

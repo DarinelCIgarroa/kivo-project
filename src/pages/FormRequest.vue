@@ -2,9 +2,8 @@
   <div class="container">
     <span></span>
     <span></span>
-    <span></span>
-    <q-form id="signupForm" @submit="onSubmit" @reset="onReset" class="row q-pa-xl">
-      <h2>Realizar viaje</h2>
+    <q-form id="signupForm" @submit="onSubmit" @reset="onReset" class="form q-pa-lg text-center">
+      <h4>Solicitar servicio</h4>
       <q-select class="inputBox col-12" label="¿Lugar de origen?" v-model="placeOfOrigin" :options="locationOptions"
         use-input @filter="filterDestinations" :placeholder="originPlaceholder" :dense="dense" transition-show="scale"
         transition-hide="scale">
@@ -27,12 +26,12 @@
             class="cursor-pointer"></q-icon>
         </template>
       </q-select>
-      <q-input filled v-model="serviceDate" class="inputBox col-12" label="Fecha y hora"
-        placeholder="Ingresa la fecha y hora del servicio">
+      <q-input filled v-model="serviceDate" class="inputBox col-12" label="Fecha"
+        placeholder="Ingresa la fecha del servicio" @click="$refs.qstartDateProxy.show()">
         <template v-slot:prepend>
           <q-icon name="event" class="iconForm cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date color="secondary" text-color="white" v-model="serviceDate" mask="YYYY-MM-DD HH:mm">
+            <q-popup-proxy ref="qstartDateProxy" cover transition-show="scale" transition-hide="scale">
+              <q-date color="secondary" text-color="white" v-model="serviceDate" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Cerrar" color="secondary" flat></q-btn>
                 </div>
@@ -40,10 +39,13 @@
             </q-popup-proxy>
           </q-icon>
         </template>
-        <template v-slot:append>
+      </q-input>
+      <q-input filled v-model="time" class="inputBox col-12" mask="time" label="Hora"
+        placeholder="Ingresa la hora del servicio" @click="$refs.qstartTimeProxy.show()">
+        <template v-slot:prepend>
           <q-icon name="access_time" class="iconForm cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-time color="secondary" text-color="white" v-model="serviceDate" mask="YYYY-MM-DD HH:mm" format24h>
+            <q-popup-proxy ref="qstartTimeProxy" cover transition-show="scale" transition-hide="scale">
+              <q-time v-model="time" :format24h="true">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Cerrar" color="secondary" flat></q-btn>
                 </div>
@@ -77,6 +79,7 @@ const destinationPlaceholder = ref('Ciudad, colonia, calle, número de casa')
 const locationOptions = ref([])
 const number = ref('')
 const dense = ref(false)
+const time = ref('')
 
 function onReset() {
   serviceDate.value = null
@@ -95,17 +98,26 @@ function filterDestinations(val, update) {
     }
   });
 }
+const showDatePopup = () => {
+  const datePopup = this.$refs.datePopup;
+  datePopup.show();
+};
 
-watch(placeOfDestination, (newVallue) => {
-  if (newVallue === null) {
+const showTimePopup = () => {
+  const timePopup = this.$refs.timePopup;
+  timePopup.show();
+};
+
+watch(placeOfDestination, (newValue) => {
+  if (newValue === null) {
     destinationPlaceholder.value = 'Ciudad, colonia, calle, número de casa'
   } else {
     destinationPlaceholder.value = ''
   }
 })
 
-watch(placeOfOrigin, (newVallue) => {
-  if (newVallue === null) {
+watch(placeOfOrigin, (newValue) => {
+  if (newValue === null) {
     originPlaceholder.value = 'Ciudad, colonia, calle, número de casa'
   } else {
     originPlaceholder.value = ''
@@ -118,7 +130,7 @@ watch(placeOfOrigin, (newVallue) => {
 .container {
   position: relative;
   width: 80%;
-  height: 500px;
+  padding: 20px;
   border-radius: 15px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -135,13 +147,14 @@ watch(placeOfOrigin, (newVallue) => {
   width: 100%;
   height: 100%;
   background: repeating-conic-gradient(from var(--a),
-      #3daeca 0%,
-      #3daeca 10%,
+      #f8f9fa 0%,
+      #f8f9fa 10%,
       transparent 10%,
       transparent 80%,
-      #3daeca 100%);
+      #f8f9fa 100%);
   border-radius: 20px;
-  animation: animate 2.5s linear infinite;
+  animation: animate 3.5s linear infinite;
+  z-index: -1;
 }
 
 @property --a {
@@ -189,25 +202,22 @@ watch(placeOfOrigin, (newVallue) => {
   filter: blur(15px);
 }
 
-form {
-  position: absolute;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+.form {
   width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
   gap: 15px;
   transition: 0.5s;
 }
 
-form h2 {
-  position: relative;
+form h4 {
   color: var(--homeText);
-  font-size: 1.5em;
+  font-size: 1.8em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 500;
+  margin: 0;
 }
 
 .iconForm {
@@ -226,25 +236,19 @@ form h2 {
   cursor: pointer;
   width: 70%;
   font-size: 1.5em;
-  background-color: #000c0c;
+  background-color: #028ecf61;
   border-radius: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #fff;
 }
 
 @media only screen and (min-width: 300px) and (max-width: 599px) {
-  form h2 {
+  .form h4 {
     font-size: 1.4em;
-  }
-
-  .container {
-    height: 565px;
   }
 
   .inputBox .q-field__label {
     font-size: 0.7em !important;
   }
-
-
 }
 </style>

@@ -7,8 +7,4 @@ defineOptions({
   name: "App",
 });
 </script>
-<style>
-body {
-  font-family: "Pacifico-Regular";
-}
-</style>
+<style></style>
