@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import FormRequest from "./FormRequest.vue"
+import FormRequest from "../components/FormRequest.vue"
 defineOptions({
   name: 'IndexPage'
 });

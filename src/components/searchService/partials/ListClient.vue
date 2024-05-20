@@ -29,22 +29,115 @@
     </q-list>
 </template>
 <script setup>
-import { ref } from "vue";
-
+import { ref, onMounted } from "vue";
+import { useClientServiceStore } from "@/stores/client-detail-store"
 import defaultAvatar from '../../../assets/img/homeService/default-avatar.png';
 
+const clientDetailStore = useClientServiceStore()
+
 const clients = ref([
-    { id: 1, name: 'Lorenzo', price: '$850', transport_type: 'Van', avatar: null },
-    { id: 2, name: 'Mirta', price: '$1300', transport_type: 'Truck', avatar: null },
-    { id: 3, name: 'Felipe', price: '$1100', transport_type: 'MiniVan', avatar: null },
-    { id: 4, name: 'Carla', price: '$1600', transport_type: 'Flatbed', avatar: null },
-    { id: 5, name: 'Sergio', price: '$1800', transport_type: 'RefrigeratedTruck', avatar: null },
-    { id: 6, name: 'Ana', price: '$1400', transport_type: 'BoxTruck', avatar: null },
+    {
+        id: 1,
+        name: 'Lorenzo',
+        price: '$850',
+        transport_type: 'Van',
+        avatar: null,
+        placeOrigin: 'Madrid, España',
+        placeDestination: 'Barcelona, España',
+        detailsArticles: [
+            'Cajas de libros', 'Bicicleta', 'Lámpara de pie', 'Mesa de noche',
+            'Jarrones', 'Cuadros', 'Espejo', 'Sillas', 'Televisor', 'Consola de juegos',
+            'Equipaje de mano', 'Mochila de camping', 'Ropa de cama', 'Toallas', 'Zapatos',
+            'Equipo de esquí', 'Bolsas de supermercado', 'Artículos de decoración', 'Herramientas', 'Juguetes'
+        ]
+    },
+    {
+        id: 2,
+        name: 'Mirta',
+        price: '$1300',
+        transport_type: 'Truck',
+        avatar: null,
+        placeOrigin: 'Buenos Aires, Argentina',
+        placeDestination: 'Mendoza, Argentina',
+        detailsArticles: [
+            'Muebles de sala', 'Electrodomésticos', 'Estantería', 'Libros de cocina',
+            'Sets de vajilla', 'Cortinas', 'Ropa de invierno', 'Bolsas de dormir', 'Camping gear',
+            'Bicicletas', 'Juguetes para niños', 'Maleta grande', 'Computadora', 'Impresora',
+            'Cámara fotográfica', 'Relojes', 'Colección de vinos', 'Equipo de audio', 'Instrumentos musicales', 'Material deportivo'
+        ]
+    },
+    {
+        id: 3,
+        name: 'Felipe',
+        price: '$1100',
+        transport_type: 'MiniVan',
+        avatar: null,
+        placeOrigin: 'Lima, Perú',
+        placeDestination: 'Cuzco, Perú',
+        detailsArticles: [
+            'Instrumentos musicales', 'Maletas de ropa', 'Sombreros', 'Bufandas',
+            'Botas de montaña', 'Tienda de campaña', 'Sacos de dormir', 'Linternas', 'Cantimploras',
+            'Mapas', 'Libros de viaje', 'Snacks', 'Ropa de abrigo', 'Guantes', 'Cámaras',
+            'Binoculares', 'GPS', 'Equipaje', 'Souvenirs', 'Medicamentos'
+        ]
+    },
+    {
+        id: 4,
+        name: 'Carla',
+        price: '$1600',
+        transport_type: 'Flatbed',
+        avatar: null,
+        placeOrigin: 'México D.F., México',
+        placeDestination: 'Guadalajara, México',
+        detailsArticles: [
+            'Piezas de arte', 'Esculturas', 'Pinturas', 'Marcos antiguos',
+            'Estatuas', 'Libros raros', 'Manuscritos', 'Joyas', 'Reliquias', 'Muebles antiguos',
+            'Instrumentos antiguos', 'Tapices', 'Lámparas', 'Candelabros', 'Espejos de época',
+            'Cámaras antiguas', 'Discos de vinilo', 'Equipos de música vintage', 'Posters de arte', 'Colecciones de monedas'
+        ]
+    },
+    {
+        id: 5,
+        name: 'Sergio',
+        price: '$1800',
+        transport_type: 'RefrigeratedTruck',
+        avatar: null,
+        placeOrigin: 'Santiago, Chile',
+        placeDestination: 'Valparaíso, Chile',
+        detailsArticles: [
+            'Carga de alimentos perecederos', 'Vegetales', 'Frutas', 'Carnes',
+            'Pescados', 'Lácteos', 'Helados', 'Comidas preparadas', 'Bebidas frías', 'Medicamentos que requieren refrigeración',
+            'Chocolates', 'Flores', 'Semillas', 'Productos biológicos', 'Cremas cosméticas',
+            'Vacunas', 'Cultivos de laboratorio', 'Especímenes para investigación', 'Ingredientes de alta cocina', 'Pasteles y postres'
+        ]
+    },
+    {
+        id: 6,
+        name: 'Ana',
+        price: '$1400',
+        transport_type: 'BoxTruck',
+        avatar: null,
+        placeOrigin: 'Bogotá, Colombia',
+        placeDestination: 'Medellín, Colombia',
+        detailsArticles: [
+            'Equipamiento de oficina', 'Documentos importantes', 'Computadoras', 'Monitores',
+            'Impresoras', 'Sillas de oficina', 'Escritorios', 'Suministros de papelería', 'Máquinas de fax', 'Teléfonos',
+            'Archivadores', 'Libros de referencia', 'Material de marketing', 'Proyectos de diseño', 'Maquetas',
+            'Equipos de red', 'Routers', 'Switches', 'Servidores', 'Discos duros'
+        ]
+    },
 ]);
 
 
+onMounted(() => {
+    // Traer el servcio de la lista de clientes
+    const firstClient = clients.value[0]
+    clientDetailStore.addClient(firstClient)
+})
+
 function selectClient(clientId) {
-    console.log('test', clientId);
+    const client = clients.value.find((client) => client.id === clientId)
+    clientDetailStore.addClient(client)
 }
 
 </script>

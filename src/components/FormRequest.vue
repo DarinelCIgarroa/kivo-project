@@ -4,25 +4,24 @@
     <span></span>
     <q-form id="signupForm" @submit="onSubmit" @reset="onReset" class="form q-pa-lg text-center">
       <h4>Solicitar servicio</h4>
-      <q-select class="inputBox col-12" label="¿Lugar de origen?" v-model="placeOfOrigin" :options="locationOptions"
+      <q-select class="inputBox col-12" label="¿Lugar de origen?" v-model="placeOrigin" :options="locationOptions"
         use-input @filter="filterDestinations" :placeholder="originPlaceholder" :dense="dense" transition-show="scale"
         transition-hide="scale">
         <template v-slot:prepend>
           <q-icon color="white" class="q-px-sm iconForm" name="my_location"></q-icon>
         </template>
-        <template v-if="placeOfOrigin" v-slot:append>
-          <q-icon color="white" name="cancel" @click.stop.prevent="placeOfOrigin = null"
-            class="cursor-pointer"></q-icon>
+        <template v-if="placeOrigin" v-slot:append>
+          <q-icon color="white" name="cancel" @click.stop.prevent="placeOrigin = null" class="cursor-pointer"></q-icon>
         </template>
       </q-select>
-      <q-select class="inputBox col-12" label="¿Lugar de destino?" v-model="placeOfDestination"
-        :options="locationOptions" use-input @filter="filterDestinations" :placeholder="destinationPlaceholder"
-        :dense="dense" transition-show="scale" transition-hide="scale">
+      <q-select class="inputBox col-12" label="¿Lugar de destino?" v-model="placeDestination" :options="locationOptions"
+        use-input @filter="filterDestinations" :placeholder="destinationPlaceholder" :dense="dense"
+        transition-show="scale" transition-hide="scale">
         <template v-slot:prepend>
           <q-icon color="white" class="q-px-sm iconForm" name="place"></q-icon>
         </template>
-        <template v-if="placeOfDestination" v-slot:append>
-          <q-icon color="white" name="cancel" @click.stop.prevent="placeOfDestination = null"
+        <template v-if="placeDestination" v-slot:append>
+          <q-icon color="white" name="cancel" @click.stop.prevent="placeDestination = null"
             class="cursor-pointer"></q-icon>
         </template>
       </q-select>
@@ -72,8 +71,8 @@ import { ref, watch } from 'vue'
 import * as HomeService from 'src/services/home/HomePageServices.js'
 
 const serviceDate = ref(null)
-const placeOfOrigin = ref(null)
-const placeOfDestination = ref('')
+const placeOrigin = ref(null)
+const placeDestination = ref('')
 const originPlaceholder = ref('Ciudad, colonia, calle, número de casa')
 const destinationPlaceholder = ref('Ciudad, colonia, calle, número de casa')
 const locationOptions = ref([])
@@ -108,7 +107,7 @@ const showTimePopup = () => {
   timePopup.show();
 };
 
-watch(placeOfDestination, (newValue) => {
+watch(placeDestination, (newValue) => {
   if (newValue === null) {
     destinationPlaceholder.value = 'Ciudad, colonia, calle, número de casa'
   } else {
@@ -116,7 +115,7 @@ watch(placeOfDestination, (newValue) => {
   }
 })
 
-watch(placeOfOrigin, (newValue) => {
+watch(placeOrigin, (newValue) => {
   if (newValue === null) {
     originPlaceholder.value = 'Ciudad, colonia, calle, número de casa'
   } else {

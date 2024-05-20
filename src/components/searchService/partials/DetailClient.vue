@@ -12,60 +12,20 @@
             <div class="profile-pic">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
-            <span class="name-client">Laura Chouette</span>
+            <span class="name-client">{{ clientNow.name }}</span>
 
             <span class="data-location">
-                <span class="text-weight-bolder">Origen:</span> Calle Madero 74, Centro Histórico, 06000 Ciudad de
-                México, CDMX, México
+                <span class="text-weight-bolder">Origen:</span> {{ clientNow.placeOrigin }}
                 <br>
-                <span class="text-weight-bolder">Destino:</span>
-                Av. Presidente Masaryk 111, Polanco, 11550 Ciudad de México, CDMX, México
+                <span class="text-weight-bolder">Destino:</span> {{ clientNow.placeDestination }}
             </span>
 
             <div class="details-articles">
                 <span>Detalles del flete/mudanza</span>
-                <div class="marticles">
-                    <q-chip outline color="primary" text-color="white">
-                        Espejo de 1 metro
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        Comedor completo
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        Tres cajas de ropa
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        Cuatro cajas de objetos
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
-                    </q-chip>
-                    <q-chip outline color="primary" text-color="white">
-                        item
+                <div class="articles">
+                    <q-chip v-for="article in clientNow.detailsArticles" :key="article" outline color="primary"
+                        text-color="white">
+                        {{ article }}
                     </q-chip>
                 </div>
             </div>
@@ -81,7 +41,12 @@
     </div>
 </template>
 <script setup>
+import { useClientServiceStore } from "@/stores/client-detail-store"
+
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+const clienStore = useClientServiceStore()
+const { clientNow } = storeToRefs(clienStore)
 const counterOfferPrice = ref('')
 </script>
 
@@ -189,7 +154,7 @@ const counterOfferPrice = ref('')
     font-weight: 400;
 }
 
-.details-articles .marticles {
+.details-articles .articles {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -198,7 +163,7 @@ const counterOfferPrice = ref('')
 }
 
 
-.marticles .q-chip:hover {
+.articles .q-chip:hover {
     color: #fff !important;
     border: 1px solid #fff !important;
     background: black !important;
