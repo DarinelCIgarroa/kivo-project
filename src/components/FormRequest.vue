@@ -8,20 +8,20 @@
         use-input @filter="filterDestinations" :placeholder="originPlaceholder" :dense="dense" transition-show="scale"
         transition-hide="scale">
         <template v-slot:prepend>
-          <q-icon color="white" class="q-px-sm iconForm" name="my_location"></q-icon>
+          <q-icon class="q-px-sm iconForm" name="my_location"></q-icon>
         </template>
         <template v-if="placeOrigin" v-slot:append>
-          <q-icon color="white" name="cancel" @click.stop.prevent="placeOrigin = null" class="cursor-pointer"></q-icon>
+          <q-icon color="accent" name="cancel" @click.stop.prevent="placeOrigin = null" class="cursor-pointer"></q-icon>
         </template>
       </q-select>
       <q-select class="inputBox col-12" label="¿Lugar de destino?" v-model="placeDestination" :options="locationOptions"
         use-input @filter="filterDestinations" :placeholder="destinationPlaceholder" :dense="dense"
         transition-show="scale" transition-hide="scale">
         <template v-slot:prepend>
-          <q-icon color="white" class="q-px-sm iconForm" name="place"></q-icon>
+          <q-icon class="q-px-sm iconForm" name="place"></q-icon>
         </template>
         <template v-if="placeDestination" v-slot:append>
-          <q-icon color="white" name="cancel" @click.stop.prevent="placeDestination = null"
+          <q-icon color="accent" name="cancel" @click.stop.prevent="placeDestination = null"
             class="cursor-pointer"></q-icon>
         </template>
       </q-select>
@@ -30,9 +30,9 @@
         <template v-slot:prepend>
           <q-icon name="event" class="iconForm cursor-pointer">
             <q-popup-proxy ref="qstartDateProxy" cover transition-show="scale" transition-hide="scale">
-              <q-date color="secondary" text-color="white" v-model="serviceDate" mask="YYYY-MM-DD">
+              <q-date color="primary" text-color="white" v-model="serviceDate" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Cerrar" color="secondary" flat></q-btn>
+                  <q-btn v-close-popup label="Cerrar" color="accent" flat></q-btn>
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -44,9 +44,9 @@
         <template v-slot:prepend>
           <q-icon name="access_time" class="iconForm cursor-pointer">
             <q-popup-proxy ref="qstartTimeProxy" cover transition-show="scale" transition-hide="scale">
-              <q-time v-model="time" :format24h="true">
+              <q-time color="primary" v-model="time" :format24h="true">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Cerrar" color="secondary" flat></q-btn>
+                  <q-btn v-close-popup label="Cerrar" color="accent" flat></q-btn>
                 </div>
               </q-time>
             </q-popup-proxy>
@@ -97,15 +97,6 @@ function filterDestinations(val, update) {
     }
   });
 }
-const showDatePopup = () => {
-  const datePopup = this.$refs.datePopup;
-  datePopup.show();
-};
-
-const showTimePopup = () => {
-  const timePopup = this.$refs.timePopup;
-  timePopup.show();
-};
 
 watch(placeDestination, (newValue) => {
   if (newValue === null) {
@@ -146,12 +137,12 @@ watch(placeOrigin, (newValue) => {
   width: 100%;
   height: 100%;
   background: repeating-conic-gradient(from var(--a),
-      #f8f9fa 0%,
-      #f8f9fa 10%,
+      rgba(161, 0, 54, 0.8) 0%,
+      rgba(161, 0, 54, 0.8)10%,
       transparent 10%,
       transparent 80%,
-      #f8f9fa 100%);
-  border-radius: 20px;
+      rgba(161, 0, 54, 0.8)100%);
+  border-radius: 15px;
   animation: animate 3.5s linear infinite;
   z-index: -1;
 }
@@ -201,6 +192,12 @@ watch(placeOrigin, (newValue) => {
   filter: blur(15px);
 }
 
+.q-field__input {
+  font-size: 200px !important;
+  /* Cambia esto al tamaño que prefieras */
+}
+
+
 .form {
   width: 100%;
   max-width: 600px;
@@ -211,7 +208,7 @@ watch(placeOrigin, (newValue) => {
 }
 
 form h4 {
-  color: var(--homeText);
+  color: var(--primary);
   font-size: 1.8em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -225,7 +222,7 @@ form h4 {
 
 .inputBox {
   outline: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  /* border: 1px solid rgba(255, 255, 255, 0.25); */
   background: rgba(0, 0, 0, 0.15);
   border-radius: 5px;
 }
@@ -235,7 +232,7 @@ form h4 {
   cursor: pointer;
   width: 70%;
   font-size: 1.5em;
-  background-color: #028ecf61;
+  background-color: var(--primary);
   border-radius: 10px;
   padding: 10px;
   border: 1px solid #fff;

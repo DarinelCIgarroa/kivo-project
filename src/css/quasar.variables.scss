@@ -1,30 +1,30 @@
-// Quasar SCSS (& Sass) Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+:root {
+  --primary: #7a1b4a; /* Blanco puro */
+  --background: linear-gradient(to bottom right, #fff, #f0f0f0);
+  --secondary: #fff; /* Gris muy claro */
+  --secondaryLight: rgba(131, 1, 45, 0.874);
+  --accent: #600926; /* Negro */
+  --dark: #000; /* Gris oscuro */
+  --dark-page: #333333; /* Casi negro */
+  --positive: #4caf50; /* Verde */
+  --negative: #ff0000; /* Rojo */
+  --info: #fffdd0; /* Crema */
+  --oro: #d4af37; /* Oro */
+  --warning: #ffff00; /* Naranja */
+  --letter: #fff;
+  --homeText: #000;
+}
 
-// Check documentation for full list of Quasar variables
-
-// Your own variables (that are declared here) and Quasar's own
-// ones will be available out of the box in your .vue/.scss/.sass files
-
-// It's highly recommended to change the default colors
-// to match your app's branding.
-// Tip: Use the "Theme Builder" on Quasar's documentation website.
-
-$primary: #0f2027; /* Color azul oscuro profundo, ideal para elementos dominantes y barras de navegación */
-$secondary: #203a43; /* Un tono de azul medio, bueno para fondos de secciones o barras laterales */
-$accent: #2c5364; /* Azul más claro, perfecto para destacar elementos interactivos o importantes */
-
-$dark: #121212; /* Un gris casi negro, excelente para texto o componentes en un fondo claro */
-$darkPage: #19232d; /* Un azul muy oscuro, proporciona un fondo sutil y elegante para páginas completas */
-
-$positive: #4caf50; /* Verde vibrante, útil para indicar éxito o confirmaciones */
-$negative: #f44336; /* Rojo intenso, ideal para alertas o errores */
-$info: #028ecf61; /* Azul brillante, excelente para información relevante o tips */
-$warning: #ffc107; /* Amarillo, utilizado para advertencias o precauciones */
-$btnPrimary: #808000;
-$btnPrimary2: #00a36c;
-$btnPrimary3: #98fb98;
-$btnPrimary4: #228b22;
-$btnPrimary5: #008080;
+$primary: #7a1b4a; /* Blanco puro */
+$secondary: #fff; /* Gris muy claro */
+$secondaryLight: rgba(103, 2, 35, 0.874);
+$accent: #600926; /* Negro */
+$dark: #000; /* Gris oscuro */
+$dark-page: #333333; /* Casi negro */
+$positive: #4caf50; /* Verde */
+$negative: #ff0000; /* Rojo */
+$info: #fffdd0; /* Azul */
+$oro: #d4af37; /* Oro */
+$warning: #ffff00; /* Amarillo */
+$letter: #fff;
+$persona: #cae6b2 !important;

@@ -14,6 +14,9 @@ export const useClientServiceStore = defineStore("clienteDetail", {
     clientNow(state) {
       return state.client;
     },
+    clientNowArticles(state) {
+      return state.client.detailsArticles;
+    },
   },
   actions: {
     addClient(client) {

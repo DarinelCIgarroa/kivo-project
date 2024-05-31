@@ -1,19 +1,40 @@
 <template>
-    <div class="data-client-detail col-md-6 col-lg-6 col-xl-6">
-        <DetailClient></DetailClient>
+    <div class="data-client-detail col-md-6 col-lg-5 col-xl-5">
+        <DetailClient @showCompleteList="handleShowCompleteList"></DetailClient>
     </div>
-    <div class="data-client-list col-md-6 col-lg-6 col-xl-6" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave"
+    <div class="data-client-list col-md-6 col-lg-7 col-xl-7" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave"
         @scroll="handleScroll">
         <ListClient></ListClient>
         <div v-if="showScrollIndicator" class="scroll-indicator">
             <i class="fa fa-arrow-down" aria-hidden="true"></i>
         </div>
     </div>
+    <q-dialog v-model="isDialogOpen" backdrop-filter="blur(4px) saturate(120%)" transition-show="rotate"
+        transition-hide="rotate">
+        <q-card class="articles" style="border-radius: 15px;">
+            <q-card-section class="bg-pink-9 text-white text-center">
+                <div class="text-h6">Lista de articulos completa</div>
+            </q-card-section>
+            <q-card-section>
+                <q-chip v-for="article in clientNowArticles" :key="article" outline color="primary">
+                    {{ article }}
+                </q-chip>
+            </q-card-section>
+            <q-card-section vertical align="right">
+                <q-btn class="text-primary" label="Cerrar" flat @click="isDialogOpen = false" />
+            </q-card-section>
+        </q-card>
+    </q-dialog>
 </template>
 
 <script setup>
 import ListClient from "./partials/ListClient.vue"
 import DetailClient from "./partials/DetailClient.vue"
+import { useClientServiceStore } from "@/stores/client-detail-store"
+import { storeToRefs } from 'pinia';
+
+const clientDetailStore = useClientServiceStore()
+const { clientNowArticles } = storeToRefs(clientDetailStore)
 
 import { ref } from "vue";
 
@@ -22,10 +43,11 @@ defineOptions({
 });
 
 const showScrollIndicator = ref(false);
-let hasScrolled = false;
+const isDialogOpen = ref(false);
+let hasScrolled = ref(false);
 
 const handleMouseOver = () => {
-    if (!hasScrolled) {
+    if (!hasScrolled.value) {
         showScrollIndicator.value = true;
     }
 };
@@ -36,26 +58,33 @@ const handleMouseLeave = () => {
 
 const handleScroll = () => {
     showScrollIndicator.value = false;
-    hasScrolled = true;
+    hasScrolled.value = true;
 };
+
+const handleShowCompleteList = () => {
+    isDialogOpen.value = true
+}
+
 </script>
 
 <style scoped>
 .data-client-detail {
+    position: relative;
+    height: 75vh;
     display: flex;
-    justify-content: center;
-    padding: 25px;
-    height: 85vh;
-    /* background: fuchsia; */
+    justify-content: start;
+    padding: 15px;
 }
 
 .data-client-list {
-    padding: 25px;
     position: relative;
-    height: 85vh;
+    height: 75vh;
+    display: flex;
+    justify-content: end;
     overflow: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding: 15px;
 }
 
 .data-client-list::-webkit-scrollbar {
@@ -70,12 +99,12 @@ const handleScroll = () => {
 
 .scroll-indicator {
     position: absolute;
-    bottom: 40px;
+    bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(100%);
     font-size: 24px;
-    color: #000;
-    background: #fff;
+    color: #fff;
+    background: #000;
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -85,5 +114,15 @@ const handleScroll = () => {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     animation: scrollIndicator 1.5s infinite;
     z-index: 1000;
+}
+
+.articles .q-chip {
+    cursor: pointer;
+}
+
+.articles .q-chip:hover {
+    color: var(--letter) !important;
+    border: 1.5px solid var(--primary) !important;
+    background: var(--primary) !important;
 }
 </style>

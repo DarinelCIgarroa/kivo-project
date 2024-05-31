@@ -1,14 +1,15 @@
-:root {
-
-  --background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-  // --background: linear-gradient(to bottom right, #ffffff, #dfe9f3);
-
-
-
-  --homeText: white;
-  --font-default: src: url("../assets/fonts/Roboto-Medium.ttf") format("truetype");
+@font-face {
+  font-family: "FontLogo";
+  src: url("../assets/fonts/KaushanScript-Regular.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
-
+@font-face {
+  font-family: "FontDefault";
+  src: url("../assets/fonts/RobotoSlab-VariableFont_wght") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 .inputBox .q-field__control {
   color: var(--homeText);
 }
@@ -22,7 +23,7 @@
 .q-field--labeled .q-field__suffix,
 .q-field__input {
   color: var(--homeText);
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
 .transparent-background .q-field__inner {
@@ -30,6 +31,6 @@
   background: none;
 }
 .q-select__dropdown-icon {
-  color: white;
+  color: var(--homeText);
   padding: 10px;
 }

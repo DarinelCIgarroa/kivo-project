@@ -2,22 +2,22 @@
   <q-page class="flex flex-center content-home row col-12">
     <div class="content-information rows col-xs-12 col-sm-12 col-md-6 column flex justify-center" style="z-index: 1;">
       <div class="service-title">
-        <span style="font-size: 60px; padding: 0; margin: 0" class="text-h1 text-white">Mudanzas y fletes</span>
+        <span style="font-size: 60px; padding: 0; margin: 0" class="text-h1">Mudanzas y fletes</span>
       </div>
       <div class="how-it-works-button">
-        <q-btn size="18px" color="info" class="how-does-work">
+        <q-btn size="18px" color="primary">
           <span class="text-white">¿Cómo funciona?</span>
         </q-btn>
       </div>
       <div class="promotional-text q-my-md">
-        <span style="font-size: 30px" class="text-subtitle2 text-white">
-          Encuentra el Mejor Servicio de Flete y Mudanza Fácilmente</span>
+        <span style="font-size: 30px">
+          Encuentra el Mejor Servicio de Flete y Mudanza Fácilmente.
+        </span>
       </div>
     </div>
     <div class="content-formRequest col-xs-12 col-sm-12 col-md-6 flex items-center justify-end" style="z-index: 1;">
       <FormRequest></FormRequest>
     </div>
-
   </q-page>
 </template>
 
@@ -27,28 +27,29 @@ defineOptions({
   name: 'IndexPage'
 });
 </script>
+
 <style scoped>
 .content-home {
   padding: 20px;
   min-height: 80vh !important;
 }
 
-.how-it-works-button .q-btn {
-  border: 0.5px solid #fff;
-  transition: 0.5s;
+.promotional-text {
+  color: var(--homeText);
+}
 
+.how-it-works-button .q-btn {
+  border: 1px solid #fff;
+  transition: 0.5s;
 }
 
 .how-it-works-button .q-btn:hover {
   border-radius: 20px;
 }
 
-
-/* @media only screen and (min-width: 300px) and (max-width: 599px) {
-  .promotional-text {
-    margin-top: 1em;
-  }
-} */
+.service-title {
+  color: var(--homeText);
+}
 
 @media only screen and (max-width: 600px) {
   .content-home {

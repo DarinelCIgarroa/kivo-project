@@ -1,6 +1,5 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <!-- <BoxHome></BoxHome> -->
     <q-page-container class="row">
       <div class="header-mobile">
       </div>
@@ -14,7 +13,6 @@
 
 <script setup>
 import Navbar from "../components/NavbarMain.vue"
-import BoxHome from "./partials/BoxHome.vue"
 import { ref } from "vue"
 
 const isMenuOpen = ref(false)
@@ -25,7 +23,7 @@ function toggleMenu() {
 
 <style>
 body {
-  font-family: var(--font-default);
+  font-family: 'FontDefault', sans-serif;
 }
 
 .q-layout {
@@ -39,7 +37,8 @@ body {
 .q-page-container {
   width: 90%;
   border-radius: 10px;
-  padding: 20px;
+  padding: 0px !important;
+  /* background: rebeccapurple */
 }
 
 .q-header {

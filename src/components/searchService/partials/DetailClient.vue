@@ -2,11 +2,6 @@
     <div class="profile-card">
         <div class="backdrop"></div>
         <div class="profile-card-top">
-            <i class="fa-solid fa-arrow-left-long"></i>
-            <div>
-                <i class="fa-regular fa-heart heart"></i>
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
         </div>
         <div class="profile-card-middle">
             <div class="profile-pic">
@@ -23,42 +18,74 @@
             <div class="details-articles">
                 <span>Detalles del flete/mudanza</span>
                 <div class="articles">
-                    <q-chip v-for="article in clientNow.detailsArticles" :key="article" outline color="primary"
-                        text-color="white">
+                    <q-chip v-for="article in listArticlesModal" :key="article" outline color="accent">
                         {{ article }}
                     </q-chip>
                 </div>
             </div>
+            <div class="details-articles">
+                <q-btn style="padding: 10px;" round dense color="primary" size="sm" icon="fa-solid fa-eye"
+                    @click="showCompleteList()">
+                    <q-tooltip class="bg-accent">Ver lista de artículos completa</q-tooltip>
+                </q-btn>
+            </div>
+
         </div>
         <div class="profile-card-bottom">
-            <q-btn rounded label="Aceptar" class="half-width accept-service"></q-btn>
-            <q-input rounded outlined v-model="counterOfferPrice" placeholder="500" class="half-width">
+            <q-input prefix="$" mask="#" fill-mask="0" reverse-fill-mask type="number" class="half-width"
+                v-model.number="serviceProviderPrice" placeholder="¿Cuánto quieres cobrar?">
                 <template v-slot:append>
-                    <q-icon color="dark" name="fa-solid fa-sack-dollar"></q-icon>
+                    <q-icon color="accent" name="fa-solid fa-sack-dollar"></q-icon>
                 </template>
             </q-input>
+            <q-btn @mouseenter="isHovering = true" @mouseleave="isHovering = false" rounded
+                :color="isHovering ? 'pink-9' : 'primary'" label="Aceptar" class="half-width accept-service"></q-btn>
         </div>
     </div>
 </template>
 <script setup>
 import { useClientServiceStore } from "@/stores/client-detail-store"
 
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
+
 const clienStore = useClientServiceStore()
 const { clientNow } = storeToRefs(clienStore)
-const counterOfferPrice = ref('')
+const serviceProviderPrice = ref(0)
+const emit = defineEmits(['showCompleteList']);
+const isHovering = ref(false)
+watch(() => clientNow.value.price, (newPrice) => {
+    serviceProviderPrice.value = newPrice;
+});
+
+const listArticlesModal = computed(() => {
+    if (clientNow.value && clientNow.value.detailsArticles) {
+        return clientNow.value.detailsArticles.slice(0, 7);
+    }
+    return [];
+})
+
+const showCompleteList = () => {
+    emit('showCompleteList');
+}
 </script>
 
 <style scoped>
 .profile-card {
-    position: absolute;
-    width: 500px;
-    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    min-height: 73vh;
     background-color: #fff;
-    padding-bottom: 0.5rem;
-    border-radius: 10px;
+    border-radius: 20px;
+    border: 0.5px solid #000;
     overflow: hidden;
+}
+
+.profile-card:hover {
+    opacity: 1;
 }
 
 .backdrop {
@@ -67,7 +94,7 @@ const counterOfferPrice = ref('')
     left: 0;
     right: 0;
     height: 25rem;
-    background-color: #19232d;
+    background: var(--primary);
     clip-path: polygon(0 0, 100% 0, 100% 14%, 0 45%);
 }
 
@@ -97,6 +124,7 @@ const counterOfferPrice = ref('')
     justify-content: center;
     flex-direction: column;
     padding: 0 1rem;
+    flex-grow: 1;
 }
 
 .profile-pic {
@@ -112,7 +140,7 @@ const counterOfferPrice = ref('')
 }
 
 .profile-pic:hover {
-    box-shadow: 0 0 8px 5px #96baff;
+    box-shadow: 0 0 8px 5px var(--accent);
 }
 
 .profile-pic i {
@@ -120,15 +148,14 @@ const counterOfferPrice = ref('')
     right: 0;
     top: 6.5rem;
     font-size: 1.2rem;
-    /* color: var(--green); */
     color: #3ec70b;
 }
 
 .name-client {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
-    color: #000;
-    font-weight: 400;
+    color: var(--accent);
+    font-weight: 600;
 }
 
 .data-location {
@@ -150,7 +177,7 @@ const counterOfferPrice = ref('')
 .details-articles span {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
-    color: #000;
+    color: var(--accent);
     font-weight: 400;
 }
 
@@ -163,32 +190,29 @@ const counterOfferPrice = ref('')
 }
 
 
+.articles .q-chip {
+    cursor: pointer;
+}
+
 .articles .q-chip:hover {
-    color: #fff !important;
-    border: 1px solid #fff !important;
-    background: black !important;
+    color: var(--primary) !important;
+    border: 1.5px solid var(--primary) !important;
+    background: #ecadc2 !important;
 }
 
 .profile-card-bottom {
-    padding: 10px;
+    margin: 0 20px;
+    padding: 20px;
     display: flex;
+    /* background: #3ec70b; */
     justify-content: space-between;
 }
 
 .half-width {
-    width: 48%;
+    width: 45%;
 }
 
-.accept-service {
-    background-color: #19232d;
-    color: white;
-}
 
-.accept-service:hover {
-    background-color: #47494b;
-    color: #fff;
-    font-weight: 500;
-}
 
 .q-field__native::placeholder {
     font-size: 5em !important;

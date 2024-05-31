@@ -2,59 +2,59 @@
     <q-list color="white" class="q-list-hover">
         <q-item v-for="client in clients" :key="client.id" class="q-my-sm q-item-hover" clickable v-ripple>
             <q-item-section avatar>
-                <q-avatar color="warning" text-color="white">
+                <q-avatar color="secondary" text-color="white">
                     <img :src="client.avatar ? client.avatar : defaultAvatar" alt="Client Avatar">
                 </q-avatar>
             </q-item-section>
-
             <q-item-section>
+                <q-icon color="secondary" v-if="activeClientId === client.id" size="sm" name="fa-solid fa-thumbtack"
+                    class="pin-icon"></q-icon>
                 <q-item-label>
-                    <q-icon class="q-px-sm" size="sm" name="person" />
+                    <q-icon color="info" class="q-px-xs" size="xs" name="fa-solid fa-user" />
                     <span class="info-span">Nombre: </span>
                     <span class="q-ml-xs data-span">{{ client.name }}</span>
                 </q-item-label>
                 <q-item-label>
-                    <q-icon class="q-px-sm" size="sm" name="commute" />
-                    <span class="info-span"> Tipo de Transporte: </span>
+                    <q-icon color="info" class="q-px-xs" size="xs" name="fa-solid fa-car" />
+                    <span class="info-span">Tipo de Transporte: </span>
                     <span class="q-ml-xs data-span">{{ client.transport_type }}</span>
                 </q-item-label>
-                <q-item-label class="content-price q-ml-md">
-                    <span class="price-span data-span">{{ client.price }}</span>
+                <q-item-label class="content-price">
+                    <span class="price-span data-span">${{ client.price }}</span>
                 </q-item-label>
             </q-item-section>
-            <q-item-section class="section-btn" side>
-                <q-btn push color="secondary" label="Detalles" @click="selectClient(client.id)"></q-btn>
+            <q-item-section v-if="activeClientId !== client.id" class="section-btn" side>
+                <q-btn style="background: var(--secondary); color: var(--accent)" label="Detalles"
+                    @click="selectClient(client.id)"></q-btn>
             </q-item-section>
         </q-item>
     </q-list>
 </template>
+
 <script setup>
 import { ref, onMounted } from "vue";
+import { Money } from "@/utils/utils";
 import { useClientServiceStore } from "@/stores/client-detail-store"
 import defaultAvatar from '../../../assets/img/homeService/default-avatar.png';
 
 const clientDetailStore = useClientServiceStore()
-
 const clients = ref([
     {
         id: 1,
-        name: 'Lorenzo',
-        price: '$850',
+        name: 'Lorenzo Cigarroa de los Santos',
+        price: '850',
         transport_type: 'Van',
         avatar: null,
         placeOrigin: 'Madrid, España',
         placeDestination: 'Barcelona, España',
         detailsArticles: [
-            'Cajas de libros', 'Bicicleta', 'Lámpara de pie', 'Mesa de noche',
-            'Jarrones', 'Cuadros', 'Espejo', 'Sillas', 'Televisor', 'Consola de juegos',
-            'Equipaje de mano', 'Mochila de camping', 'Ropa de cama', 'Toallas', 'Zapatos',
-            'Equipo de esquí', 'Bolsas de supermercado', 'Artículos de decoración', 'Herramientas', 'Juguetes'
+            'Cajas de libros', 'Bicicleta',
         ]
     },
     {
         id: 2,
-        name: 'Mirta',
-        price: '$1300',
+        name: 'Mirta Ocaña Lopez',
+        price: '1300',
         transport_type: 'Truck',
         avatar: null,
         placeOrigin: 'Buenos Aires, Argentina',
@@ -68,8 +68,8 @@ const clients = ref([
     },
     {
         id: 3,
-        name: 'Felipe',
-        price: '$1100',
+        name: 'Felipe Gutierrez Nola',
+        price: '1100',
         transport_type: 'MiniVan',
         avatar: null,
         placeOrigin: 'Lima, Perú',
@@ -83,8 +83,8 @@ const clients = ref([
     },
     {
         id: 4,
-        name: 'Carla',
-        price: '$1600',
+        name: 'Carla Karian Mendez Agrup',
+        price: '1600',
         transport_type: 'Flatbed',
         avatar: null,
         placeOrigin: 'México D.F., México',
@@ -98,8 +98,8 @@ const clients = ref([
     },
     {
         id: 5,
-        name: 'Sergio',
-        price: '$1800',
+        name: 'Sergio Ramos Verllin',
+        price: '1800',
         transport_type: 'RefrigeratedTruck',
         avatar: null,
         placeOrigin: 'Santiago, Chile',
@@ -113,8 +113,8 @@ const clients = ref([
     },
     {
         id: 6,
-        name: 'Ana',
-        price: '$1400',
+        name: 'Ana Perez Lopez',
+        price: '1400',
         transport_type: 'BoxTruck',
         avatar: null,
         placeOrigin: 'Bogotá, Colombia',
@@ -128,37 +128,51 @@ const clients = ref([
     },
 ]);
 
-
 onMounted(() => {
     // Traer el servcio de la lista de clientes
     const firstClient = clients.value[0]
     clientDetailStore.addClient(firstClient)
 })
 
+const activeClientId = ref(null);
+
+function moneyFilter(money) {
+    return Money(money)
+}
+
 function selectClient(clientId) {
-    const client = clients.value.find((client) => client.id === clientId)
-    clientDetailStore.addClient(client)
+    activeClientId.value = clientId;  // Activar el ID del cliente seleccionado
+    const client = clients.value.find(c => c.id === clientId);
+    clientDetailStore.addClient(client);
 }
 
 </script>
 <style scoped>
+.q-list {
+    width: 80%;
+}
+
 .q-item {
     position: relative;
-    display: flex;
     padding: 10px;
     border-radius: 10px;
-    margin: 25px 0;
     cursor: pointer;
     transition: 0.3s ease;
-    background: #fff;
+    background: var(--primary);
+    /* box-shadow: -10px 20px 35px rgba(0, 0, 0, 0.15); */
+    margin-bottom: 25px;
 }
 
 .section-btn {
     position: absolute;
     bottom: 35px;
-    right: -200px;
+    right: -220px;
     transition: 0.5s;
     font-size: 2em;
+}
+
+.section-btn .q-btn {
+    border-radius: 5px;
 }
 
 .q-list .q-item-section .section-btn .q-btn {
@@ -167,7 +181,7 @@ function selectClient(clientId) {
 }
 
 .q-item:hover {
-    box-shadow: -10px 20px 35px rgba(0, 0, 0, 0.15);
+    background: var(--accent) !important;
     transform: scale(1.05);
 }
 
@@ -183,11 +197,16 @@ function selectClient(clientId) {
     margin-right: 10px;
 }
 
+.q-item:hover .q-avatar {
+    background: var(--secondary) !important;
+}
+
 .q-list-hover:hover .q-item-hover {
     opacity: 0.2;
 }
 
 .q-list-hover:hover .q-item-hover:hover {
+    background: var(--secondary);
     opacity: 1;
 }
 
@@ -199,43 +218,50 @@ function selectClient(clientId) {
 .info-span {
     font-size: 18px;
     font-weight: bold;
-    color: #000;
+    color: var(--letter);
 }
 
 .data-span {
     font-size: 18px;
-    color: #000;
+    color: var(--letter);
 }
 
 .content-price {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #19232d;
-    width: 15%;
+    background: var(--secondary);
+    width: 18%;
     border-radius: 10px;
-    padding: 10px;
+    padding: 12px;
+    margin: 10px 0 0 6px;
+    /* top right bottom left */
 }
 
 .content-price .price-span {
-    color: white;
+    color: #000;
     font-size: 1.2em;
 }
 
-@keyframes scrollIndicator {
-    0% {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
+.pin-icon {
+    position: absolute;
+    margin: 20px;
+    right: 0;
+    top: 0;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        /* El elemento está en su tamaño original al inicio y al final de la animación */
     }
 
     50% {
-        transform: translateX(-50%) translateY(10px);
-        opacity: 0.5;
-    }
-
-    100% {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
+        transform: scale(1.15);
+        /* El elemento crece al 105% de su tamaño original en el punto medio de la animación */
     }
 }
 </style>

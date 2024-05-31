@@ -1,23 +1,10 @@
 <template>
   <div class="nav-container row col-12">
     <div class="flex justify-start col-6 logo">
-      <span class="text-h4 text-white">Kivo</span>
+      <span>Kivo</span>
     </div>
     <div class="content-nav flex justify-end col-6">
-      <nav>
-        <ul class="nav-menu flex justify-end">
-          <li class="nav-item"><a href="#home" class="nav-link">Inicio</a></li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Acerca de</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Contacto</a>
-          </li>
-        </ul>
-      </nav>
+      <q-icon color="dark" size="md" name="fa-solid fa-bars"></q-icon>
     </div>
   </div>
 </template>
@@ -34,10 +21,22 @@ function toggleMenu() {
 
 <style scoped>
 .nav-container {
-  background: none !important;
+  /* background: #2d0929; */
+  /* background: none !important; */
   width: 100%;
-  /* padding: 20px 10px; */
-  /* background-color: rgb(5, 110, 155); */
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 50px;
+  font-weight: 500;
+  color: var(--homeText);
+}
+
+.logo span {
+  font-family: 'FontLogo', sans-serif;
 }
 
 .nav-menu {
@@ -56,6 +55,10 @@ function toggleMenu() {
   margin: 0 10px;
 }
 
+.nav-item a {
+  font-size: 22px;
+}
+
 .nav-link {
   color: var(--homeText);
   text-decoration: none;
@@ -71,49 +74,5 @@ function toggleMenu() {
   display: none;
 }
 
-@media only screen and (min-width: 300px) and (max-width: 768px) {
-
-  .nav-container {
-    width: 80%;
-    height: 100%;
-    background: linear-gradient(to bottom right, #2d0929, #1758a3) !important;
-  }
-
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    padding: 20px;
-    width: 100%;
-    /* background-color: red; */
-  }
-
-  .logo span {
-    font-size: 1.5em;
-  }
-
-  .content-nav {
-    display: flex;
-    width: 100%;
-    height: 70%;
-    /* background-color: aqua; */
-  }
-
-  .content-nav nav {
-    /* background: yellow; */
-    width: 100%;
-  }
-
-  .nav-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-  }
-
-  .nav-menu li a {
-    font-size: 2em;
-  }
-
-}
+@media only screen and (min-width: 300px) and (max-width: 768px) {}
 </style>
