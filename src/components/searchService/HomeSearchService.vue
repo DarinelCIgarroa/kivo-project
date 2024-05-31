@@ -1,9 +1,9 @@
 <template>
-    <div class="data-client-detail col-md-6 col-lg-5 col-xl-5">
+    <div v-show="!isMobile" class="data-client-detail col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">
         <DetailClient @showCompleteList="handleShowCompleteList"></DetailClient>
     </div>
-    <div class="data-client-list col-md-6 col-lg-7 col-xl-7" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave"
-        @scroll="handleScroll">
+    <div class="data-client-list col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xl-7" @mouseover="handleMouseOver"
+        @mouseleave="handleMouseLeave" @scroll="handleScroll">
         <ListClient></ListClient>
         <div v-if="showScrollIndicator" class="scroll-indicator">
             <i class="fa fa-arrow-down" aria-hidden="true"></i>
@@ -32,19 +32,23 @@ import ListClient from "./partials/ListClient.vue"
 import DetailClient from "./partials/DetailClient.vue"
 import { useClientServiceStore } from "@/stores/client-detail-store"
 import { storeToRefs } from 'pinia';
+import { ref, onMounted } from "vue";
 
 const clientDetailStore = useClientServiceStore()
 const { clientNowArticles } = storeToRefs(clientDetailStore)
-
-import { ref } from "vue";
+const showScrollIndicator = ref(false);
+const isDialogOpen = ref(false);
+let hasScrolled = ref(false);
+const isMobile = ref(false)
 
 defineOptions({
     name: 'HomeSearchService'
 });
 
-const showScrollIndicator = ref(false);
-const isDialogOpen = ref(false);
-let hasScrolled = ref(false);
+
+onMounted(() => {
+    isMobile.value = window.innerWidth <= 768;
+});
 
 const handleMouseOver = () => {
     if (!hasScrolled.value) {
@@ -77,6 +81,7 @@ const handleShowCompleteList = () => {
 }
 
 .data-client-list {
+    /* background: rebeccapurple; */
     position: relative;
     height: 75vh;
     display: flex;
@@ -124,5 +129,15 @@ const handleShowCompleteList = () => {
     color: var(--letter) !important;
     border: 1.5px solid var(--primary) !important;
     background: var(--primary) !important;
+}
+
+@media (max-width: 320px) {
+    .data-client-list {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        height: 90vh;
+    }
 }
 </style>

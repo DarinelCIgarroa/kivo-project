@@ -1,14 +1,15 @@
 <template>
     <q-list color="white" class="q-list-hover">
         <q-item v-for="client in clients" :key="client.id" class="q-my-sm q-item-hover" clickable v-ripple>
-            <q-item-section avatar>
+            <q-item-section avatar class="section-avatar">
                 <q-avatar color="secondary" text-color="white">
                     <img :src="client.avatar ? client.avatar : defaultAvatar" alt="Client Avatar">
                 </q-avatar>
             </q-item-section>
-            <q-item-section>
+            <q-item-section class="section-info">
                 <q-icon color="secondary" v-if="activeClientId === client.id" size="sm" name="fa-solid fa-thumbtack"
-                    class="pin-icon"></q-icon>
+                    class="pin-icon">
+                </q-icon>
                 <q-item-label>
                     <q-icon color="info" class="q-px-xs" size="xs" name="fa-solid fa-user" />
                     <span class="info-span">Nombre: </span>
@@ -180,13 +181,13 @@ function selectClient(clientId) {
     opacity: 0.25;
 }
 
+.q-item:hover .section-btn {
+    right: 50px;
+}
+
 .q-item:hover {
     background: var(--accent) !important;
     transform: scale(1.05);
-}
-
-.q-item:hover .section-btn {
-    right: 50px;
 }
 
 .q-avatar {
@@ -256,12 +257,61 @@ function selectClient(clientId) {
     0%,
     100% {
         transform: scale(1);
-        /* El elemento está en su tamaño original al inicio y al final de la animación */
     }
 
     50% {
         transform: scale(1.15);
-        /* El elemento crece al 105% de su tamaño original en el punto medio de la animación */
+    }
+}
+
+@media (max-width: 320px) {
+    .data-client-list {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0px;
+    }
+
+    .q-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .section-avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* .q-item__section {
+        border: 1px solid #000;
+    } */
+
+    .section-info .q-item__label {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .section-info .q-item__label span {
+        font-size: 15px;
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .content-price {
+        width: 25%;
+        margin: 8px;
+    }
+
+    .section-btn {
+        bottom: 20px;
+    }
+
+    .q-item:hover .section-btn {
+        right: 15px;
     }
 }
 </style>
