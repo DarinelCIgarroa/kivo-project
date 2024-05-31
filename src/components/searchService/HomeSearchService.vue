@@ -31,11 +31,14 @@
 import ListClient from "./partials/ListClient.vue"
 import DetailClient from "./partials/DetailClient.vue"
 import { useClientServiceStore } from "@/stores/client-detail-store"
+import { useAppStore } from "@/stores/app-store.js"
 import { storeToRefs } from 'pinia';
 import { ref, onMounted } from "vue";
 
 const clientDetailStore = useClientServiceStore()
 const { clientNowArticles } = storeToRefs(clientDetailStore)
+const appStore = useAppStore()
+
 const showScrollIndicator = ref(false);
 const isDialogOpen = ref(false);
 let hasScrolled = ref(false);
@@ -44,7 +47,6 @@ const isMobile = ref(false)
 defineOptions({
     name: 'HomeSearchService'
 });
-
 
 onMounted(() => {
     isMobile.value = window.innerWidth <= 768;
@@ -60,9 +62,19 @@ const handleMouseLeave = () => {
     showScrollIndicator.value = false;
 };
 
-const handleScroll = () => {
+const handleScroll = (event) => {
     showScrollIndicator.value = false;
-    hasScrolled.value = true;
+    const scrollTop = event.target.scrollTop;
+
+    if (scrollTop > 0) {
+        hasScrolled.value = true;
+        appStore.setScrolled(true);
+        return true
+    }
+
+    hasScrolled.value = false;
+    appStore.setScrolled(false);
+
 };
 
 const handleShowCompleteList = () => {

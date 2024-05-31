@@ -1,9 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-page-container class="row">
-      <div class="header-mobile">
-      </div>
-      <q-header class="col-12 flex justify-start" :class="{ 'header-open-menu ': isMenuOpen, 'q-header': !isMenuOpen }">
+      <q-header class="col-12 flex justify-start q-header">
         <Navbar></Navbar>
       </q-header>
       <router-view></router-view>
@@ -42,38 +40,9 @@ body {
 }
 
 .q-header {
-  background: none !important;
+  background: transparent;
   position: relative;
 }
 
-@media only screen and (max-width: 600px) {
-
-  .header-mobile {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    z-index: 4;
-  }
-
-  .q-header {
-    position: absolute;
-    display: flex;
-    transform: translateX(150%);
-    transition: background-color 0.5s ease, transform 0.5s ease;
-    z-index: 2;
-  }
-
-  .header-open-menu {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    transform: translateX(120%);
-  }
-
-  .q-header-mobile {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-}
+@media only screen and (max-width: 600px) {}
 </style>

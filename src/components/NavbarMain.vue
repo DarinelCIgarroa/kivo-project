@@ -1,28 +1,22 @@
 <template>
-  <div class="nav-container row col-12">
+  <div :class="['nav-container row col-12', { 'scrolled': appStore.isScrolled }]">
     <div class="flex justify-start col-6 logo">
       <span>Kivo</span>
     </div>
     <div class="content-nav flex justify-end col-6">
-      <q-icon color="dark" size="md" name="fa-solid fa-bars"></q-icon>
+      <q-icon color="dark" :class="appStore.isScrolled ? 'icon-small' : 'icon-medium'" name="fa-solid fa-bars"></q-icon>
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { useAppStore } from '@/stores/app-store.js';
 
-const menuActive = ref(false)
+const appStore = useAppStore();
 
-function toggleMenu() {
-  console.log('menu');
-  menuActive.value = !menuActive.value;
-}
 </script>
 
 <style scoped>
 .nav-container {
-  /* background: #2d0929; */
-  /* background: none !important; */
   width: 100%;
   padding: 15px;
   display: flex;
@@ -37,6 +31,22 @@ function toggleMenu() {
 
 .logo span {
   font-family: 'FontLogo', sans-serif;
+  transition: padding 0.5s ease, font-size 0.5s ease;
+}
+
+.scrolled .logo span {
+  padding: 0px;
+  font-size: 38px;
+}
+
+.icon-medium {
+  font-size: 30px;
+  transition: font-size 0.5s ease;
+}
+
+.icon-small {
+  font-size: 25px;
+  transition: font-size 0.5s ease;
 }
 
 .nav-menu {
@@ -74,5 +84,9 @@ function toggleMenu() {
   display: none;
 }
 
-@media only screen and (min-width: 300px) and (max-width: 768px) {}
+@media (max-width: 320px) {
+  .nav-container {
+    padding: 8px;
+  }
+}
 </style>
