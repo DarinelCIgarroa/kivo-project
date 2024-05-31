@@ -1,14 +1,22 @@
 <template>
-    <div v-show="!appStore.isMobile" class="data-client-detail col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">
-        <DetailClient @showCompleteList="handleShowCompleteList"></DetailClient>
-    </div>
-    <div class="data-client-list col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xl-7" @mouseover="handleMouseOver"
-        @mouseleave="handleMouseLeave" @scroll="handleScroll">
-        <ListClient></ListClient>
-        <div v-if="showScrollIndicator" class="scroll-indicator">
-            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+    <transition appear enter-active-class="animated bounceInUp slower" leave-active-class="animated fadeInDown slower"
+        v-if="!isMobile || showSelectClient">
+        <div class="data-client-detail col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">
+            <DetailClient @showCompleteList="handleShowCompleteList" @closeClientDetails="closeDetailClient">
+            </DetailClient>
         </div>
-    </div>
+    </transition>
+    <transition appear enter-active-class="animated bounceInRight slower"
+        leave-active-class="animated rotateOutDownLeft slower" v-if="showClientList">
+        <div class="data-client-list col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xl-7" @mouseover="handleMouseOver"
+            @mouseleave="handleMouseLeave" @scroll="handleScroll">
+            <ListClient @selectClient="showClientDetails"></ListClient>
+            <div v-if="showScrollIndicator" class="scroll-indicator">
+                <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            </div>
+        </div>
+    </transition>
+
     <q-dialog v-model="isDialogOpen" backdrop-filter="blur(4px) saturate(120%)" transition-show="rotate"
         transition-hide="rotate">
         <q-card class="articles" style="border-radius: 15px;">
@@ -33,18 +41,30 @@ import DetailClient from "./partials/DetailClient.vue"
 import { useClientServiceStore } from "@/stores/client-detail-store"
 import { useAppStore } from "@/stores/app-store.js"
 import { storeToRefs } from 'pinia';
-import { ref } from "vue";
+import { ref, watch } from "vue";
+
+const appStore = useAppStore()
+const { isMobile } = storeToRefs(appStore)
 
 const clientDetailStore = useClientServiceStore()
 const { clientNowArticles } = storeToRefs(clientDetailStore)
-const appStore = useAppStore()
 
 const showScrollIndicator = ref(false);
 const isDialogOpen = ref(false);
+const showSelectClient = ref(true);
+const showClientList = ref(true);
 let hasScrolled = ref(false);
 
 defineOptions({
     name: 'HomeSearchService'
+});
+
+watch(isMobile, (newValue) => {
+    if (newValue) {
+        showSelectClient.value = false;
+    } else {
+        showSelectClient.value = true;
+    }
 });
 
 const handleMouseOver = () => {
@@ -72,8 +92,17 @@ const handleScroll = (event) => {
 
 };
 
+const showClientDetails = () => {
+    showSelectClient.value = true
+    showClientList.value = false
+}
+
 const handleShowCompleteList = () => {
     isDialogOpen.value = true
+}
+const closeDetailClient = () => {
+    showSelectClient.value = false
+    showClientList.value = true
 }
 </script>
 
@@ -142,8 +171,16 @@ const handleShowCompleteList = () => {
         width: 100%;
         display: flex;
         justify-content: center;
-        padding: 20px;
+        padding: 8px;
         height: 90vh;
+    }
+
+    .data-client-detail {
+        height: 90vh;
+    }
+
+    .scroll-indicator {
+        left: 27%;
     }
 }
 </style>

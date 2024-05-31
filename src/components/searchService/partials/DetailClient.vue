@@ -1,7 +1,8 @@
 <template>
     <div class="profile-card">
         <div class="backdrop"></div>
-        <div class="profile-card-top">
+        <div v-if="isMobile" class="profile-card-top">
+            <q-icon @click="closeSelectClient" name="fa-solid fa-circle-xmark" size="2em" color="white"></q-icon>
         </div>
         <div class="profile-card-middle">
             <div class="profile-pic">
@@ -45,25 +46,40 @@
 </template>
 <script setup>
 import { useClientServiceStore } from "@/stores/client-detail-store"
-
+import { useAppStore } from "@/stores/app-store"
 import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 
 const clienStore = useClientServiceStore()
 const { clientNow } = storeToRefs(clienStore)
+
+const appStore = useAppStore()
+const { isMobile } = storeToRefs(appStore)
+
 const serviceProviderPrice = ref(0)
-const emit = defineEmits(['showCompleteList']);
+const emit = defineEmits(['showCompleteList', 'closeClientDetails']);
 const isHovering = ref(false)
+
 watch(() => clientNow.value.price, (newPrice) => {
     serviceProviderPrice.value = newPrice;
 });
 
 const listArticlesModal = computed(() => {
-    if (clientNow.value && clientNow.value.detailsArticles) {
+    console.log("isMobile", isMobile.value);
+    if (clientNow.value && clientNow.value.detailsArticles && !isMobile.value) {
+        console.log('if');
         return clientNow.value.detailsArticles.slice(0, 7);
+    } else {
+        console.log('else');
+        return clientNow.value.detailsArticles.slice(0, 3);
     }
+
     return [];
 })
+
+const closeSelectClient = () => {
+    emit('closeClientDetails')
+}
 
 const showCompleteList = () => {
     emit('showCompleteList');
@@ -72,6 +88,7 @@ const showCompleteList = () => {
 
 <style scoped>
 .profile-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -82,6 +99,7 @@ const showCompleteList = () => {
     border-radius: 20px;
     border: 0.5px solid #000;
     overflow: hidden;
+    z-index: 2;
 }
 
 .profile-card:hover {
@@ -96,26 +114,19 @@ const showCompleteList = () => {
     height: 25rem;
     background: var(--primary);
     clip-path: polygon(0 0, 100% 0, 100% 14%, 0 45%);
+    z-index: -1;
 }
 
 .profile-card-top {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: #fff;
+    justify-content: end;
     font-size: 1.2rem;
     padding: 0.8rem 1rem;
 }
 
 .profile-card-top i {
     cursor: pointer;
-}
-
-.profile-card-top div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 3.5rem;
 }
 
 .profile-card-middle {
@@ -212,9 +223,17 @@ const showCompleteList = () => {
     width: 45%;
 }
 
-
-
 .q-field__native::placeholder {
     font-size: 5em !important;
+}
+
+@media (max-width: 320px) {
+    .name-client {
+        text-align: center
+    }
+
+    .details-articles span {
+        text-align: center;
+    }
 }
 </style>

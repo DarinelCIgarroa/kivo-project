@@ -35,7 +35,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useClientServiceStore } from "@/stores/client-detail-store"
-import defaultAvatar from '../../../assets/img/homeService/default-avatar.png';
+import { useAppStore } from "@/stores/app-store"
+import defaultAvatar from '@/assets/img/homeService/default-avatar.png';
 
 const clientDetailStore = useClientServiceStore()
 const clients = ref([
@@ -127,6 +128,8 @@ const clients = ref([
         ]
     },
 ]);
+const appStore = useAppStore()
+const emit = defineEmits(['selectClient'])
 
 onMounted(() => {
     // Traer el servcio de la lista de clientes
@@ -140,6 +143,9 @@ function selectClient(clientId) {
     activeClientId.value = clientId;  // Activar el ID del cliente seleccionado
     const client = clients.value.find(c => c.id === clientId);
     clientDetailStore.addClient(client);
+    if (appStore.isMobile) {
+        emit('selectClient')
+    }
 }
 </script>
 
@@ -297,10 +303,12 @@ function selectClient(clientId) {
 
     .section-btn {
         bottom: 20px;
+        right: 15px;
     }
 
     .q-item:hover .section-btn {
         right: 15px;
     }
+
 }
 </style>
