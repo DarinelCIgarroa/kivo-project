@@ -34,7 +34,6 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Money } from "@/utils/utils";
 import { useClientServiceStore } from "@/stores/client-detail-store"
 import defaultAvatar from '../../../assets/img/homeService/default-avatar.png';
 
@@ -137,17 +136,13 @@ onMounted(() => {
 
 const activeClientId = ref(null);
 
-function moneyFilter(money) {
-    return Money(money)
-}
-
 function selectClient(clientId) {
     activeClientId.value = clientId;  // Activar el ID del cliente seleccionado
     const client = clients.value.find(c => c.id === clientId);
     clientDetailStore.addClient(client);
 }
-
 </script>
+
 <style scoped>
 .q-list {
     width: 80%;
@@ -160,7 +155,6 @@ function selectClient(clientId) {
     cursor: pointer;
     transition: 0.3s ease;
     background: var(--primary);
-    /* box-shadow: -10px 20px 35px rgba(0, 0, 0, 0.15); */
     margin-bottom: 25px;
 }
 
@@ -236,7 +230,6 @@ function selectClient(clientId) {
     border-radius: 10px;
     padding: 12px;
     margin: 10px 0 0 6px;
-    /* top right bottom left */
 }
 
 .content-price .price-span {
@@ -284,10 +277,6 @@ function selectClient(clientId) {
         padding: 0;
         margin: 0;
     }
-
-    /* .q-item__section {
-        border: 1px solid #000;
-    } */
 
     .section-info .q-item__label {
         display: flex;

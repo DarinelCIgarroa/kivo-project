@@ -1,5 +1,5 @@
 <template>
-    <div v-show="!isMobile" class="data-client-detail col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">
+    <div v-show="!appStore.isMobile" class="data-client-detail col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">
         <DetailClient @showCompleteList="handleShowCompleteList"></DetailClient>
     </div>
     <div class="data-client-list col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xl-7" @mouseover="handleMouseOver"
@@ -33,7 +33,7 @@ import DetailClient from "./partials/DetailClient.vue"
 import { useClientServiceStore } from "@/stores/client-detail-store"
 import { useAppStore } from "@/stores/app-store.js"
 import { storeToRefs } from 'pinia';
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 const clientDetailStore = useClientServiceStore()
 const { clientNowArticles } = storeToRefs(clientDetailStore)
@@ -42,14 +42,9 @@ const appStore = useAppStore()
 const showScrollIndicator = ref(false);
 const isDialogOpen = ref(false);
 let hasScrolled = ref(false);
-const isMobile = ref(false)
 
 defineOptions({
     name: 'HomeSearchService'
-});
-
-onMounted(() => {
-    isMobile.value = window.innerWidth <= 768;
 });
 
 const handleMouseOver = () => {
@@ -80,7 +75,6 @@ const handleScroll = (event) => {
 const handleShowCompleteList = () => {
     isDialogOpen.value = true
 }
-
 </script>
 
 <style scoped>

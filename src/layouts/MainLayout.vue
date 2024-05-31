@@ -11,12 +11,16 @@
 
 <script setup>
 import Navbar from "../components/NavbarMain.vue"
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
+import { useAppStore } from "@/stores/app-store.js"
 
 const isMenuOpen = ref(false)
-function toggleMenu() {
-  isMenuOpen.value = !isMenuOpen.value
-}
+const appStore = useAppStore()
+
+onMounted(() => {
+  appStore.isMobile = window.innerWidth <= 768;
+});
+
 </script>
 
 <style>
