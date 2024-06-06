@@ -1,186 +1,230 @@
 <template>
-    <transition appear enter-active-class="animated bounceInUp slower" leave-active-class="animated fadeInDown slower"
-        v-if="!isMobile || showSelectClient">
-        <div class="data-client-detail col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">
-            <DetailClient @showCompleteList="handleShowCompleteList" @closeClientDetails="closeDetailClient">
-            </DetailClient>
+  <transition appear enter-active-class="animated zoomIn slower" leave-active-class="animated fadeInDown slower">
+    <div ref="scrollArea" class="data-client-detail col-12">
+      <q-infinite-scroll @load="onLoad" :offset="50" :scroll-target="scrollArea">
+        <div class="content-card">
+          <DetailClient v-for="client in clients" :key="client.id" :client="client">
+          </DetailClient>
         </div>
-    </transition>
-    <transition appear enter-active-class="animated bounceInRight slower"
-        leave-active-class="animated rotateOutDownLeft slower" v-if="showClientList">
-        <div class="data-client-list col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xl-7" @mouseover="handleMouseOver"
-            @mouseleave="handleMouseLeave" @scroll="handleScroll">
-            <ListClient @selectClient="showClientDetails"></ListClient>
-            <div v-if="showScrollIndicator" class="scroll-indicator">
-                <i class="fa fa-arrow-down" aria-hidden="true"></i>
-            </div>
-        </div>
-    </transition>
-
-    <q-dialog v-model="isDialogOpen" backdrop-filter="blur(4px) saturate(120%)" transition-show="rotate"
-        transition-hide="rotate">
-        <q-card class="articles" style="border-radius: 15px;">
-            <q-card-section class="bg-pink-9 text-white text-center">
-                <div class="text-h6">Lista de articulos completa</div>
-            </q-card-section>
-            <q-card-section>
-                <q-chip v-for="article in clientNowArticles" :key="article" outline color="primary">
-                    {{ article }}
-                </q-chip>
-            </q-card-section>
-            <q-card-section vertical align="right">
-                <q-btn class="text-primary" label="Cerrar" flat @click="isDialogOpen = false" />
-            </q-card-section>
-        </q-card>
-    </q-dialog>
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="2.5em"></q-spinner-dots>
+          </div>
+        </template>
+      </q-infinite-scroll>
+    </div>
+  </transition>
 </template>
 
 <script setup>
-import ListClient from "./partials/ListClient.vue"
 import DetailClient from "./partials/DetailClient.vue"
-import { useClientServiceStore } from "@/stores/client-detail-store"
-import { useAppStore } from "@/stores/app-store.js"
-import { storeToRefs } from 'pinia';
-import { ref, watch } from "vue";
-
-const appStore = useAppStore()
-const { isMobile } = storeToRefs(appStore)
-
-const clientDetailStore = useClientServiceStore()
-const { clientNowArticles } = storeToRefs(clientDetailStore)
-
-const showScrollIndicator = ref(false);
-const isDialogOpen = ref(false);
-const showSelectClient = ref(true);
-const showClientList = ref(true);
-let hasScrolled = ref(false);
+import { ref } from 'vue';
 
 defineOptions({
-    name: 'HomeSearchService'
+  name: 'HomeSearchService'
 });
 
-watch(isMobile, (newValue) => {
-    if (newValue) {
-        showSelectClient.value = false;
-    } else {
-        showSelectClient.value = true;
-    }
-});
+const clients = ref([
+  {
+    id: 1,
+    name: 'Lorenzo Cigarroa de los Santos',
+    price: '850',
+    transport_type: 'Van',
+    avatar: null,
+    placeOrigin: 'Madrid, España',
+    placeDestination: 'Barcelona, España',
+    detailsArticles: [
+      { name: 'Cajas de libros', number: 10 },
+      { name: 'Bicicleta', number: 2 },
+      { name: 'Equipo de camping', number: 3 },
+      { name: 'Cajas de cocina', number: 4 },
+      { name: 'Lámparas', number: 2 },
+      { name: 'Ropa de temporada', number: 8 },
+      { name: 'Televisor', number: 1 },
+      { name: 'Equipo de sonido', number: 1 },
+      { name: 'Cajas de decoración', number: 5 },
+      { name: 'Juguetes', number: 3 },
+      { name: 'Muebles pequeños', number: 3 },
+      { name: 'Cajas de herramientas', number: 2 },
+      { name: 'Artículos deportivos', number: 4 },
+      { name: 'Ropa de cama', number: 3 },
+      { name: 'Calzado', number: 5 },
+      { name: 'Libros', number: 20 },
+      { name: 'Electrodomésticos pequeños', number: 3 },
+      { name: 'Artículos de baño', number: 4 },
+      { name: 'Maletas', number: 3 },
+      { name: 'Mochilas', number: 2 }
+    ]
+  },
+  // Ejemplos adicionales con números aleatorios y tipos de artículos:
+  {
+    id: 2,
+    name: 'Mirta Ocaña Lopez',
+    price: '1300',
+    transport_type: 'Truck',
+    avatar: null,
+    placeOrigin: 'Buenos Aires, Argentina',
+    placeDestination: 'Mendoza, Argentina',
+    detailsArticles: Array.from({ length: 20 }, (_, i) => ({ name: `Artículo ${i + 1}`, number: i + 1 }))
+  },
+  {
+    id: 3,
+    name: 'Felipe Gutierrez Nola',
+    price: '1100',
+    transport_type: 'MiniVan',
+    avatar: null,
+    placeOrigin: 'Lima, Perú',
+    placeDestination: 'Cuzco, Perú',
+    detailsArticles: Array.from({ length: 20 }, (_, i) => ({ name: `Producto ${i + 1}`, number: 2 }))
+  },
+  {
+    id: 4,
+    name: 'Carla Karian Mendez Agrup',
+    price: '1600',
+    transport_type: 'Flatbed',
+    avatar: null,
+    placeOrigin: 'México D.F., México',
+    placeDestination: 'Guadalajara, México',
+    detailsArticles: Array.from({ length: 20 }, (_, i) => ({ name: `Ítem ${i + 1}`, number: 3 }))
+  },
+  {
+    id: 5,
+    name: 'Sergio Ramos Verllin',
+    price: '1800',
+    transport_type: 'RefrigeratedTruck',
+    avatar: null,
+    placeOrigin: 'Santiago, Chile',
+    placeDestination: 'Valparaíso, Chile',
+    detailsArticles: Array.from({ length: 20 }, (_, i) => ({ name: `Carga ${i + 1}`, number: 4 }))
+  },
+  {
+    id: 6,
+    name: 'Ana Perez Lopez',
+    price: '1400',
+    transport_type: 'BoxTruck',
+    avatar: null,
+    placeOrigin: 'Bogotá, Colombia',
+    placeDestination: 'Medellín, Colombia',
+    detailsArticles: Array.from({ length: 20 }, (_, i) => ({ name: `Equipo ${i + 1}`, number: 5 }))
+  },
+  {
+    id: 7,
+    name: 'Jorge Ortega Paez',
+    price: '950',
+    transport_type: 'SUV',
+    avatar: null,
+    placeOrigin: 'Quito, Ecuador',
+    placeDestination: 'Guayaquil, Ecuador',
+    detailsArticles: Array.from({ length: 20 }, (_, i) => ({ name: `Material ${i + 1}`, number: 6 }))
+  },
+  {
+    id: 8,
+    name: 'Lucía Vargas',
+    price: '2000',
+    transport_type: 'Cargo Plane',
+    avatar: null,
+    placeOrigin: 'Caracas, Venezuela',
+    placeDestination: 'Maracaibo, Venezuela',
+    detailsArticles: Array.from({ length: 20 }, (_, i) => ({ name: `Paquete ${i + 1}`, number: 7 }))
+  }
+]);
 
-const handleMouseOver = () => {
-    if (!hasScrolled.value) {
-        showScrollIndicator.value = true;
-    }
-};
+const scrollArea = ref(null);
 
-const handleMouseLeave = () => {
-    showScrollIndicator.value = false;
-};
+const onLoad = (index, done) => {
+  console.log(index, done);
+  setTimeout(() => {
+    clients.value.push(
+      {
+        id: 1,
+        name: 'Lorenzo Cigarroa de los Santos',
+        price: '850',
+        transport_type: 'Van',
+        avatar: null,
+        placeOrigin: 'Madrid, España',
+        placeDestination: 'Barcelona, España',
+        detailsArticles: ['Cajas de libros', 'Bicicleta'],
+      },
+      {
+        id: 1,
+        name: 'Lorenzo Cigarroa de los Santos',
+        price: '850',
+        transport_type: 'Van',
+        avatar: null,
+        placeOrigin: 'Madrid, España',
+        placeDestination: 'Barcelona, España',
+        detailsArticles: ['Cajas de libros', 'Bicicleta'],
+      },
+      {
+        id: 2,
+        name: 'María Rodríguez',
+        price: '750',
+        transport_type: 'Carro',
+        avatar: null,
+        placeOrigin: 'Sevilla, España',
+        placeDestination: 'Valencia, España',
+        detailsArticles: ['Ropa', 'Electrónicos'],
+      },
+      {
+        id: 3,
+        name: 'Carlos Pérez',
+        price: '950',
+        transport_type: 'Camión',
+        avatar: null,
+        placeOrigin: 'Barcelona, España',
+        placeDestination: 'Madrid, España',
+        detailsArticles: ['Muebles', 'Electrodomésticos'],
+      }
+    );
 
-const handleScroll = (event) => {
-    showScrollIndicator.value = false;
-    const scrollTop = event.target.scrollTop;
-
-    if (scrollTop > 0) {
-        hasScrolled.value = true;
-        appStore.setScrolled(true);
-        return true
-    }
-
-    hasScrolled.value = false;
-    appStore.setScrolled(false);
-
-};
-
-const showClientDetails = () => {
-    showSelectClient.value = true
-    showClientList.value = false
+    done()
+  }, 2000)
 }
 
-const handleShowCompleteList = () => {
-    isDialogOpen.value = true
-}
-const closeDetailClient = () => {
-    showSelectClient.value = false
-    showClientList.value = true
-}
 </script>
 
 <style scoped>
 .data-client-detail {
-    position: relative;
-    height: 75vh;
-    display: flex;
-    justify-content: start;
-    padding: 15px;
+  max-height: 80vh;
+  width: 100%;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) white;
 }
 
-.data-client-list {
-    /* background: rebeccapurple; */
-    position: relative;
-    height: 75vh;
-    display: flex;
-    justify-content: end;
-    overflow: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 15px;
-}
-
-.data-client-list::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-
-.container {
-    background: gray;
-    height: 100%;
+.content-card {
+  display: flex;
+  flex-wrap: wrap;
+  height: 40%;
+  width: 100%;
 }
 
 .scroll-indicator {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(100%);
-    font-size: 24px;
-    color: #fff;
-    background: #000;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    animation: scrollIndicator 1.5s infinite;
-    z-index: 1000;
-}
-
-.articles .q-chip {
-    cursor: pointer;
-}
-
-.articles .q-chip:hover {
-    color: var(--letter) !important;
-    border: 1.5px solid var(--primary) !important;
-    background: var(--primary) !important;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(100%);
+  font-size: 24px;
+  color: #fff;
+  background: #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: scrollIndicator 1.5s infinite;
+  z-index: 1000;
 }
 
 @media (max-width: 320px) {
-    .data-client-list {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 8px;
-        height: 90vh;
-    }
+  .data-client-detail {
+    height: 90vh;
+  }
 
-    .data-client-detail {
-        height: 90vh;
-    }
-
-    .scroll-indicator {
-        left: 27%;
-    }
+  .scroll-indicator {
+    left: 27%;
+  }
 }
 </style>

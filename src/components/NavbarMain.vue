@@ -10,15 +10,14 @@
 </template>
 <script setup>
 import { useAppStore } from '@/stores/app-store.js';
-
 const appStore = useAppStore();
 
 </script>
 
 <style scoped>
 .nav-container {
+  /* background: aliceblue; */
   width: 100%;
-  padding: 15px;
   display: flex;
   align-items: center;
 }

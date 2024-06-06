@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-page-container class="row">
-      <q-header class="col-12 flex justify-start q-header">
+      <q-header class="q-header">
         <Navbar></Navbar>
       </q-header>
       <router-view></router-view>
@@ -40,13 +40,18 @@ body {
   width: 90%;
   border-radius: 10px;
   padding: 0px !important;
-  /* background: rebeccapurple */
+  padding: 0 100px;
+  display: flex;
+  justify-content: center;
 }
 
 .q-header {
   background: transparent;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
 }
-
-@media only screen and (max-width: 600px) {}
 </style>

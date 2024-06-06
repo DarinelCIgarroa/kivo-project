@@ -1,239 +1,216 @@
 <template>
-    <div class="profile-card">
-        <div class="backdrop"></div>
-        <div v-if="isMobile" class="profile-card-top">
-            <q-icon @click="closeSelectClient" name="fa-solid fa-circle-xmark" size="2em" color="white"></q-icon>
-        </div>
-        <div class="profile-card-middle">
-            <div class="profile-pic">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <span class="name-client">{{ clientNow.name }}</span>
+  <q-card class="my-card">
+    <transition appear enter-active-class="animated zoomIn delay-1s">
+      <div v-if="showMainINformation" class="content-img">
+        <q-img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250" class="card-image" />
+      </div>
+    </transition>
+    <transition appear enter-active-class="animated zoomIn delay-1s">
+      <div v-if="showMainINformation" class="text-content">
+        <div class="text-date">26 December 2019</div>
+        <div class="text-title" style="color: var(--primary);">{{ client.name }}</div>
+        <q-item-section class="text-description">
+          <q-item-label>
+            <q-icon class="q-px-xs iconForm" size="xs" name="my_location"></q-icon>
+            <span class="info-span">Origen: </span>
+            <span class="q-ml-xs data-span">{{ client.placeOrigin }}</span>
+          </q-item-label>
+          <q-item-label>
+            <q-icon class="q-px-xs iconForm" size="xs" name="place"></q-icon>
+            <span class="info-span">Destino: </span>
+            <span class="q-ml-xs data-span">{{ client.placeDestination }}</span>
+          </q-item-label>
+          <q-item-label>
+            <q-icon color="dark" class="q-px-xs" size="xs" name="fa-solid fa-car" />
+            <span class="info-span">Tipo de Transporte: </span>
+            <span class="q-ml-xs data-span">{{ client.transport_type }}</span>
+          </q-item-label>
+          <div class="changes-tab">
+          </div>
+        </q-item-section>
 
-            <span class="data-location">
-                <span class="text-weight-bolder">Origen:</span> {{ clientNow.placeOrigin }}
-                <br>
-                <span class="text-weight-bolder">Destino:</span> {{ clientNow.placeDestination }}
-            </span>
-
-            <div class="details-articles">
-                <span>Detalles del flete/mudanza</span>
-                <div class="articles">
-                    <q-chip v-for="article in listArticlesModal" :key="article" outline color="accent">
-                        {{ article }}
-                    </q-chip>
-                </div>
-            </div>
-            <div class="details-articles">
-                <q-btn style="padding: 10px;" round dense color="primary" size="sm" icon="fa-solid fa-eye"
-                    @click="showCompleteList()">
-                    <q-tooltip class="bg-accent">Ver lista de artículos completa</q-tooltip>
-                </q-btn>
-            </div>
-
-        </div>
-        <div class="profile-card-bottom">
-            <q-input prefix="$" mask="#" fill-mask="0" reverse-fill-mask type="number" class="half-width"
-                v-model.number="serviceProviderPrice" placeholder="¿Cuánto quieres cobrar?">
-                <template v-slot:append>
-                    <q-icon color="accent" name="fa-solid fa-sack-dollar"></q-icon>
-                </template>
-            </q-input>
-            <q-btn @mouseenter="isHovering = true" @mouseleave="isHovering = false" rounded
-                :color="isHovering ? 'pink-9' : 'primary'" label="Aceptar" class="half-width accept-service"></q-btn>
-        </div>
+        <q-item-section class="content-price">
+          <span class="price-span data-span">$ {{ client.price }}</span>
+        </q-item-section>
+      </div>
+    </transition>
+    <transition appear enter-active-class="animated zoomIn delay-1s">
+      <div v-if="!showMainINformation" class="text-content-details">
+        <q-chip v-for="(article, index) in client.detailsArticles" :key="index" v-model="cookies" color="grey-4"
+          text-color="dark">
+          <q-avatar color="primary" text-color="white">{{ article.number }}</q-avatar>
+          <div class="ellipsis">
+            {{ article.name }}
+          </div>
+        </q-chip>
+      </div>
+    </transition>
+    <div class="changes-section">
+      <div @click="peopleInformation('mainInformation')" :class="{ active: showMainINformation }">
+      </div>
+      <div @click="peopleInformation('')" :class="{ active: showSecondaryInformation }">
+        <q-tooltip class="bg-grey-4 text-black text-weight-medium" transition-show="scale" transition-hide="scale">
+          <span>Lista de articulos</span>
+        </q-tooltip>
+      </div>
     </div>
+  </q-card>
 </template>
+
 <script setup>
-import { useClientServiceStore } from "@/stores/client-detail-store"
-import { useAppStore } from "@/stores/app-store"
-import { computed, ref, watch } from 'vue';
-import { storeToRefs } from 'pinia';
+import { ref, toRef, computed } from "vue";
 
-const clienStore = useClientServiceStore()
-const { clientNow } = storeToRefs(clienStore)
+const props = defineProps(['client'])
+const client = toRef(props.client)
 
-const appStore = useAppStore()
-const { isMobile } = storeToRefs(appStore)
+const showMainINformation = ref(true);
+const showSecondaryInformation = ref(false);
 
-const serviceProviderPrice = ref(0)
-const emit = defineEmits(['showCompleteList', 'closeClientDetails']);
-const isHovering = ref(false)
-
-watch(() => clientNow.value.price, (newPrice) => {
-    serviceProviderPrice.value = newPrice;
-});
-
-const listArticlesModal = computed(() => {
-    console.log("isMobile", isMobile.value);
-    if (clientNow.value && clientNow.value.detailsArticles && !isMobile.value) {
-        console.log('if');
-        return clientNow.value.detailsArticles.slice(0, 7);
-    } else {
-        console.log('else');
-        return clientNow.value.detailsArticles.slice(0, 3);
-    }
-
-    return [];
-})
-
-const closeSelectClient = () => {
-    emit('closeClientDetails')
-}
-
-const showCompleteList = () => {
-    emit('showCompleteList');
+const peopleInformation = (section) => {
+  if (section == 'mainInformation') {
+    showMainINformation.value = true
+    showSecondaryInformation.value = false
+    return
+  }
+  showMainINformation.value = false
+  showSecondaryInformation.value = true
+  return
 }
 </script>
 
-<style scoped>
-.profile-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    width: 100%;
-    min-height: 73vh;
-    background-color: #fff;
-    border-radius: 20px;
-    border: 0.5px solid #000;
-    overflow: hidden;
-    z-index: 2;
+<style>
+.my-card {
+  display: flex;
+  width: 40%;
+  padding: 30px 5px 30px 20px;
+  /* background: rgb(23, 170, 181); */
+  border-radius: 20px;
+  margin: 15px 62px;
+  height: 20em;
+  max-height: 20em;
 }
 
-.profile-card:hover {
-    opacity: 1;
+.content-img {
+  position: relative;
+  width: 29%;
+  height: auto;
+  flex-shrink: 0;
+  /* background: palegreen; */
+  transform: translateX(-80px);
 }
 
-.backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 25rem;
-    background: var(--primary);
-    clip-path: polygon(0 0, 100% 0, 100% 14%, 0 45%);
-    z-index: -1;
+.content-img:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120%;
+  height: 100%;
+  border-radius: 20px;
+  opacity: 0.8;
+  -webkit-box-shadow: 10px 10px 21px -1px rgba(122, 27, 74, 0.6);
+  -moz-box-shadow: 10px 10px 21px -1px rgba(122, 27, 74, 0.6);
+  box-shadow: 10px 10px 21px -1px rgba(122, 27, 74, 0.6);
 }
 
-.profile-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    font-size: 1.2rem;
-    padding: 0.8rem 1rem;
+.content-img .q-img {
+  width: 120%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+  transition: all 0.3s;
 }
 
-.profile-card-top i {
-    cursor: pointer;
+.text-content {
+  text-align: justify;
+  padding: 5px;
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  flex-direction: column;
+  /* background: bisque; */
 }
 
-.profile-card-middle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 1rem;
-    flex-grow: 1;
+.text-content-details {
+  padding: 5px;
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) white;
 }
 
-.profile-pic {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background-size: cover;
-    cursor: pointer;
-    margin-bottom: 0.5rem;
-    background-image: url(https://randomuser.me/api/portraits/men/20.jpg);
-    transition: box-shadow 0.3s ease-in-out;
+.text-date {
+  font-size: 0.8rem;
+  color: rgba(22, 22, 22, 0.7);
+  margin-bottom: 5px;
 }
 
-.profile-pic:hover {
-    box-shadow: 0 0 8px 5px var(--accent);
+.text-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.profile-pic i {
-    position: absolute;
-    right: 0;
-    top: 6.5rem;
-    font-size: 1.2rem;
-    color: #3ec70b;
+.text-description {
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-.name-client {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-    color: var(--accent);
-    font-weight: 600;
+.read-more-button {
+  background: var(--primary);
+  color: white;
+  border-radius: 50px;
 }
 
-.data-location {
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #000;
-    padding-bottom: 0.5rem;
-    font-size: 0.9rem;
-    text-align: center;
-    color: #000;
+.info-span {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--dark);
 }
 
-.details-articles {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 1rem;
+.content-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--secondaryLight);
+  width: 30%;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0 0 6px;
 }
 
-.details-articles span {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-    color: var(--accent);
-    font-weight: 400;
+.content-price .price-span {
+  color: var(--letter);
+  font-size: 1.2em;
 }
 
-.details-articles .articles {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding-left: 0.5rem;
+.changes-section {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-
-.articles .q-chip {
-    cursor: pointer;
+.changes-section div {
+  background: #a3a2a2;
+  margin: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.7s ease;
 }
 
-.articles .q-chip:hover {
-    color: var(--primary) !important;
-    border: 1.5px solid var(--primary) !important;
-    background: #ecadc2 !important;
-}
-
-.profile-card-bottom {
-    margin: 0 20px;
-    padding: 20px;
-    display: flex;
-    /* background: #3ec70b; */
-    justify-content: space-between;
-}
-
-.half-width {
-    width: 45%;
-}
-
-.q-field__native::placeholder {
-    font-size: 5em !important;
-}
-
-@media (max-width: 320px) {
-    .name-client {
-        text-align: center
-    }
-
-    .details-articles span {
-        text-align: center;
-    }
+.changes-section .active {
+  /* border-radius: 5px !important; */
+  width: 17px;
+  height: 17px;
+  background: var(--primary) !important;
+  /* transition: 5s ease; */
 }
 </style>
