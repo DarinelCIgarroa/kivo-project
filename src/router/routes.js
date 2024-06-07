@@ -9,9 +9,12 @@ const routes = [
     children: [
       { path: "home", component: () => import("pages/IndexPage.vue") },
       {
+        path: "how-does-it-work",
+        component: () => import("@/pages/HowWorks.vue"),
+      },
+      {
         path: "home-search-service",
-        component: () =>
-          import("src/components/searchService/HomeSearchService.vue"),
+        component: () => import("src/pages/SearchService.vue"),
       },
     ],
   },

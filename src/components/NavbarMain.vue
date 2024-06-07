@@ -4,7 +4,7 @@
       <span>Kivo</span>
     </div>
     <div class="content-nav flex justify-end col-6">
-      <q-icon color="dark" :class="appStore.isScrolled ? 'icon-small' : 'icon-medium'" name="fa-solid fa-bars"></q-icon>
+      <q-icon color="dark" class="icon-medium" name="fa-solid fa-bars"></q-icon>
     </div>
   </div>
 </template>
@@ -16,10 +16,13 @@ const appStore = useAppStore();
 
 <style scoped>
 .nav-container {
-  /* background: aliceblue; */
   width: 100%;
   display: flex;
   align-items: center;
+}
+
+.content-nav {
+  cursor: pointer;
 }
 
 .logo {

@@ -38,9 +38,9 @@
       <div v-if="!showMainINformation" class="text-content-details">
         <q-chip v-for="(article, index) in client.detailsArticles" :key="index" v-model="cookies" color="grey-4"
           text-color="dark">
-          <q-avatar color="primary" text-color="white">{{ article.number }}</q-avatar>
+          <q-avatar color="primary" text-color="white"><span>{{ article.number }}</span></q-avatar>
           <div class="ellipsis">
-            {{ article.name }}
+            <span>{{ article.name }}</span>
           </div>
         </q-chip>
       </div>
@@ -82,12 +82,12 @@ const peopleInformation = (section) => {
 .my-card {
   display: flex;
   width: 40%;
-  padding: 30px 5px 30px 20px;
+  padding: 20px 0px 20px 0px;
+  margin: 15px 10px 17px 112px;
   /* background: rgb(23, 170, 181); */
   border-radius: 20px;
-  margin: 15px 62px;
   height: 20em;
-  max-height: 20em;
+  max-height: 18em;
 }
 
 .content-img {
@@ -212,5 +212,9 @@ const peopleInformation = (section) => {
   height: 17px;
   background: var(--primary) !important;
   /* transition: 5s ease; */
+}
+
+.q-chip span {
+  font-size: 13px;
 }
 </style>

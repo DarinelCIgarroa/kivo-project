@@ -6,7 +6,7 @@
           <span style="font-size: 70px; padding: 0; margin: 0" class="text-h1">Mudanzas y fletes</span>
         </div>
         <div class="how-it-works-button">
-          <q-btn size="18px" color="primary">
+          <q-btn @click="goToRoute" size="18px" color="primary">
             <span class="text-white">¿Cómo funciona?</span>
           </q-btn>
         </div>
@@ -23,34 +23,26 @@
       </div>
     </transition>
   </q-page>
-  <q-page class="home-how-works row col-12">
-    <HomeHowWorks></HomeHowWorks>
-  </q-page>
 </template>
 
 <script setup>
 import FormRequest from "../components/home/FormRequest.vue"
-import HomeHowWorks from "../components/home/HomeHowWorks.vue"
+import { useRouter } from 'vue-router';
 
 defineOptions({
   name: 'IndexPage'
 });
+
+
+const router = useRouter();
+
+const goToRoute = () => {
+  router.push('/how-does-it-work');
+}
+
 </script>
 
 <style scoped>
-.main-home {
-  min-height: 100%;
-}
-
-.home-how-works {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  min-width: 100vh;
-  min-height: 100vh;
-}
-
 .promotional-text {
   color: var(--homeText);
 }
@@ -90,12 +82,10 @@ defineOptions({
   }
 
   .content-information {
-    background: blue !important;
     height: 50vh;
   }
 
   .content-formRequest {
-    background: red;
     margin-top: 2em;
     justify-content: center;
   }

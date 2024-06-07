@@ -1,55 +1,60 @@
 <template>
-  <div class="select-information col-12">
-    <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-      <q-tab name="clientUser" label="Quiero un servicio" active-color="red" indicator-color="dark"
-        class="bg-primary text-white text-center"></q-tab>
-      <q-tab name="serviceProvider" label="Quiero ser conductor" active-color="red" indicator-color="dark"
-        class="bg-primary text-white text-center"></q-tab>
-    </q-tabs>
-  </div>
-  <div>
-    <q-tab-panels v-model="tab" animated transition-prev="scale" transition-next="scale">
-      <q-tab-panel name="clientUser">
-        <div v-for="(step, index) in steps" :key="index" class="step-box" @click="toggleExpand(index, $event)">
-          <q-avatar size="120px">
-            <img :src="step.img">
-          </q-avatar>
-          <div class="original-step">
-            <span class="text-weight-bold">{{ step.step }}</span>
-            <span>{{ step.title }}</span>
-            <span>{{ step.subtitle }}</span>
-          </div>
+  <q-page class=" row col-12">
+    <transition appear enter-active-class="animated zoomIn slower delay-1s " leave-active-class="animated fadeOut">
+      <div class="home-how-works">
+        <div class="select-information col-12">
+          <q-tabs v-model="tab" indicator-color="transparent" active-color="white"
+            class="bg-primary text-grey-5 shadow-3">
+            <q-tab name="clientUser" label="Quiero un servicio"></q-tab>
+            <q-tab name="serviceProvider" label="Quiero ser conductor"></q-tab>
+          </q-tabs>
         </div>
-      </q-tab-panel>
-    </q-tab-panels>
+        <div>
+          <q-tab-panels v-model="tab" animated transition-prev="scale" transition-next="scale">
+            <q-tab-panel name="clientUser">
+              <div v-for="(step, index) in steps" :key="index" class="step-box" @click="toggleExpand(index, $event)">
+                <q-avatar size="120px">
+                  <img :src="step.img">
+                </q-avatar>
+                <div class="original-step">
+                  <span class="text-weight-bold">{{ step.step }}</span>
+                  <span>{{ step.title }}</span>
+                  <span>{{ step.subtitle }}</span>
+                </div>
+              </div>
+            </q-tab-panel>
+          </q-tab-panels>
+        </div>
+        <q-dialog v-model="isDialogOpen" backdrop-filter="blur(5px) saturate(130%)" transition-show="rotate"
+          transition-hide="rotate">
+          <q-card class="card-select-detail no-shadow">
+            <q-card-section class="section-detail-step">
+              <img :src="selectedStep.img" class="select-detail-img">
+              <div class="select-detail-steps">
+                <div class="select-detail-info">
+                  <div class="flex justify-end" style="width: 100%;">
+                    <q-icon name="fa-solid fa-circle-xmark" color="dark" size="1.4rem"
+                      @click="isDialogOpen = !isDialogOpen" style="cursor: pointer;"></q-icon>
+                  </div>
+                  <div><span class="text-weight-bolder" style="font-size: 20px;">{{ selectedStep.title }}</span></div>
+                  <div><span class="text-weight-bold" style="font-size: 15px;">{{ selectedStep.subtitle }}</span></div>
+                  <div class="step" v-for="(detail, index) in selectedStep.details" :key="index">
+                    <div>
+                      <q-icon name="fa-solid fa-check" color="positive" size="1.2rem"></q-icon>
+                    </div>
+                    <div>
+                      <span style="font-size: 15px;">{{ `${detail}` }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
+      </div>
+    </transition>
+  </q-page>
 
-  </div>
-  <q-dialog v-model="isDialogOpen" backdrop-filter="blur(5px) saturate(130%)" transition-show="rotate"
-    transition-hide="rotate">
-    <q-card class="card-select-detail no-shadow">
-      <q-card-section class="section-detail-step">
-        <img :src="selectedStep.img" class="select-detail-img">
-        <div class="select-detail-steps">
-          <div class="select-detail-info">
-            <div class="flex justify-end" style="width: 100%;">
-              <q-icon name="fa-solid fa-circle-xmark" color="dark" size="1.4rem" @click="isDialogOpen = !isDialogOpen"
-                style="cursor: pointer;"></q-icon>
-            </div>
-            <div><span class="text-weight-bolder" style="font-size: 20px;">{{ selectedStep.title }}</span></div>
-            <div><span class="text-weight-bold" style="font-size: 15px;">{{ selectedStep.subtitle }}</span></div>
-            <div class="step" v-for="(detail, index) in selectedStep.details" :key="index">
-              <div>
-                <q-icon name="fa-solid fa-check" color="positive" size="1.2rem"></q-icon>
-              </div>
-              <div>
-                <span style="font-size: 15px;">{{ `${detail}` }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script setup>
@@ -133,10 +138,20 @@ function toggleExpand(index) {
 </script>
 
 <style scoped>
+.home-how-works {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  min-width: 100%;
+  padding: 50px;
+}
+
 .select-information {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .q-tabs {
@@ -148,9 +163,7 @@ function toggleExpand(index) {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /* Centra los items cuando no llenan completamente la última fila */
   padding: 10px;
-  /* Añade un poco de padding para espaciado general */
 }
 
 .step-box {
@@ -167,11 +180,9 @@ function toggleExpand(index) {
   box-sizing: border-box;
 }
 
-
 .q-tab-panels {
   background: transparent;
 }
-
 
 .step-box .original-step {
   padding: 10px;
@@ -186,7 +197,6 @@ function toggleExpand(index) {
 }
 
 .card-select-detail {
-  /* background: gold; */
   background: transparent;
   padding: 5px;
   border-radius: 15px;
@@ -197,7 +207,6 @@ function toggleExpand(index) {
 }
 
 .section-detail-step {
-  /* background: #000; */
   width: 100%;
   display: flex;
   justify-content: center;
@@ -206,13 +215,11 @@ function toggleExpand(index) {
 }
 
 .select-detail-img {
-  /* background: rgb(40, 147, 196); */
   position: absolute;
   width: 36%;
   left: 17px;
 
 }
-
 
 .select-detail-steps {
   background: white;
@@ -224,7 +231,6 @@ function toggleExpand(index) {
 }
 
 .select-detail-info {
-  /* background: rebeccapurple; */
   padding: 15px;
   width: 70%;
   display: flex;
@@ -234,7 +240,6 @@ function toggleExpand(index) {
 
 .select-detail-info .step {
   padding: 15px;
-  /* background: blue; */
   display: flex;
   width: 100%;
 }

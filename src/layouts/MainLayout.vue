@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout>
     <q-page-container class="row">
       <q-header class="q-header">
         <Navbar></Navbar>
@@ -32,16 +32,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  background: var(--background);
+  min-height: 100vh !important;
 }
 
 .q-page-container {
   width: 90%;
-  border-radius: 10px;
-  padding: 0px !important;
-  padding: 0 100px;
+  padding: 0px 60px !important;
   display: flex;
+  min-height: 100vh;
   justify-content: center;
 }
 
@@ -51,7 +49,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  padding: 10px;
+  min-width: 100%;
+  padding: 20px;
 }
 </style>
