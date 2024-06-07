@@ -1,5 +1,3 @@
-import { ref } from "vue";
-
 export const getPlacePredictions = async (val) => {
   return new Promise((resolve, reject) => {
     const service = new google.maps.places.AutocompleteService();

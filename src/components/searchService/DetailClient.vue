@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, toRef, computed } from "vue";
+import { ref, toRef } from "vue";
 
 const props = defineProps(['client'])
 const client = toRef(props.client)

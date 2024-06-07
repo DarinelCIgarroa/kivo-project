@@ -11,10 +11,9 @@
 
 <script setup>
 import Navbar from "../components/NavbarMain.vue"
-import { ref, onMounted } from "vue"
+import { onMounted } from "vue"
 import { useAppStore } from "@/stores/app-store.js"
 
-const isMenuOpen = ref(false)
 const appStore = useAppStore()
 
 onMounted(() => {
