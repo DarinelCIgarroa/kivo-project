@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center main-home row col-12">
-    <transition appear enter-active-class="animated zoomIn slower delay-1s " leave-active-class="animated fadeOut">
+    <transition appear enter-active-class="animated zoomIn slower delay-05s " leave-active-class="animated fadeOut">
       <div class="content-information row col-xs-12 col-sm-12 col-md-6">
         <div class="service-title">
           <span style="font-size: 70px; padding: 0; margin: 0" class="text-h1">Mudanzas y fletes</span>
@@ -17,7 +17,7 @@
         </div>
       </div>
     </transition>
-    <transition appear enter-active-class="animated zoomIn slower delay-1s " leave-active-class="animated fadeOut">
+    <transition appear enter-active-class="animated zoomIn slower delay-05s " leave-active-class="animated fadeOut">
       <div class="content-formRequest col-xs-12 col-sm-12 col-md-6 flex items-center justify-end">
         <FormRequest></FormRequest>
       </div>
