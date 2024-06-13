@@ -16,6 +16,10 @@ const routes = [
         path: "home-search-service",
         component: () => import("src/pages/SearchService.vue"),
       },
+      {
+        path: "my-profiel",
+        component: () => import("src/pages/MyProfile.vue"),
+      },
     ],
   },
   {

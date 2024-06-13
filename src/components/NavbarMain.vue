@@ -1,27 +1,41 @@
 <template>
-  <div :class="['nav-container row col-12', { 'scrolled': appStore.isScrolled }]">
+  <div class="nav-container row col-12">
     <div class="flex justify-start col-6 logo">
       <span>Kivo</span>
     </div>
     <div class="content-nav flex justify-end col-6">
-      <q-icon color="dark" class="icon-medium" name="fa-solid fa-bars"></q-icon>
+      <q-icon @click="toggleLoginForm" color="primary" size="2.1em" class="q-mx-lg"
+        name="fa-solid fa-circle-user"></q-icon>
+      <q-icon @click="toggleMenu" color="dark" size="2.1em" class="q-mx-lg" name="fa-solid fa-bars-staggered"></q-icon>
     </div>
   </div>
 </template>
 <script setup>
-import { useAppStore } from '@/stores/app-store.js';
-const appStore = useAppStore();
+import { useNavbarStore } from '@/stores/mainStore/global-navbar-store';
+const store = useNavbarStore();
 
+const toggleLoginForm = () => {
+  store.activeFormLogin = !store.activeFormLogin;
+}
+
+const toggleMenu = () => {
+  store.toggleDrawerLeft();
+}
 </script>
 
 <style scoped>
 .nav-container {
+  /* background: yellowgreen; */
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .content-nav {
+  /* background: white; */
+  display: flex;
+  align-items: center;
   cursor: pointer;
 }
 

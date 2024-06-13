@@ -1,5 +1,5 @@
 <template>
-  <q-page class=" row col-12">
+  <q-page class="row col-12">
     <transition appear enter-active-class="animated zoomIn slower delay-1s " leave-active-class="animated fadeOut">
       <div class="home-how-works">
         <div class="select-information col-12">
