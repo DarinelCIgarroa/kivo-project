@@ -2,41 +2,37 @@
   <q-page class="row col-12">
     <div class="profile-container">
       <div class="profile__container__section basic-information">
-        <q-card class="card" flat bordered>
-          <q-card-section horizontal>
-            <q-card-section class="col-5 q-py-sm">
-              <q-img style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;"
-                src="https://fastly.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg"></q-img>
-            </q-card-section>
+        <q-card class="card row" flat bordered>
+          <q-card-section class="col-md-5 col-xs-12 q-py-sm">
+            <q-img style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;"
+              src="https://fastly.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg"></q-img>
+          </q-card-section>
+          <q-card-section class="col-md-7 col-xs-12 card__info">
+            <span class="text-h5 q-ml-xs q-my-sm">Información básica</span>
+            <div class="card__data">
+              <div class="card__data-title"><span class="text-weight-bold">Nombre:</span></div>
+              <div class="card__data-value"><span>Darinel</span></div>
+            </div>
+            <q-separator></q-separator>
+            <div class="card__data">
+              <div class="card__data-title"><span class="text-weight-bold">Apellidos:</span></div>
+              <div class="card__data-value"><span>Cigarroa de Los Santos</span></div>
+            </div>
+            <q-separator></q-separator>
 
-            <q-card-section class="col-7 card__info">
-              <span class="text-h5 q-ml-xs q-my-sm">Información básica</span>
-              <div class="card__data">
-                <div class="card__data-title"><span class="text-weight-bold">Nombre:</span></div>
-                <div class="card__data-value"><span>Darinel</span></div>
-              </div>
-              <q-separator></q-separator>
-              <div class="card__data">
-                <div class="card__data-title"><span class="text-weight-bold">Apellidos:</span></div>
-                <div class="card__data-value"><span>Cigarroa de Los Santos</span></div>
-              </div>
-              <q-separator></q-separator>
+            <div class="card__data">
+              <div class="card__data-title"><span class="text-weight-bold">Número:</span></div>
+              <div class="card__data-value"><span>9612365046</span></div>
+            </div>
+            <q-separator></q-separator>
 
-              <div class="card__data">
-                <div class="card__data-title"><span class="text-weight-bold">Número:</span></div>
-                <div class="card__data-value"><span>9612365046</span></div>
+            <div class="card__data">
+              <div class="card__data-title"><span class="text-weight-bold">Dirección:</span></div>
+              <div class="card__data-value">
+                <span>San Victorio 13, Pedregal de Sta Úrsula, Coyoacán, 04600 Ciudad de México, CDMX</span>
               </div>
-              <q-separator></q-separator>
-
-              <div class="card__data">
-                <div class="card__data-title"><span class="text-weight-bold">Dirección:</span></div>
-                <div class="card__data-value">
-                  <span>San Victorio 13, Pedregal de Sta Úrsula, Coyoacán, 04600 Ciudad de México, CDMX</span>
-                </div>
-              </div>
-              <q-separator></q-separator>
-
-            </q-card-section>
+            </div>
+            <q-separator></q-separator>
 
           </q-card-section>
         </q-card>
@@ -85,7 +81,7 @@
                 <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit
                   elit.</q-item-label>
               </q-item-section>
-              <q-separato></q-separato>
+              <q-separator></q-separator>
               <q-item-section side top>
                 <q-item-label caption>2 min ago</q-item-label>
                 <div class="text-orange">
@@ -134,11 +130,24 @@
       </div>
       <div class="profile__container__section vehicle-information">
         <q-card class="card row" flat bordered>
-          <q-card-section style="height: 100%" class="col-6">
-            <q-img style="width: 100%; height: 100%; object-fit: contain; border-radius: 15px;"
-              src="https://fastly.picsum.photos/id/655/2000/1125.jpg?hmac=Uwp6LjnVtMcRT0nyC8GmWiNp7GFP02ipyf5uiePLE6Q"></q-img>
+          <q-card-section class="col-md-6 col-xs-12">
+            <q-carousel height="100%" swipeable animated v-model="slide" arrows navigation infinite autoplay
+              v-model:fullscreen="fullscreen" :class="{ 'card--fullscreen-carousel': fullscreen }">
+              <q-carousel-slide :name="1"
+                img-src="https://images.unsplash.com/photo-1473994539470-288907e8d04b?q=80&w=2052&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></q-carousel-slide>
+              <q-carousel-slide :name="2"
+                img-src="https://images.unsplash.com/photo-1518368273159-87a4efdc654f?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></q-carousel-slide>
+              <q-carousel-slide :name="3"
+                img-src="https://images.unsplash.com/photo-1518560998531-087edcb36c13?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></q-carousel-slide>
+              <template v-slot:control>
+                <q-carousel-control position="bottom-right" :offset="[18, 18]">
+                  <q-btn push round dense color="primary" text-color="white"
+                    :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'" @click="fullscreen = !fullscreen"></q-btn>
+                </q-carousel-control>
+              </template>
+            </q-carousel>
           </q-card-section>
-          <q-card-section class="col-6">
+          <q-card-section class="col-md-6 col-xs-12">
             <span class="text-h6">Perfil del Vehículo</span>
             <div class="card__data">
               <div class="card__data-title"><span class="text-weight-bold">Tipo de Vehículo:</span></div>
@@ -173,8 +182,8 @@
         </q-card>
       </div>
       <div class="profile__container__section information-income">
-        <q-card class="card card--direction-column" flat bordered>
-          <div class="card__summary">
+        <q-card class="card card--direction-column row" flat bordered>
+          <div class="card__summary col-12">
             <q-item>
               <q-item-section side>
                 <q-avatar size="2.5em" color="primary" text-color="white" icon="fa-solid fa-wallet">
@@ -186,8 +195,7 @@
               </q-item-section>
             </q-item>
           </div>
-          <div class="card__content-chart">
-            <apexchart height="260" width="590" type="area" :options="chartOptions" :series="series"></apexchart>
+          <div class="card__content-chart col-12">
           </div>
         </q-card>
       </div>
@@ -197,17 +205,33 @@
 
 
 <script setup>
-import { ref } from "vue";
-
+import { ref, onMounted } from "vue";
+import ApexCharts from 'apexcharts';
+const slide = ref(1)
+const fullscreen = ref(false)
 const chartOptions = ref({
   chart: {
     type: 'area',
+    width: '100%',  // Usa un ancho relativo
+    height: '100%', // Opcional, dependiendo del diseño deseado
     tollbar: {
       show: false
     },
     zoom: {
       enabled: false
-    }
+    },
+    responsive: [{
+      breakpoint: 360,
+      options: {
+        chart: {
+          width: 100,
+          height: 500
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }]
   },
   dataLabels: {
     enabled: false
@@ -234,27 +258,40 @@ const chartOptions = ref({
       fontSize: '16px',
     },
   },
-  // colors: ['#FF5733', '#335BFF'], // Colores personalizados para cada mes
   xaxis: {
     categories: [
-      "Sem 1 Mayo", "Sem 2 Mayo", "Sem 3 Mayo", "Sem 4 Mayo",
-      "Sem 1 Junio", "Sem 2 Junio", "Sem 3 Junio", "Sem 4 Junio"
+      "Sem 1", "Sem 2", "Sem 3", "Sem 4",
     ]
   },
   tooltip: {
     x: {
       format: 'dd/MM/yy HH:mm'
     }
-  }
+  },
+  series: [{
+    name: 'Mayo',
+    data: [1000, 1200, 900, 1600]
+  }, {
+    name: 'Junio',
+    data: [1100, 1400, 1300, 0]
+  }]
 });
 
-const series = ref([{
-  name: 'Mayo',
-  data: [1000, 1200, 900, 1600]
-}, {
-  name: 'Junio',
-  data: [1100, 1400, 1300, 0]
-}]);
+onMounted(() => {
+  const chartContainer = document.querySelector(".card__content-chart");
+  const observer = new ResizeObserver(() => {
+    if (chart) {
+      chart.destroy();
+      chart = new ApexCharts(chartContainer, chartOptions.value);
+      chart.render();
+    }
+  });
+
+  observer.observe(chartContainer);
+
+  let chart = new ApexCharts(chartContainer, chartOptions.value);
+  chart.render();
+});
 
 </script>
 
@@ -305,13 +342,10 @@ const series = ref([{
 .card {
   height: 100%;
   min-width: 100%;
-  /* min-height: 100%; */
   padding: 5px !important;
   border-radius: 20px;
   background: #EEEE;
   display: flex;
-  /*justify-content: center;
-  align-items: center; */
 }
 
 .card--direction-column {
@@ -323,23 +357,18 @@ const series = ref([{
   display: flex;
   flex-direction: column;
   padding: 3px;
-  /* margin: 1px; */
 }
 
 .card__data .card__data-title {
-  /* padding: 2px; */
   display: flex;
   align-items: center;
   min-width: 25%;
-  /* background: rgb(8, 66, 158); */
 }
 
 .card__data-value {
-  /* padding: 2px; */
   display: flex;
   align-items: center;
   min-width: 65%;
-  /* background: rgb(4, 174, 118); */
 }
 
 .card__content-counts {
@@ -354,26 +383,36 @@ const series = ref([{
   height: 30%;
 }
 
-.card__summary {
-  width: 100%;
-}
-
 .card__content-chart {
   height: 80%;
-  width: 100%;
-  max-width: 100%;
 }
 
 @media (max-width: 480px) {
   .profile-container {
     grid-template-columns: 100%;
     grid-template-rows: 30%;
-
     grid-template-areas:
       "basicInformation"
       "aditionalInformation"
       "vehicleInformation"
       "informationIncome";
   }
+
+  .card__content-counts {
+    display: block
+  }
+
+  .card__content-chart {
+    height: 300px;
+  }
+
+  .q-carousel {
+    height: 50vh !important;
+  }
+
+  .card--fullscreen-carousel {
+    height: 100vh !important;
+  }
+
 }
 </style>
