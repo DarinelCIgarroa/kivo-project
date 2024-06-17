@@ -1,56 +1,47 @@
 <template>
   <q-layout view="hHh Lpr lff" container style="height: 100vh" class="shadow-2 rounded-borders">
     <q-drawer v-model="drawer" show-if-above :mini="!drawer || miniState" @click.capture="drawerClick" :width="200"
-      :breakpoint="500" bordered :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
+      :breakpoint="500" bordered :class="$q.dark.isActive ? 'bg-dark' : 'bg-dark'">
+
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
         <q-list padding class="q-pa-lg">
-          <q-item active clickable v-ripple>
+
+          <q-item clickable v-ripple @click="this.$router.push({ name: 'home' });">
             <q-item-section avatar>
-              <q-icon name="fa-solid fa-truck-fast" color="primary" size="1.7em"></q-icon>
+              <q-icon name="fa-solid fa-house" color="white"></q-icon>
             </q-item-section>
-            <q-item-section>
+            <q-item-section class="q-drawer__label-item">
               Kivo
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="inbox"></q-icon>
-            </q-item-section>
 
-            <q-item-section>
-              Inbox
+          <q-item clickable v-ripple @click="this.$router.push({ name: 'my-profile' })">
+            <q-item-section avatar>
+              <q-icon name="fa-solid fa-user" color="white"></q-icon>
+            </q-item-section>
+            <q-item-section class="q-drawer__label-item">
+              Mi perfil
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple @click="this.$router.push({ name: 'client-services' })">
             <q-item-section avatar>
-              <q-icon name="star"></q-icon>
+              <q-icon color="white" name="fa-solid fa-box"></q-icon>
             </q-item-section>
-
-            <q-item-section>
-              Star
+            <q-item-section class="q-drawer__label-item">
+              Servicio
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple @click="this.$router.push({ name: 'how-work' })">
             <q-item-section avatar>
-              <q-icon name="send"></q-icon>
+              <q-icon color="white" name="fa-solid fa-info"></q-icon>
             </q-item-section>
-
-            <q-item-section>
-              Send
+            <q-item-section class="q-drawer__label-item">
+              ¿Cómo funciona?
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="drafts"></q-icon>
-            </q-item-section>
-
-            <q-item-section>
-              Drafts
-            </q-item-section>
-          </q-item>
         </q-list>
       </q-scroll-area>
       <div class="q-mini-drawer-hide absolute" style="top: 15px; right: -17px">
@@ -83,5 +74,9 @@ const drawerClick = (e) => {
 <style>
 body {
   font-family: 'FontDefault', sans-serif;
+}
+
+.q-drawer__label-item {
+  color: white;
 }
 </style>
