@@ -13,7 +13,7 @@ const routes = [
         component: () => import("@/pages/HowWorks.vue"),
       },
       {
-        path: "home-search-service",
+        path: "search-service",
         component: () => import("src/pages/SearchService.vue"),
       },
       {
