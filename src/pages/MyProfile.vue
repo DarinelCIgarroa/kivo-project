@@ -87,7 +87,7 @@ const openFormVehicle = () => {
   grid-area: informationIncome;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 899px) {
   .profile-container {
     grid-template-columns: 100%;
     grid-template-areas:
@@ -98,6 +98,7 @@ const openFormVehicle = () => {
   }
 }
 
+/*
 @media (min-width: 601px) and (max-width: 899px) {
   .profile-container {
     grid-template-columns: 100%;
@@ -107,5 +108,5 @@ const openFormVehicle = () => {
       "vehicleInformation"
       "informationIncome";
   }
-}
+} */
 </style>

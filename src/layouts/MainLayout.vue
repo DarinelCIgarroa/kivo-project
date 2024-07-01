@@ -4,7 +4,7 @@
       :breakpoint="500" bordered :class="$q.dark.isActive ? 'bg-dark' : 'bg-dark'">
 
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
-        <q-list padding class="q-pa-lg">
+        <q-list padding>
 
           <q-item clickable v-ripple @click="this.$router.push({ name: 'home' });">
             <q-item-section avatar>
@@ -35,7 +35,7 @@
 
           <q-item clickable v-ripple @click="this.$router.push({ name: 'how-work' })">
             <q-item-section avatar>
-              <q-icon color="white" name="fa-solid fa-info"></q-icon>
+              <q-icon color="white" name="fa-solid fa-question"></q-icon>
             </q-item-section>
             <q-item-section class="q-drawer__label-item">
               ¿Cómo funciona?
