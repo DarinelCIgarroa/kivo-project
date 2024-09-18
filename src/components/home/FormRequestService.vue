@@ -174,7 +174,7 @@ watch(placeOrigin, (newValue) => {
   content: "";
   position: absolute;
   inset: 5px;
-  background: var(--background);
+  background: var(--secondary);
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
@@ -185,7 +185,7 @@ watch(placeOrigin, (newValue) => {
   content: "";
   position: absolute;
   inset: 5px;
-  background: var(--background);
+  background: var(--secondary);
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
