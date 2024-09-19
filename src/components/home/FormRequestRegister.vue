@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <q-form id="signupForm" @submit="onSubmit" @reset="onReset" class="form q-pa-lg text-center">
-            <h4>Quiero ser cliente</h4>
+            <h4>Cliente</h4>
 
             <q-input class="inputBox col-12" v-model="name" label="Nombre">
                 <template v-slot:prepend>
@@ -153,7 +153,7 @@ watch(location, (newValue) => {
 }
 
 .submit {
-    font-weight: 600;
+    font-weight: 400;
     cursor: pointer;
     width: 70%;
     font-size: 1.2em;
