@@ -3,7 +3,10 @@
     <div class="profile-container">
       <div class="profile__container__section basic-information">
         <CustomCardProfile>
-          <BasicInformation @open-form="openFormDataBasic" :editForm="true"></BasicInformation>
+          <BasicInformation
+            @open-form="openFormDataBasic"
+            :editForm="true"
+          ></BasicInformation>
         </CustomCardProfile>
       </div>
       <div class="profile__container__section aditional-iformation">
@@ -23,7 +26,9 @@
       </div>
     </div>
     <FormBasicInformation v-model="showFormDataBasic"></FormBasicInformation>
-    <FormVehicleInformation v-model="showFormVehicleInformation"></FormVehicleInformation>
+    <FormVehicleInformation
+      v-model="showFormVehicleInformation"
+    ></FormVehicleInformation>
   </q-page>
 </template>
 
@@ -35,19 +40,18 @@ import InformationIncome from "@/components/myProfile/InformationIncome.vue";
 import CustomCardProfile from "../components/myProfile/utils/CustomCardProfile.vue";
 import FormBasicInformation from "../components/myProfile/utils/FormBasicInformation.vue";
 import FormVehicleInformation from "../components/myProfile/utils/FormVehicleInformation.vue";
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const showFormDataBasic = ref(false)
-const showFormVehicleInformation = ref(false)
+const showFormDataBasic = ref(false);
+const showFormVehicleInformation = ref(false);
 
 const openFormDataBasic = () => {
-  showFormDataBasic.value = true
-}
+  showFormDataBasic.value = true;
+};
 
 const openFormVehicle = () => {
-  showFormVehicleInformation.value = true
-}
-
+  showFormVehicleInformation.value = true;
+};
 </script>
 
 <style scoped>
@@ -89,12 +93,21 @@ const openFormVehicle = () => {
 
 @media (max-width: 899px) {
   .profile-container {
-    grid-template-columns: 100%;
+    grid-template-columns: 50%;
     grid-template-areas:
       "basicInformation"
       "aditionalInformation"
       "vehicleInformation"
       "informationIncome";
+  }
+}
+
+@media (max-width: 900px) {
+  .profile-container {
+    grid-template-columns: 49%;
+    grid-template-areas:
+      "basicInformation aditionalInformation"
+      "vehicleInformation informationIncome";
   }
 }
 
