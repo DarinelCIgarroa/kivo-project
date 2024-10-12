@@ -13,7 +13,7 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
       },
       {
-        path: "how-does-it-work",
+        path: "how-work",
         name: "how-work",
         component: () => import("@/pages/HowWorks.vue"),
       },
@@ -23,7 +23,7 @@ const routes = [
         component: () => import("src/pages/SearchService.vue"),
       },
       {
-        path: "my-profiel",
+        path: "my-profile",
         name: "my-profile",
         component: () => import("src/pages/MyProfile.vue"),
       },
