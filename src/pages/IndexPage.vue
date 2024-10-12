@@ -1,147 +1,137 @@
 <template>
-  <q-page class="flex flex-center main-home row col-12">
-    <transition appear enter-active-class="animated zoomIn slower delay-1s " leave-active-class="animated fadeOut">
-      <div class="content-information row col-xs-12 col-sm-12 col-md-6">
-        <div class="service-title">
-          <span style="font-size: 70px; padding: 0; margin: 0" class="text-h1">Mudanzas y fletes</span>
-        </div>
-        <div class="how-it-works-button">
-          <q-btn size="18px" color="primary">
-            <span class="text-white">¿Cómo funciona?</span>
-          </q-btn>
-        </div>
-        <div class="promotional-text q-my-md">
-          <span style="font-size: 25px">
-            Encuentra el Mejor Servicio de Flete y Mudanza Fácilmente.
-          </span>
-        </div>
+  <q-page class="main-home grid-container" :class="{ 'active': isActive }">
+    <div class="left-section" :class="{ 'move-right': isActive }">
+      <img :src="homeKivo" alt="Camión de mudanzas" />
+      <div class="button-container">
+        <span>Encuentra el mejor servicio de fletes y mudanzas fácilmente</span>
+        <q-btn unelevated rounded color="accent" :label="labelButton" class="q-mt-md" @click="toggleMove" />
       </div>
-    </transition>
-    <transition appear enter-active-class="animated zoomIn slower delay-1s " leave-active-class="animated fadeOut">
-      <div class="content-formRequest col-xs-12 col-sm-12 col-md-6 flex items-center justify-end">
-        <FormRequest></FormRequest>
-      </div>
-    </transition>
-  </q-page>
-  <q-page class="home-how-works row col-12">
-    <HomeHowWorks></HomeHowWorks>
+    </div>
+    <div class="right-section" :class="{ 'move-left': isActive }">
+      <FormRequestRegister />
+    </div>
   </q-page>
 </template>
 
 <script setup>
-import FormRequest from "../components/home/FormRequest.vue"
-import HomeHowWorks from "../components/home/HomeHowWorks.vue"
+import { ref } from 'vue';
+import homeKivo from '@/assets/img/home/homeKivo.svg';
+import FormRequestRegister from "../components/home/FormRequestRegister.vue";
+let labelButton = 'Quiero ser conductor';
 
-defineOptions({
-  name: 'IndexPage'
-});
+// Estado para controlar la animación
+const isActive = ref(false);
+
+// Función para alternar el estado
+const toggleMove = () => {
+  isActive.value = !isActive.value;
+  if (isActive.value) {
+    labelButton = 'Quiero ser contratista';
+  } else {
+    labelButton = 'Quiero ser conductor';
+  }
+};
+
 </script>
 
+
 <style scoped>
-.main-home {
-  min-height: 100%;
+.grid-container {
+  display: grid;
+  grid-template-columns: 5fr 2fr;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
-.home-how-works {
+.left-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.left-section {
+  /* background: red; */
+  padding: 80px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 20px;
-  min-width: 100vh;
-  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+  position: relative;
+  transition: transform 0.8s ease-in-out, clip-path 0.8s ease-in-out;
+  /* Transición suave */
 }
 
-.promotional-text {
-  color: var(--homeText);
-}
-
-.how-it-works-button .q-btn {
-  border: 1px solid #fff;
-  transition: 0.4s;
-}
-
-.how-it-works-button .q-btn:hover {
-  border-radius: 20px;
-}
-
-.service-title {
-  color: var(--homeText);
-}
-
-.content-information {
+.right-section {
+  background: linear-gradient(to right, rgba(228, 228, 228, 0.937), rgba(255, 255, 255, 0.937));
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  /* background: blue !important; */
+  justify-content: flex-end;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.8s ease-in-out, background 0.8s ease-in-out;
+  /* Transición de color suave */
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+  /* Diagonal inicial */
 }
 
-.content-formRequest {
+/* Efecto cuando se activa la clase 'move-right' */
+.move-right {
+  transform: translateX(33vw);
+  background: linear-gradient(to right, rgba(238, 237, 237, 0.937), rgba(255, 255, 255, 0.937));
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+  /* Ajuste de la diagonal */
+}
+
+/* Cambios cuando la clase 'move-left' está activa */
+.move-left {
+  background: #fff;
+  /* background: rgb(26, 102, 92); */
+  transform: translateX(-52vw);
+  clip-path: none !important;
+}
+
+.button-container {
+  position: absolute;
+  bottom: 12%;
+  height: 50px;
+  width: 100%;
   display: flex;
-  padding: 10px;
-  /* background: rgb(40, 204, 122) !important; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
 }
 
-@media only screen and (max-width: 600px) {
-  .main-home {
+.button-container span {
+  font-size: 20px;
+}
+
+/* Para pantallas más pequeñas */
+@media (max-width: 600px) {
+  .grid-container {
     display: flex;
     flex-direction: column;
-    width: 100vh;
-    /* background: red */
+    height: 100vh;
   }
 
-  .content-information {
-    background: blue !important;
-    height: 50vh;
-  }
-
-  .content-formRequest {
-    background: red;
-    margin-top: 2em;
-    justify-content: center;
-  }
-
-  .promotional-text,
-  .service-title,
-  .how-it-works-button {
-    text-align: center;
-  }
-
-  .promotional-text {
-    margin-top: 3em;
+  .left-section,
+  .right-section {
+    width: 100%;
+    height: auto;
   }
 }
 
-@media only screen and (min-width: 601px) and (max-width: 768px) {
-  .content-formRequest {
-    margin-top: 2em;
-    justify-content: center;
+@media (min-width: 601px) and (max-width: 899px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr;
   }
 
-  .promotional-text,
-  .service-title,
-  .how-it-works-button {
-    text-align: center;
-  }
-
-  .promotional-text {
-    margin-top: 2em;
-  }
-}
-
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-  .content-formRequest {
-    margin-top: 2em;
-    justify-content: center;
-  }
-
-  .promotional-text,
-  .service-title,
-  .how-it-works-button {
-    text-align: center;
-  }
-
-  .promotional-text {
-    margin-top: 2em;
+  .left-section,
+  .right-section {
+    width: 100%;
   }
 }
 </style>

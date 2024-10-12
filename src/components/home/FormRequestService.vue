@@ -174,7 +174,7 @@ watch(placeOrigin, (newValue) => {
   content: "";
   position: absolute;
   inset: 5px;
-  background: var(--background);
+  background: var(--secondary);
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
@@ -185,7 +185,7 @@ watch(placeOrigin, (newValue) => {
   content: "";
   position: absolute;
   inset: 5px;
-  background: var(--background);
+  background: var(--secondary);
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
@@ -238,7 +238,7 @@ form h4 {
   border: 1px solid #fff;
 }
 
-@media only screen and (min-width: 300px) and (max-width: 599px) {
+@media only screen and (min-width: 300px) and (max-width: 600px) {
   .form h4 {
     font-size: 1.4em;
   }

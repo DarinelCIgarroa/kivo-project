@@ -1,23 +1,25 @@
 <template>
-  <transition appear enter-active-class="animated zoomIn slower" leave-active-class="animated fadeInDown slower">
-    <div ref="scrollArea" class="data-client-detail col-12">
-      <q-infinite-scroll @load="onLoad" :offset="50" :scroll-target="scrollArea">
-        <div class="content-card">
-          <DetailClient v-for="client in clients" :key="client.id" :client="client">
-          </DetailClient>
-        </div>
-        <template v-slot:loading>
-          <div class="row justify-center q-my-md">
-            <q-spinner-dots color="primary" size="2.5em"></q-spinner-dots>
+  <q-page class="flex flex-center main-home row col-12">
+    <transition appear enter-active-class="animated zoomIn slower" leave-active-class="animated fadeInDown slower">
+      <div ref="scrollArea" class="data-client-detail col-12">
+        <q-infinite-scroll @load="onLoad" :offset="50" :scroll-target="scrollArea">
+          <div class="content-card">
+            <DetailClient v-for="client in clients" :key="client.id" :client="client">
+            </DetailClient>
           </div>
-        </template>
-      </q-infinite-scroll>
-    </div>
-  </transition>
+          <template v-slot:loading>
+            <div class="row justify-center q-my-md">
+              <q-spinner-dots color="primary" size="2.5em"></q-spinner-dots>
+            </div>
+          </template>
+        </q-infinite-scroll>
+      </div>
+    </transition>
+  </q-page>
 </template>
 
 <script setup>
-import DetailClient from "./partials/DetailClient.vue"
+import DetailClient from "../components/searchService/DetailClient.vue"
 import { ref } from 'vue';
 
 defineOptions({
@@ -185,7 +187,7 @@ const onLoad = (index, done) => {
 
 <style scoped>
 .data-client-detail {
-  max-height: 80vh;
+  max-height: 90.6vh;
   width: 100%;
   overflow: auto;
   scrollbar-width: thin;
@@ -195,7 +197,7 @@ const onLoad = (index, done) => {
 .content-card {
   display: flex;
   flex-wrap: wrap;
-  height: 40%;
+  height: 100%;
   width: 100%;
 }
 
