@@ -41,6 +41,22 @@
           <q-item
             clickable
             v-ripple
+            to="client-services"
+            @click="link = 'client-services'"
+            :active="link === 'client-services'"
+            active-class="my-menu-link"
+            class="q-my-sm"
+          >
+            <q-item-section avatar>
+              <q-icon name="fa-solid fa-handshake" color="white"></q-icon>
+            </q-item-section>
+            <q-item-section class="q-drawer__label-item">
+              <q-item-label>Solicitudes de servicio</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item
+            clickable
+            v-ripple
             to="my-profile"
             @click="link = 'my-profile'"
             :active="link === 'my-profile'"
@@ -87,7 +103,6 @@
             class="q-my-sm"
           >
             <q-item-section avatar>
-              
               <q-icon name="fa-solid fa-shapes" color="white" />
             </q-item-section>
             <q-item-section class="q-drawer__label-item">
@@ -101,10 +116,12 @@
           dense
           round
           unelevated
-          color="accent"
-          icon="chevron_left"
+          color="white"
+          icon="fa-solid fa-circle-chevron-left"
+          size="md"
+          text-color="primary"
           @click="miniState = true"
-        ></q-btn>
+        />
       </div>
     </q-drawer>
 

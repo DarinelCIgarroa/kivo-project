@@ -1,39 +1,55 @@
 <template>
-  <q-page class="main-home grid-container" :class="{ 'active': isActive }">
+  <q-page class="main-home grid-container" :class="{ active: isActive }">
     <div class="left-section" :class="{ 'move-right': isActive }">
       <img :src="homeKivo" alt="Camión de mudanzas" />
       <div class="button-container">
         <span>Encuentra el mejor servicio de fletes y mudanzas fácilmente</span>
-        <q-btn unelevated rounded color="accent" :label="labelButton" class="q-mt-md" @click="toggleMove" />
+        <q-btn
+          unelevated
+          rounded
+          color="accent"
+          :label="labelButton"
+          class="q-mt-md"
+          @click="toggleMove"
+        />
       </div>
     </div>
     <div class="right-section" :class="{ 'move-left': isActive }">
-      <FormRequestRegister />
+      <FormRequestRegister v-if="isActive" />
+      <FormRequestService v-else @code-validation="codeValidation" />
     </div>
+    <q-dialog v-model="showCodeVerification">
+      <CodeVerification  />
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import homeKivo from '@/assets/img/home/homeKivo.svg';
+import { ref } from "vue";
+import homeKivo from "@/assets/img/home/homeKivo.svg";
 import FormRequestRegister from "../components/home/FormRequestRegister.vue";
-let labelButton = 'Quiero ser conductor';
+import FormRequestService from "../components/home/FormRequestService.vue";
+import CodeVerification from "../components/home/CodeVerification.vue";
 
-// Estado para controlar la animación
+let labelButton = "Quiero ser conductor";
+// Estado para controlar la animación IsActive false = cliente, contrario conductor
 const isActive = ref(false);
-
+const showCodeVerification = ref(false);
 // Función para alternar el estado
 const toggleMove = () => {
   isActive.value = !isActive.value;
   if (isActive.value) {
-    labelButton = 'Quiero ser contratista';
+    labelButton = "Quiero ser contratista";
   } else {
-    labelButton = 'Quiero ser conductor';
+    labelButton = "Quiero ser conductor";
   }
 };
 
+const codeValidation = () => {
+  console.log("codeValidation");
+  showCodeVerification.value = true;
+};
 </script>
-
 
 <style scoped>
 .grid-container {
@@ -64,7 +80,11 @@ const toggleMove = () => {
 }
 
 .right-section {
-  background: linear-gradient(to right, rgba(228, 228, 228, 0.937), rgba(255, 255, 255, 0.937));
+  background: linear-gradient(
+    to right,
+    rgba(228, 228, 228, 0.937),
+    rgba(255, 255, 255, 0.937)
+  );
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -80,7 +100,11 @@ const toggleMove = () => {
 /* Efecto cuando se activa la clase 'move-right' */
 .move-right {
   transform: translateX(33vw);
-  background: linear-gradient(to right, rgba(238, 237, 237, 0.937), rgba(255, 255, 255, 0.937));
+  background: linear-gradient(
+    to right,
+    rgba(238, 237, 237, 0.937),
+    rgba(255, 255, 255, 0.937)
+  );
   clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
   /* Ajuste de la diagonal */
 }
