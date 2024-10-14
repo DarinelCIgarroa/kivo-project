@@ -8,7 +8,7 @@
       transition-show="slide-right"
       transition-hide="slide-left"
       :breakpoint="500"
-      style="background: #293041"
+      class="drawer"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
         <q-list padding active-class="text-white">
@@ -174,12 +174,19 @@ body {
   color: white;
   background: #474c5b;
 }
-
+.drawer {
+  background: #293041;
+}
 .test {
   /* background-color: aquamarine; */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 10px;
+}
+@media (max-width: 1400px) {
+  .q-drawer--standard {
+    width: 250px !important;
+  }
 }
 </style>
