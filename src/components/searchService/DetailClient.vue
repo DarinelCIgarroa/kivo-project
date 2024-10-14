@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card shadow-15">
+  <q-card class="my-card shadow-11">
     <transition appear enter-active-class="animated zoomIn delay-1s">
       <div v-if="showMainINformation" class="content-img">
         <q-img
@@ -110,7 +110,7 @@ const peopleInformation = (section) => {
 <style>
 .my-card {
   display: flex;
-  width: 80%;
+  width: 75%;
   padding: 20px 0px 20px 0px;
   margin: 15px 10px 17px 112px;
   /* background: rgb(23, 170, 181); */
