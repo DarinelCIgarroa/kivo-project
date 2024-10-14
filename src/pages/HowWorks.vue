@@ -324,7 +324,8 @@ function toggleExpand(index, actor) {
 }
 
 .card-detail__step-box {
-  background: #EEE;
+  background: var(--card);
+  /* border: 0.1px solid black; */
   border-radius: 20px;
   cursor: pointer;
   display: flex;

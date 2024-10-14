@@ -2,7 +2,7 @@
   "name": "kivo-project",
   "version": "0.0.1",
   "description": "Kivo es una aplicación web diseñada para simplificar y optimizar los servicios de fletes y mudanzas. Ofrecemos una plataforma integral que conecta a usuarios individuales y empresas con una red de transportistas confiables y verificados.",
-  "productName": "kivo app",
+  "productName": "kivo",
   "author": "Darinel Cigarroa",
   "private": true,
   "scripts": {

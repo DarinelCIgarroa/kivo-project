@@ -22,7 +22,7 @@ const { directionColumn } = toRefs(props);
   min-width: 100%;
   padding: 5px !important;
   border-radius: 20px;
-  background: #EEEE;
+  background: var(--card);
   display: flex;
 }
 

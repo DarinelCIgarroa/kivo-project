@@ -29,6 +29,7 @@
             @click="link = 'home'"
             :active="link === 'home'"
             active-class="my-menu-link"
+            class="q-my-sm"
           >
             <q-item-section avatar>
               <q-icon name="fa-solid fa-house" color="white"></q-icon>
@@ -40,10 +41,27 @@
           <q-item
             clickable
             v-ripple
+            to="client-services"
+            @click="link = 'client-services'"
+            :active="link === 'client-services'"
+            active-class="my-menu-link"
+            class="q-my-sm"
+          >
+            <q-item-section avatar>
+              <q-icon name="fa-solid fa-handshake" color="white"></q-icon>
+            </q-item-section>
+            <q-item-section class="q-drawer__label-item">
+              <q-item-label>Solicitudes de servicio</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item
+            clickable
+            v-ripple
             to="my-profile"
             @click="link = 'my-profile'"
             :active="link === 'my-profile'"
             active-class="q-item-no-link-highlighting my-menu-link"
+            class="q-my-sm"
           >
             <q-item-section avatar>
               <q-icon name="fa-solid fa-user" color="white" />
@@ -53,9 +71,10 @@
             </q-item-section>
           </q-item>
           <q-expansion-item
-            icon="fa-solid fa-box"
+            icon="fa-solid fa-dice-d6"
             label="Servicios"
             header-class="text-white justify-center items-center"
+            class="q-my-sm"
           >
             <q-list class="q-pl-lg">
               <q-item
@@ -66,7 +85,7 @@
                 active-class="q-item-no-link-highlighting text-white my-menu-link"
               >
                 <q-item-section avatar>
-                  <q-icon color="white" name="local_shipping" />
+                  <q-icon color="white" name="fa-solid fa-circle-nodes" />
                 </q-item-section>
                 <q-item-section class="q-drawer__label-item">
                   <q-item-label>Mis servicios</q-item-label>
@@ -81,9 +100,9 @@
             @click="link = 'how-work'"
             :active="link === 'how-work'"
             active-class="q-item-no-link-highlighting my-menu-link"
+            class="q-my-sm"
           >
             <q-item-section avatar>
-              
               <q-icon name="fa-solid fa-shapes" color="white" />
             </q-item-section>
             <q-item-section class="q-drawer__label-item">
@@ -97,10 +116,12 @@
           dense
           round
           unelevated
-          color="accent"
-          icon="chevron_left"
+          color="white"
+          icon="fa-solid fa-circle-chevron-left"
+          size="md"
+          text-color="primary"
           @click="miniState = true"
-        ></q-btn>
+        />
       </div>
     </q-drawer>
 
