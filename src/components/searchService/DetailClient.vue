@@ -1,17 +1,26 @@
 <template>
-  <q-card class="my-card">
+  <q-card class="my-card shadow-15">
     <transition appear enter-active-class="animated zoomIn delay-1s">
       <div v-if="showMainINformation" class="content-img">
-        <q-img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250" class="card-image" />
+        <q-img
+          src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"
+          class="card-image"
+        />
       </div>
     </transition>
     <transition appear enter-active-class="animated zoomIn delay-1s">
       <div v-if="showMainINformation" class="text-content">
         <div class="text-date">26 December 2019</div>
-        <div class="text-title" style="color: var(--primary);">{{ client.name }}</div>
+        <div class="text-title" style="color: var(--primary)">
+          {{ client.name }}
+        </div>
         <q-item-section class="text-description">
           <q-item-label>
-            <q-icon class="q-px-xs iconForm" size="xs" name="my_location"></q-icon>
+            <q-icon
+              class="q-px-xs iconForm"
+              size="xs"
+              name="my_location"
+            ></q-icon>
             <span class="info-span">Origen: </span>
             <span class="q-ml-xs data-span">{{ client.placeOrigin }}</span>
           </q-item-label>
@@ -21,12 +30,16 @@
             <span class="q-ml-xs data-span">{{ client.placeDestination }}</span>
           </q-item-label>
           <q-item-label>
-            <q-icon color="dark" class="q-px-xs" size="xs" name="fa-solid fa-car" />
+            <q-icon
+              color="dark"
+              class="q-px-xs"
+              size="xs"
+              name="fa-solid fa-car"
+            />
             <span class="info-span">Tipo de Transporte: </span>
             <span class="q-ml-xs data-span">{{ client.transport_type }}</span>
           </q-item-label>
-          <div class="changes-tab">
-          </div>
+          <div class="changes-tab"></div>
         </q-item-section>
 
         <q-item-section class="content-price">
@@ -36,9 +49,16 @@
     </transition>
     <transition appear enter-active-class="animated zoomIn delay-1s">
       <div v-if="!showMainINformation" class="text-content-details">
-        <q-chip v-for="(article, index) in client.detailsArticles" :key="index" v-model="cookies" color="grey-4"
-          text-color="dark">
-          <q-avatar color="primary" text-color="white"><span>{{ article.number }}</span></q-avatar>
+        <q-chip
+          v-for="(article, index) in client.detailsArticles"
+          :key="index"
+          v-model="cookies"
+          color="grey-4"
+          text-color="dark"
+        >
+          <q-avatar color="primary" text-color="white"
+            ><span>{{ article.number }}</span></q-avatar
+          >
           <div class="ellipsis">
             <span>{{ article.name }}</span>
           </div>
@@ -46,10 +66,19 @@
       </div>
     </transition>
     <div class="changes-section">
-      <div @click="peopleInformation('mainInformation')" :class="{ active: showMainINformation }">
-      </div>
-      <div @click="peopleInformation('')" :class="{ active: showSecondaryInformation }">
-        <q-tooltip class="bg-grey-4 text-black text-weight-medium" transition-show="scale" transition-hide="scale">
+      <div
+        @click="peopleInformation('mainInformation')"
+        :class="{ active: showMainINformation }"
+      ></div>
+      <div
+        @click="peopleInformation('')"
+        :class="{ active: showSecondaryInformation }"
+      >
+        <q-tooltip
+          class="bg-grey-4 text-black text-weight-medium"
+          transition-show="scale"
+          transition-hide="scale"
+        >
           <span>Lista de articulos</span>
         </q-tooltip>
       </div>
@@ -60,34 +89,33 @@
 <script setup>
 import { ref, toRef } from "vue";
 
-const props = defineProps(['client'])
-const client = toRef(props.client)
+const props = defineProps(["client"]);
+const client = toRef(props.client);
 
 const showMainINformation = ref(true);
 const showSecondaryInformation = ref(false);
 
 const peopleInformation = (section) => {
-  if (section == 'mainInformation') {
-    showMainINformation.value = true
-    showSecondaryInformation.value = false
-    return
+  if (section == "mainInformation") {
+    showMainINformation.value = true;
+    showSecondaryInformation.value = false;
+    return;
   }
-  showMainINformation.value = false
-  showSecondaryInformation.value = true
-  return
-}
+  showMainINformation.value = false;
+  showSecondaryInformation.value = true;
+  return;
+};
 </script>
 
 <style>
 .my-card {
   display: flex;
-  width: 40%;
+  width: 80%;
   padding: 20px 0px 20px 0px;
   margin: 15px 10px 17px 112px;
   /* background: rgb(23, 170, 181); */
   border-radius: 20px;
   height: 20em;
-  max-height: 18em;
 }
 
 .content-img {
@@ -100,7 +128,7 @@ const peopleInformation = (section) => {
 }
 
 .content-img:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -148,8 +176,8 @@ const peopleInformation = (section) => {
 }
 
 .text-title {
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 1.2rem;
+  /* font-weight: bold; */
   margin-bottom: 10px;
 }
 
@@ -216,5 +244,35 @@ const peopleInformation = (section) => {
 
 .q-chip span {
   font-size: 13px;
+}
+@media (max-width: 1300px) {
+  .content-img {
+    position: relative;
+    width: 40%;
+    height: auto;
+    flex-shrink: 0;
+    /* background: palegreen; */
+    transform: translateX(0px);
+  }
+  .text-content {
+    padding: 18px;
+  }
+  .my-card {
+    height: 100%;
+    width: 90%;
+    margin: 12px;
+    padding: 0px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background: red; */
+  }
+  .text-title {
+    font-size: 1.1rem;
+  }
+
+  .changes-section {
+    flex-direction: initial;
+  }
 }
 </style>
