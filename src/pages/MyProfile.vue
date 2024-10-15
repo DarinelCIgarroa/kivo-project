@@ -68,7 +68,7 @@ const openFormVehicle = () => {
     "vehicleInformation"
     "informationIncome";
   gap: 10px;
-  padding: 30px;
+  padding: 0px;
 }
 
 .profile__container__section {
@@ -101,7 +101,6 @@ const openFormVehicle = () => {
       "aditionalInformation"
       "vehicleInformation"
       "informationIncome";
-      padding: 5px;
   }
 }
 @media (min-width: 768px) {
@@ -111,7 +110,6 @@ const openFormVehicle = () => {
       "basicInformation aditionalInformation"
       "vehicleInformation informationIncome";
     grid-template-rows: auto auto;
-    padding: 5px;
   }
 }
 </style>
