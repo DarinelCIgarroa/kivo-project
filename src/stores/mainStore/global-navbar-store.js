@@ -11,8 +11,21 @@ export const useNavbarStore = defineStore("clienteDetail", {
       this.activeFormLogin = !this.activeFormLogin;
     },
     toggleDrawerLeft() {
-      console.log(" toggleDrawerLeft");
       this.drawerLeft = !this.drawerLeft;
+    },
+  },
+});
+
+export const useDrawerStore = defineStore('drawer', {
+  state: () => ({
+    isMiniDrawer: false,
+  }),
+  actions: {
+    miniDrawer() {
+      this.isMiniDrawer = true;
+    },
+    drawerClick() {
+      this.isMiniDrawer = false;
     },
   },
 });

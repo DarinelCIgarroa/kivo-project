@@ -15,29 +15,37 @@
           {{ client.name }}
         </div>
         <q-item-section class="text-description">
-          <q-item-label>
+          <q-item-label class="row">
             <q-icon
               class="q-px-xs iconForm"
               size="xs"
               name="my_location"
             ></q-icon>
-            <span class="info-span">Origen: </span>
-            <span class="q-ml-xs data-span">{{ client.placeOrigin }}</span>
+            <div class="info">
+              <span class="info-span">Origen: </span>
+              <span class="q-ml-xs data-span">{{ client.placeOrigin }}</span>
+            </div>
           </q-item-label>
-          <q-item-label>
+          <q-item-label class="row">
             <q-icon class="q-px-xs iconForm" size="xs" name="place"></q-icon>
-            <span class="info-span">Destino: </span>
-            <span class="q-ml-xs data-span">{{ client.placeDestination }}</span>
+            <div class="info">
+              <span class="info-span">Destino: </span>
+              <span class="q-ml-xs data-span">{{
+                client.placeDestination
+              }}</span>
+            </div>
           </q-item-label>
-          <q-item-label>
+          <q-item-label class="row">
             <q-icon
               color="dark"
               class="q-px-xs"
               size="xs"
               name="fa-solid fa-car"
             />
-            <span class="info-span">Tipo de Transporte: </span>
-            <span class="q-ml-xs data-span">{{ client.transport_type }}</span>
+            <div class="info">
+              <span class="info-span">Tipo de Transporte: </span>
+              <span class="q-ml-xs data-span">{{ client.transport_type }}</span>
+            </div>
           </q-item-label>
           <div class="changes-tab"></div>
         </q-item-section>
@@ -245,13 +253,21 @@ const peopleInformation = (section) => {
 .q-chip span {
   font-size: 13px;
 }
+@media (max-width: 768px) {
+  .q-item__label .info {
+    display: flex;
+    flex-direction: column;
+  }
+  .info-span {
+    margin: 3px;
+  }
+  .data-span {
+    margin: 3px;
+  }
+}
 @media (max-width: 1300px) {
   .content-img {
-    position: relative;
     width: 40%;
-    height: auto;
-    flex-shrink: 0;
-    /* background: palegreen; */
     transform: translateX(0px);
   }
   .text-content {

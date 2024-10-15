@@ -11,7 +11,7 @@
           :offset="50"
           :scroll-target="scrollArea"
         >
-          <div class="content-card">
+        <div class="content-card">
             <DetailClient
               v-for="client in clients"
               :key="client.id"
@@ -163,7 +163,6 @@ const clients = ref([
     })),
   },
 ]);
-
 const scrollArea = ref(null);
 
 const onLoad = (index, done) => {
@@ -219,7 +218,7 @@ const onLoad = (index, done) => {
 
 <style scoped>
 .data-client-detail {
-  max-height: 90.6vh;
+  /* max-height: 90.6vh; */
   width: 100%;
   overflow: auto;
   scrollbar-width: thin;
@@ -257,7 +256,12 @@ const onLoad = (index, done) => {
     grid-template-columns: 1fr;
     justify-items: center;
     justify-content: center;
-    /* flex-direction: column; */
+    gap: 10px;
+  }
+}
+@media (max-width: 1300px) {
+  .content-card {
+    gap: 40px;
   }
 }
 

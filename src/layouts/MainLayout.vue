@@ -1,33 +1,49 @@
 <template>
   <q-layout view="hHh Lpr lff" container style="height: 100vh" class="shadow-2">
+    <q-header class="drawer">
+      <q-toolbar class="row items-center justify-between q-gutter-sm">
+        <!-- Imagen alineada a la izquierda -->
+        <div>
+          <img
+            v-if="!drawerOpen && $q.screen.lt.md"
+            :src="myIcon"
+            class="logoSmall"
+            :to="{ name: 'home' }"
+          />
+        </div>
+
+        <!-- Botón de menú alineado a la derecha -->
+        <q-btn
+          flat
+          dense
+          round
+          icon="fa-solid fa-bars"
+          @click="drawer = !drawer"
+        />
+      </q-toolbar>
+    </q-header>
     <q-drawer
       v-model="drawer"
-      show-if-above
-      :mini="!drawer || miniState"
+      :mini="!drawer || drawerStore.isMiniDrawer"
       @click.capture="drawerClick"
       transition-show="slide-right"
       transition-hide="slide-left"
-      :breakpoint="500"
+      transition-duration="900" 
+      :breakpoint="768"
       class="drawer"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
         <q-list padding active-class="text-white">
-          <q-item
-            clickable
-            v-ripple
-            @click="link = 'home'"
-            class="justify-center items-center"
-          >
+          <q-item clickable v-ripple class="justify-center items-center">
             <q-item-section avatar>
-              <img :src="myIcon" :class="miniState ? 'logoSmall' : 'logo'" />
+              <img :src="myIcon" :class="drawer ? 'logoSmall' : 'logo'" />
             </q-item-section>
           </q-item>
           <q-item
             clickable
             v-ripple
-            to="home"
-            @click="link = 'home'"
-            :active="link === 'home'"
+            :to="{ name: 'home' }"
+            :active="$route.name === 'home'"
             active-class="my-menu-link"
             class="q-my-sm"
           >
@@ -41,9 +57,8 @@
           <q-item
             clickable
             v-ripple
-            to="client-services"
-            @click="link = 'client-services'"
-            :active="link === 'client-services'"
+            :to="{ name: 'client-services' }"
+            :active="$route.name === 'client-services'"
             active-class="my-menu-link"
             class="q-my-sm"
           >
@@ -57,9 +72,8 @@
           <q-item
             clickable
             v-ripple
-            to="my-profile"
-            @click="link = 'my-profile'"
-            :active="link === 'my-profile'"
+            :to="{ name: 'my-profile' }"
+            :active="$route.name === 'my-profile'"
             active-class="q-item-no-link-highlighting my-menu-link"
             class="q-my-sm"
           >
@@ -80,8 +94,8 @@
               <q-item
                 clickable
                 v-ripple
-                @click="link = 'my-service'"
-                :active="link === 'my-service'"
+                :to="{ name: 'my-services' }"
+                :active="$route.name === 'my-services'"
                 active-class="q-item-no-link-highlighting text-white my-menu-link"
               >
                 <q-item-section avatar>
@@ -96,9 +110,8 @@
           <q-item
             clickable
             v-ripple
-            to="how-work"
-            @click="link = 'how-work'"
-            :active="link === 'how-work'"
+            :to="{ name: 'how-work' }"
+            :active="$route.name === 'how-work'"
             active-class="q-item-no-link-highlighting my-menu-link"
             class="q-my-sm"
           >
@@ -120,7 +133,7 @@
           icon="fa-solid fa-circle-chevron-left"
           size="md"
           text-color="primary"
-          @click="miniState = true"
+          @click="miniDrawer"
         />
       </div>
     </q-drawer>
@@ -136,16 +149,17 @@
 <script setup>
 import { ref } from "vue";
 import myIcon from "@/assets/logo-kivo.svg";
+import { useDrawerStore } from "@/stores/mainStore/global-navbar-store";
 
+const drawerStore = useDrawerStore();
 const drawer = ref(false);
-const miniState = ref(false);
-const link = ref("home");
 
-const drawerClick = (e) => {
-  if (miniState.value) {
-    miniState.value = false;
-    e.stopPropagation();
-  }
+const miniDrawer = () => {
+  drawerStore.miniDrawer();
+};
+
+const drawerClick = () => {
+  drawerStore.drawerClick();
 };
 </script>
 
@@ -176,17 +190,15 @@ body {
 }
 .drawer {
   background: #293041;
+  transition: transform 0.8s ease-in-out;
 }
-.test {
-  /* background-color: aquamarine; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
+.q-drawer {
+  background: #293041;
+  transition: transform 0.9s ease-in-out; /* Ajuste de tiempo de transición */
 }
-@media (max-width: 1400px) {
+/* @media (max-width: 1400px) {
   .q-drawer--standard {
     width: 250px !important;
   }
-}
+} */
 </style>
