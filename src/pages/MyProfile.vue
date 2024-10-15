@@ -101,6 +101,7 @@ const openFormVehicle = () => {
       "aditionalInformation"
       "vehicleInformation"
       "informationIncome";
+      padding: 5px;
   }
 }
 @media (min-width: 768px) {
@@ -110,6 +111,7 @@ const openFormVehicle = () => {
       "basicInformation aditionalInformation"
       "vehicleInformation informationIncome";
     grid-template-rows: auto auto;
+    padding: 5px;
   }
 }
 </style>
