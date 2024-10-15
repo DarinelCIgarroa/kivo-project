@@ -1,44 +1,63 @@
 <template>
-  <q-card-section class="col-md-5 col-xs-12 q-py-sm card__content-avatar">
-    <q-img class="card__img"
-      src="https://fastly.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg"></q-img>
-  </q-card-section>
-  <q-card-section class="col-md-7 col-xs-12 card__info">
-    <div class="card__header-info">
-      <span class="text-h5 q-ml-xs q-my-sm">Información básica</span>
-      <q-icon @click="openForm" class="card__icon" color="primary" size="1.5em"
-        name="fa-solid fa-pen-to-square"></q-icon>
-    </div>
-    <div class="card__data">
-      <div class="card__data-title"><span class="text-weight-bold">Nombre:</span></div>
-      <div class="card__data-value"><span>Darinel</span></div>
-    </div>
-    <q-separator></q-separator>
-    <div class="card__data">
-      <div class="card__data-title"><span class="text-weight-bold">Apellidos:</span></div>
-      <div class="card__data-value"><span>Cigarroa de Los Santos</span></div>
-    </div>
-    <q-separator></q-separator>
-    <div class="card__data">
-      <div class="card__data-title"><span class="text-weight-bold">Número:</span></div>
-      <div class="card__data-value"><span>9612365046</span></div>
-    </div>
-    <q-separator></q-separator>
-    <div class="card__data">
-      <div class="card__data-title"><span class="text-weight-bold">Dirección:</span></div>
-      <div class="card__data-value">
-        <span>San Victorio 13, Pedregal de Sta Úrsula, Coyoacán, 04600 Ciudad de México, CDMX</span>
+  <div>
+    <q-card-section class="col-md-5 col-xs-12 q-py-sm card__content-avatar">
+      <q-img
+        class="card__img"
+        src="https://fastly.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg"
+      ></q-img>
+    </q-card-section>
+    <q-card-section class="col-md-7 col-xs-12 card__info">
+      <div class="card__header-info">
+        <span class="text-h5 q-ml-xs q-my-sm">Información básica</span>
+        <q-icon
+          @click="openForm"
+          class="card__icon"
+          color="primary"
+          size="1.5em"
+          name="fa-solid fa-pen-to-square"
+        ></q-icon>
       </div>
-    </div>
-    <q-separator></q-separator>
-  </q-card-section>
+      <div class="card__data">
+        <div class="card__data-title">
+          <span class="text-weight-bold">Nombre:</span>
+        </div>
+        <div class="card__data-value"><span>Darinel</span></div>
+      </div>
+      <q-separator></q-separator>
+      <div class="card__data">
+        <div class="card__data-title">
+          <span class="text-weight-bold">Apellidos:</span>
+        </div>
+        <div class="card__data-value"><span>Cigarroa de Los Santos</span></div>
+      </div>
+      <q-separator></q-separator>
+      <div class="card__data">
+        <div class="card__data-title">
+          <span class="text-weight-bold">Número:</span>
+        </div>
+        <div class="card__data-value"><span>9612365046</span></div>
+      </div>
+      <q-separator></q-separator>
+      <div class="card__data">
+        <div class="card__data-title">
+          <span class="text-weight-bold">Dirección:</span>
+        </div>
+        <div class="card__data-value">
+          <span
+            >San Victorio 13, Pedregal de Sta Úrsula, Coyoacán, 04600 Ciudad de
+            México, CDMX</span
+          >
+        </div>
+      </div>
+    </q-card-section>
+  </div>
 </template>
 <script setup>
-const emit = defineEmits(['openForm'])
+const emit = defineEmits(["openForm"]);
 
 const openForm = () => {
-  emit('openForm')
-}
+  emit("openForm");
+};
 </script>
 <style scoped>
 .card__img {

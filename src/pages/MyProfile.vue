@@ -59,11 +59,14 @@ const openFormVehicle = () => {
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-columns: calc((100% - 20px) * 0.5) calc((100% - 20px) * 0.5);
-  grid-template-rows: auto auto;
+  /* grid-template-columns: calc((100% - 20px) * 0.5) calc((100% - 20px) * 0.5); */
+  grid-template-columns: 100%;
+  grid-template-rows: auto;
   grid-template-areas:
-    "basicInformation aditionalInformation"
-    "vehicleInformation informationIncome";
+    "basicInformation"
+    "aditionalInformation"
+    "vehicleInformation"
+    "informationIncome";
   gap: 10px;
   padding: 30px;
 }
@@ -91,9 +94,8 @@ const openFormVehicle = () => {
   grid-area: informationIncome;
 }
 
-@media (max-width: 899px) {
+@media (min-width: 576px) {
   .profile-container {
-    grid-template-columns: 50%;
     grid-template-areas:
       "basicInformation"
       "aditionalInformation"
@@ -101,25 +103,13 @@ const openFormVehicle = () => {
       "informationIncome";
   }
 }
-
-@media (max-width: 900px) {
+@media (min-width: 768px) {
   .profile-container {
-    grid-template-columns: 49%;
+    grid-template-columns: calc((100% - 20px) * 0.5) calc((100% - 20px) * 0.5);
     grid-template-areas:
       "basicInformation aditionalInformation"
       "vehicleInformation informationIncome";
+    grid-template-rows: auto auto;
   }
 }
-
-/*
-@media (min-width: 601px) and (max-width: 899px) {
-  .profile-container {
-    grid-template-columns: 100%;
-    grid-template-areas:
-      "basicInformation"
-      "aditionalInformation"
-      "vehicleInformation"
-      "informationIncome";
-  }
-} */
 </style>
