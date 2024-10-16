@@ -229,7 +229,7 @@ const onLoad = (index, done) => {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    padding: 10px;
+    padding: 5px;
 }
 
 .scroll-indicator {
