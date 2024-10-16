@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <q-card
+    class="card row"
+    flat
+    bordered
+  >
     <q-card-section class="col-md-5 col-xs-12 q-py-sm card__content-avatar">
       <q-img
         class="card__img"
@@ -50,7 +54,7 @@
         </div>
       </div>
     </q-card-section>
-  </div>
+  </q-card>
 </template>
 <script setup>
 const emit = defineEmits(["openForm"]);
