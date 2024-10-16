@@ -28,12 +28,8 @@
       @click.capture="drawerClick"
       transition-show="slide-right"
       transition-hide="slide-left"
-<<<<<<< Updated upstream
-      :breakpoint="500"
-=======
       transition-duration="900"
       :breakpoint="768"
->>>>>>> Stashed changes
       class="drawer"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
