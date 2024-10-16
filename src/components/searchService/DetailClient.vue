@@ -50,8 +50,16 @@
           <div class="changes-tab"></div>
         </q-item-section>
 
-        <q-item-section class="content-price">
-          <span class="price-span data-span">$ {{ client.price }}</span>
+        <q-item-section
+          class="row no-wrap justify-between items-center"
+          style="padding: 10px; flex-direction: initial"
+        >
+          <div class="price-section">
+            <span class="price-span data-span">$ {{ client.price }}</span>
+          </div>
+          <div class="button-section">
+            <q-btn color="primary" outline rounded label="Aceptar" />
+          </div>
         </q-item-section>
       </div>
     </transition>
@@ -116,16 +124,22 @@ const peopleInformation = (section) => {
 </script>
 
 <style>
-.my-card {
+/* .my-card {
   display: flex;
   width: 80%;
   padding: 20px 0px 20px 0px;
   margin: 15px 10px 17px 112px;
-  /* background: rgb(23, 170, 181); */
+  border-radius: 20px;
+  height: 20em;
+} */
+.my-card {
+  display: flex;
+  width: 80%;
+  padding: 20px 0px 36px 0px;
+  margin: 20px 0px 15px 110px;
   border-radius: 20px;
   height: 20em;
 }
-
 .content-img {
   position: relative;
   width: 29%;
@@ -207,8 +221,16 @@ const peopleInformation = (section) => {
   font-weight: bold;
   color: var(--dark);
 }
+.price-section {
+  flex: 1;
+  text-align: left;
+}
 
-.content-price {
+.button-section {
+  text-align: right;
+}
+
+/* .content-price {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -217,11 +239,15 @@ const peopleInformation = (section) => {
   border-radius: 10px;
   padding: 12px;
   margin: 10px 0 0 6px;
-}
+} */
 
-.content-price .price-span {
+.price-span {
+  border-radius: 10px;
+  margin: 10px 0 0 6px;
+  background: var(--secondaryLight);
   color: var(--letter);
-  font-size: 1.2em;
+  font-size: 1.5em;
+  padding: 10px;
 }
 
 .changes-section {
