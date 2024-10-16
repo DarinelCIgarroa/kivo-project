@@ -28,15 +28,17 @@
       @click.capture="drawerClick"
       transition-show="slide-right"
       transition-hide="slide-left"
-      transition-duration="900" 
-      :breakpoint="768"
+      :breakpoint="500"
       class="drawer"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
         <q-list padding active-class="text-white">
           <q-item clickable v-ripple class="justify-center items-center">
             <q-item-section avatar>
-              <img :src="myIcon" :class="drawer ? 'logoSmall' : 'logo'" />
+              <img
+                :src="myIcon"
+                :class="drawerStore.isMiniDrawer ? 'logoSmall' : 'logo'"
+              />
             </q-item-section>
           </q-item>
           <q-item
@@ -152,7 +154,7 @@ import myIcon from "@/assets/logo-kivo.svg";
 import { useDrawerStore } from "@/stores/mainStore/global-navbar-store";
 
 const drawerStore = useDrawerStore();
-const drawer = ref(false);
+const drawer = ref(true);
 
 const miniDrawer = () => {
   drawerStore.miniDrawer();
@@ -167,10 +169,11 @@ const drawerClick = () => {
 body {
   font-family: "FontDefault", sans-serif;
 }
+
 .logo {
-  width: 100px;
-  height: 100px;
-  transition: width 0.5s ease, height 0.7s ease; /* Transición suave */
+  width: 110px;
+  height: 110px;
+  transition: width 0.6s ease, height 0.6s ease; /* Transición suave */
 }
 
 .logoSmall {
@@ -186,19 +189,16 @@ body {
 
 .my-menu-link {
   color: white;
-  background: #474c5b;
+  background: #293041;
+}
+
+.q-drawer {
+  transition: width 6s ease;
+  transition: padding 6s ease-in-out;
 }
 .drawer {
   background: #293041;
-  transition: transform 0.8s ease-in-out;
+  transition: width 6s ease-in-out;
+  transition: padding 6s ease-in-out;
 }
-.q-drawer {
-  background: #293041;
-  transition: transform 0.9s ease-in-out; /* Ajuste de tiempo de transición */
-}
-/* @media (max-width: 1400px) {
-  .q-drawer--standard {
-    width: 250px !important;
-  }
-} */
 </style>

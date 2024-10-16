@@ -1,23 +1,19 @@
 <template>
   <q-page class="row col-12">
-    <div class="profile-container">
+    <div
+      :class="[
+        'profile-container',
+        { 'profile-container-mini': !isMiniDrawer },
+      ]"
+    >
       <div class="profile__container__section basic-information">
-        <CustomCardProfile>
-          <BasicInformation
-            @open-form="openFormDataBasic"
-            :editForm="true"
-          ></BasicInformation>
-        </CustomCardProfile>
+        <BasicInformation @open-form="openFormDataBasic"></BasicInformation>
       </div>
       <div class="profile__container__section aditional-iformation">
-        <CustomCardProfile :directionColumn="true">
-          <AditionalInformation></AditionalInformation>
-        </CustomCardProfile>
+        <AditionalInformation></AditionalInformation>
       </div>
       <div class="profile__container__section vehicle-information">
-        <CustomCardProfile :editForm="true">
-          <VehicleInformation @open-form="openFormVehicle"></VehicleInformation>
-        </CustomCardProfile>
+        <VehicleInformation @open-form="openFormVehicle"></VehicleInformation>
       </div>
       <div class="profile__container__section information-income">
         <CustomCardProfile :directionColumn="true">
@@ -37,13 +33,19 @@ import BasicInformation from "@/components/myProfile/BasicInformation.vue";
 import AditionalInformation from "@/components/myProfile/AditionalInformation.vue";
 import VehicleInformation from "@/components/myProfile/VehicleInformation.vue";
 import InformationIncome from "@/components/myProfile/InformationIncome.vue";
-import CustomCardProfile from "../components/myProfile/utils/CustomCardProfile.vue";
-import FormBasicInformation from "../components/myProfile/utils/FormBasicInformation.vue";
-import FormVehicleInformation from "../components/myProfile/utils/FormVehicleInformation.vue";
-import { ref } from "vue";
+import CustomCardProfile from "@/components/myProfile/utils/CustomCardProfile.vue";
+import FormBasicInformation from "@/components/myProfile/utils/FormBasicInformation.vue";
+import FormVehicleInformation from "@/components/myProfile/utils/FormVehicleInformation.vue";
+import { useDrawerStore } from "@/stores/mainStore/global-navbar-store.js";
+import { ref, computed } from "vue";
 
 const showFormDataBasic = ref(false);
 const showFormVehicleInformation = ref(false);
+const store = useDrawerStore();
+
+const isMiniDrawer = computed(() => {
+  return store.isMiniDrawer;
+});
 
 const openFormDataBasic = () => {
   showFormDataBasic.value = true;
@@ -69,6 +71,14 @@ const openFormVehicle = () => {
     "informationIncome";
   gap: 10px;
   padding: 0px;
+}
+.card {
+  height: 100%;
+  min-width: 100%;
+  padding: 30px !important;
+  border-radius: 20px;
+  background: var(--card);
+  display: flex;
 }
 
 .profile__container__section {
@@ -103,13 +113,25 @@ const openFormVehicle = () => {
       "informationIncome";
   }
 }
+/* Estilo para pantallas grandes */
 @media (min-width: 768px) {
   .profile-container {
-    grid-template-columns: calc((100% - 20px) * 0.5) calc((100% - 20px) * 0.5);
+    grid-template-columns: 1fr 1fr; /* Dos columnas, cada una ocupando el 50% del ancho */
+    grid-template-rows: auto auto; /* Dos filas automáticas */
     grid-template-areas:
       "basicInformation aditionalInformation"
       "vehicleInformation informationIncome";
-    grid-template-rows: auto auto;
+  }
+}
+@media (min-width: 768px) and (max-width: 1360px) {
+  .profile-container-mini {
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "basicInformation"
+      "aditionalInformation"
+      "vehicleInformation"
+      "informationIncome";
   }
 }
 </style>
