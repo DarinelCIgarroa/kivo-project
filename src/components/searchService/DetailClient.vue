@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card shadow-11">
+  <q-card class="my-card shadow-7">
     <transition appear enter-active-class="animated zoomIn delay-1s">
       <div v-if="showMainINformation" class="content-img">
         <q-img
