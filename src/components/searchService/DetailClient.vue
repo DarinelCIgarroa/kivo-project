@@ -118,7 +118,7 @@ const peopleInformation = (section) => {
 <style>
 .my-card {
   display: flex;
-  width: 75%;
+  width: 80%;
   padding: 20px 0px 20px 0px;
   margin: 15px 10px 17px 112px;
   /* background: rgb(23, 170, 181); */
@@ -254,6 +254,9 @@ const peopleInformation = (section) => {
   font-size: 13px;
 }
 @media (max-width: 768px) {
+  .my-card {
+    width: 100%;
+  }
   .q-item__label .info {
     display: flex;
     flex-direction: column;
