@@ -230,17 +230,6 @@ const peopleInformation = (section) => {
   text-align: right;
 }
 
-/* .content-price {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--secondaryLight);
-  width: 30%;
-  border-radius: 10px;
-  padding: 12px;
-  margin: 10px 0 0 6px;
-} */
-
 .price-span {
   border-radius: 10px;
   margin: 10px 0 0 6px;
@@ -279,32 +268,33 @@ const peopleInformation = (section) => {
 .q-chip span {
   font-size: 13px;
 }
-@media (max-width: 768px) {
-  .my-card {
-    width: 100%;
-  }
+
+@media (max-width: 1300px) {
   .q-item__label .info {
     display: flex;
     flex-direction: column;
   }
+
   .info-span {
     margin: 3px;
   }
+
   .data-span {
     margin: 3px;
   }
-}
-@media (max-width: 1300px) {
+
   .content-img {
     width: 40%;
     transform: translateX(0px);
   }
+
   .text-content {
     padding: 18px;
   }
+
   .my-card {
     height: 100%;
-    width: 90%;
+    width: 100%;
     margin: 12px;
     padding: 0px;
     flex-direction: column;
@@ -312,6 +302,7 @@ const peopleInformation = (section) => {
     align-items: center;
     /* background: red; */
   }
+
   .text-title {
     font-size: 1.1rem;
   }
