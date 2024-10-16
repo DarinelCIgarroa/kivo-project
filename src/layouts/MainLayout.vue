@@ -28,7 +28,12 @@
       @click.capture="drawerClick"
       transition-show="slide-right"
       transition-hide="slide-left"
+<<<<<<< Updated upstream
       :breakpoint="500"
+=======
+      transition-duration="900"
+      :breakpoint="768"
+>>>>>>> Stashed changes
       class="drawer"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
@@ -177,8 +182,8 @@ body {
 }
 
 .logoSmall {
-  width: 65px;
-  height: 65px;
+  width: 50px;
+  height: 50px;
   transition: width 0.5s ease, height 0.7s ease; /* Transición suave */
 }
 
