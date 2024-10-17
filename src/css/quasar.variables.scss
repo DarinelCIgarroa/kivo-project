@@ -11,11 +11,13 @@
   --negative: #ff0000; /* Rojo */
   --info: #fffdd0; /* Crema */
   --oro: #d4af37; /* Oro */
+  --gold: #b0832a; /* Oro */
   --warning: #ffff00; /* Naranja */
   --letter: #fff;
   --homeText: #000;
-  --card: #FFFFFF;
-  --general: #F3F3F7;
+  --card: #fff;
+  // --general: #eaeaec;
+  --general: #f3f3f7;
   --drawer: #293041;
 }
 
@@ -31,4 +33,5 @@ $info: #fffdd0; /* Azul */
 $oro: #d4af37; /* Oro */
 $warning: #ffff00; /* Amarillo */
 $letter: #fff;
-$card: #FFFFFF;
+$card: #ffffff;
+$gold: #b0832a; /* Oro */
