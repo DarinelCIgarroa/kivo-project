@@ -502,7 +502,7 @@ function toggleExpand(index, actor) {
   }
 
   .card-detail__details {
-    font-size: 12px !important;
+    font-size: 17px !important;
   }
 
   .card-detail__list__detail {
@@ -554,7 +554,7 @@ function toggleExpand(index, actor) {
 
   .card-detail__img {
     position: relative;
-    width: 25%;
+    width: 30%;
     left: 0;
     top: 20px;
   }
