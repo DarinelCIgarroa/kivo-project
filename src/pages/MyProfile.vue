@@ -74,7 +74,7 @@ const openFormVehicle = () => {
 .card {
   height: 100%;
   min-width: 100%;
-  padding: 30px !important;
+  padding: 10px;
   border-radius: 20px;
   background: var(--card);
   border: 0.1px solid #d6d6d6e1;
@@ -112,6 +112,9 @@ const openFormVehicle = () => {
       "vehicleInformation"
       "informationIncome";
   }
+  .card {
+    padding: 0px;
+  }
 }
 /* Estilo para pantallas grandes */
 @media (min-width: 768px) {
@@ -121,6 +124,9 @@ const openFormVehicle = () => {
     grid-template-areas:
       "basicInformation aditionalInformation"
       "vehicleInformation informationIncome";
+  }
+  .card {
+    padding: 10px;
   }
 }
 @media (min-width: 768px) and (max-width: 1360px) {
