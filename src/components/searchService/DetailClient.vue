@@ -58,7 +58,7 @@
             <span class="price-span data-span">$ {{ client.price }}</span>
           </div>
           <div class="button-section">
-            <q-btn color="primary" outline  label="Aceptar" />
+            <q-btn color="primary" outline rounded label="Aceptar" />
           </div>
         </q-item-section>
       </div>
@@ -231,13 +231,13 @@ const peopleInformation = (section) => {
 }
 
 .price-span {
-  border-radius: 10px;
-  margin: 10px 0 0 6px;
-  background: rgba(4, 111, 96, 0.69);;
-  /* background: var(--secondaryLight); */
+  border-radius: 28px;
+  margin: 10px 0 0 6px !important;
+  /* background: rgba(4, 111, 96, 0.69); */
+  background: var(--secondaryLight);
   color: var(--letter);
-  font-size: 1.5em;
-  padding: 10px;
+  font-size: 1.3em;
+  padding: 10px 20px;
 }
 
 .changes-section {
@@ -303,7 +303,7 @@ const peopleInformation = (section) => {
     align-items: center;
     /* background: red; */
   }
- 
+
   .text-title {
     font-size: 1.1rem;
   }
