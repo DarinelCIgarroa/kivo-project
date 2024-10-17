@@ -233,8 +233,8 @@ const peopleInformation = (section) => {
 .price-span {
   border-radius: 28px;
   margin: 10px 0 0 6px !important;
-  /* background: rgba(4, 111, 96, 0.69); */
-  background: var(--secondaryLight);
+  background: rgba(4, 111, 96, 0.69);
+  /* background: var(--secondaryLight); */
   color: var(--letter);
   font-size: 1.3em;
   padding: 10px 20px;
