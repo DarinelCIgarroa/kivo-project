@@ -58,7 +58,7 @@
             <span class="price-span data-span">$ {{ client.price }}</span>
           </div>
           <div class="button-section">
-            <q-btn color="primary" outline rounded label="Aceptar" />
+            <q-btn color="primary" outline  label="Aceptar" />
           </div>
         </q-item-section>
       </div>
@@ -233,7 +233,8 @@ const peopleInformation = (section) => {
 .price-span {
   border-radius: 10px;
   margin: 10px 0 0 6px;
-  background: var(--secondaryLight);
+  background: rgba(4, 111, 96, 0.69);;
+  /* background: var(--secondaryLight); */
   color: var(--letter);
   font-size: 1.5em;
   padding: 10px;
@@ -294,15 +295,15 @@ const peopleInformation = (section) => {
 
   .my-card {
     height: 100%;
-    width: 100%;
-    margin: 12px;
+    width: 95%;
+    margin: 5px;
     padding: 0px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     /* background: red; */
   }
-
+ 
   .text-title {
     font-size: 1.1rem;
   }
