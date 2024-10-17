@@ -1,25 +1,42 @@
 <template>
   <q-page class="row col-12">
-    <transition appear enter-active-class="animated zoomIn slower delay-1s " leave-active-class="animated fadeOut">
+    <transition
+      appear
+      enter-active-class="animated zoomIn slower delay-1s "
+      leave-active-class="animated fadeOut"
+    >
       <div class="how-works">
         <div class="how-works__select-information col-12">
-          <q-tabs v-model="tab" indicator-color="transparent" active-color="white"
-            class="bg-primary text-grey-5 shadow-3">
+          <q-tabs
+            v-model="tab"
+            indicator-color="transparent"
+            active-color="white"
+            class="bg-primary text-grey-5 shadow-3"
+          >
             <q-tab name="clientUser" label="Quiero un servicio"></q-tab>
             <q-tab name="serviceProvider" label="Quiero ser conductor"></q-tab>
           </q-tabs>
         </div>
-        <q-tab-panels v-model="tab" animated transition-prev="scale" transition-next="scale">
+        <q-tab-panels
+          v-model="tab"
+          animated
+          transition-prev="scale"
+          transition-next="scale"
+        >
           <q-tab-panel name="clientUser">
-            <div v-for="(step, index) in stepsClient" :key="index" class="card-detail__step-box"
-              @click="toggleExpand(index, 'client')">
+            <div
+              v-for="(step, index) in stepsClient"
+              :key="index"
+              class="card-detail__step-box"
+              @click="toggleExpand(index, 'client')"
+            >
               <div class="card-detail__avatar">
                 <q-avatar>
-                  <img :src="step.img" class="avatar-img">
+                  <img :src="step.img" class="avatar-img" />
                 </q-avatar>
               </div>
 
-              <div class="how-works__original-step" style="text-align: center;">
+              <div class="how-works__original-step" style="text-align: center">
                 <span class="text-weight-bold">{{ step.step }}</span>
                 <span>{{ step.title }}</span>
                 <span>{{ step.subtitle }}</span>
@@ -27,14 +44,18 @@
             </div>
           </q-tab-panel>
           <q-tab-panel name="serviceProvider">
-            <div v-for="(step, index) in stepsServiceProvider" :key="index" class="card-detail__step-box"
-              @click="toggleExpand(index, 'provider')">
+            <div
+              v-for="(step, index) in stepsServiceProvider"
+              :key="index"
+              class="card-detail__step-box"
+              @click="toggleExpand(index, 'provider')"
+            >
               <div class="card-detail__avatar">
                 <q-avatar>
-                  <img :src="step.img" class="avatar-img">
+                  <img :src="step.img" class="avatar-img" />
                 </q-avatar>
               </div>
-              <div class="how-works__original-step" style="text-align: center;">
+              <div class="how-works__original-step" style="text-align: center">
                 <span class="text-weight-bold">{{ step.step }}</span>
                 <span>{{ step.title }}</span>
                 <span>{{ step.subtitle }}</span>
@@ -44,30 +65,60 @@
         </q-tab-panels>
       </div>
     </transition>
-    <q-dialog v-model="isDialogOpen" backdrop-filter="blur(5px) saturate(130%)" transition-show="rotate"
-      transition-hide="rotate" persistent>
+    <q-dialog
+      v-model="isDialogOpen"
+      backdrop-filter="blur(5px)"
+      transition-show="rotate"
+      transition-hide="rotate"
+      persistent
+    >
       <q-card class="card-detail no-shadow">
         <q-card-section class="card-detail__section">
-          <img :src="selectedStep.img" class="card-detail__img">
+          <img :src="selectedStep.img" class="card-detail__img" />
           <div class="card-detail__steps">
             <div class="card-detail__info">
-              <div class="flex justify-end" style="width: 100%;">
-                <q-icon class="card-detail__circle-xmark" name="fa-solid fa-circle-xmark" color="dark" size="1.4rem"
-                  @click="isDialogOpen = !isDialogOpen" style="cursor: pointer;"></q-icon>
+              <div class="flex justify-end" style="width: 100%">
+                <q-icon
+                  class="card-detail__circle-xmark"
+                  name="fa-solid fa-circle-xmark"
+                  color="dark"
+                  size="1.4rem"
+                  @click="isDialogOpen = !isDialogOpen"
+                  style="cursor: pointer"
+                ></q-icon>
               </div>
               <div class="card-detail__title text-center">
-                <span class="text-weight-bolder" style="font-size: 1.1em;">{{ selectedStep.title }}</span>
+                <span class="text-weight-bolder" style="font-size: 1.1em">{{
+                  selectedStep.title
+                }}</span>
               </div>
               <div>
-                <span class="card-detail__subtitle text-weight-bold" style="font-size: 0.9em;">{{ selectedStep.subtitle
-                  }}</span>
+                <span
+                  class="card-detail__subtitle text-weight-bold"
+                  style="font-size: 0.9em"
+                  >{{ selectedStep.subtitle }}</span
+                >
               </div>
-              <div class="card-detail__step" v-for="(step, index) in selectedStep.steps" :key="index">
-                <span class="text-weight-bold" v-show="step.title">{{ step.title }}</span>
-                <div class="card-detail__details" v-for="(detail, index) in step.details" :key="index">
+              <div
+                class="card-detail__step"
+                v-for="(step, index) in selectedStep.steps"
+                :key="index"
+              >
+                <span class="text-weight-bold" v-show="step.title">{{
+                  step.title
+                }}</span>
+                <div
+                  class="card-detail__details"
+                  v-for="(detail, index) in step.details"
+                  :key="index"
+                >
                   <div class="card-detail__list row">
                     <div class="col-1 card-detail__list__icon">
-                      <q-icon name="fa-solid fa-check" color="positive" size="1.2rem"></q-icon>
+                      <q-icon
+                        name="fa-solid fa-check"
+                        color="positive"
+                        size="1.2rem"
+                      ></q-icon>
                     </div>
                     <div class="col-11 card-detail__list__detail">
                       <span>{{ detail }}</span>
@@ -84,131 +135,130 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import imageStepOne from '@/assets/img/homeHowWorks/step-1-client.svg';
-import imageStepTwo from '@/assets/img/homeHowWorks/step-2-client.svg';
-import imageStepThree from '@/assets/img/homeHowWorks/step-3-client.svg';
-import imageStepFour from '@/assets/img/homeHowWorks/step-4-client.svg';
-import imageStepFive from '@/assets/img/homeHowWorks/step-5-client.svg';
-import imageStepSix from '@/assets/img/homeHowWorks/step-6-client.svg';
+import { ref } from "vue";
+import imageStepOne from "@/assets/img/homeHowWorks/step-1-client.svg";
+import imageStepTwo from "@/assets/img/homeHowWorks/step-2-client.svg";
+import imageStepThree from "@/assets/img/homeHowWorks/step-3-client.svg";
+import imageStepFour from "@/assets/img/homeHowWorks/step-4-client.svg";
+import imageStepFive from "@/assets/img/homeHowWorks/step-5-client.svg";
+import imageStepSix from "@/assets/img/homeHowWorks/step-6-client.svg";
 
-import imageStepOneProvider from '@/assets/img/homeHowWorks/step-1-provider3.svg';
-import imageStepTwoProvider from '@/assets/img/homeHowWorks/step-2-provider.svg';
-import imageStepThreeProvider from '@/assets/img/homeHowWorks/step-3-provider.svg';
+import imageStepOneProvider from "@/assets/img/homeHowWorks/step-1-provider3.svg";
+import imageStepTwoProvider from "@/assets/img/homeHowWorks/step-2-provider.svg";
+import imageStepThreeProvider from "@/assets/img/homeHowWorks/step-3-provider.svg";
 
-const tab = ref('clientUser');
-const selectedStep = ref(null)
+const tab = ref("clientUser");
+const selectedStep = ref(null);
 const isDialogOpen = ref(false);
 
 const stepsClient = ref([
   {
     img: imageStepOne,
-    step: 'Paso 1',
-    title: 'Llenar formulario',
-    subtitle: '(Solicitar servicio)',
+    step: "Paso 1",
+    title: "Llenar formulario",
+    subtitle: "(Solicitar servicio)",
     steps: [
       {
         details: [
           "Completa el formulario de solicitud proporcionando toda la información requerida para iniciar el proceso.",
           "Recibirás un código de verificación vía WhatsApp inmediatamente después de enviar el formulario.",
           "Abre el mensaje de WhatsApp y copia el código de verificación recibido.",
-          "Regresa al formulario, ingresa el código en el campo correspondiente y presiona 'Aceptar' para confirmar tu solicitud."
-        ]
-      }
-    ]
+          "Regresa al formulario, ingresa el código en el campo correspondiente y presiona 'Aceptar' para confirmar tu solicitud.",
+        ],
+      },
+    ],
   },
   {
     img: imageStepTwo,
-    step: 'Paso 2',
-    title: 'Información específica del flete/mudanza',
-    subtitle: '(Detalla los artículos)',
+    step: "Paso 2",
+    title: "Información específica del flete/mudanza",
+    subtitle: "(Detalla los artículos)",
     steps: [
       {
         details: [
-          'Describe con precisión los artículos que deseas trasladar, incluyendo dimensiones y cantidad.',
-          'Selecciona el tipo de vehículo que mejor se adapte a tus necesidades de transporte.',
-          'Propón un precio justo acorde al servicio requerido.'
-        ]
-      }
-    ]
+          "Describe con precisión los artículos que deseas trasladar, incluyendo dimensiones y cantidad.",
+          "Selecciona el tipo de vehículo que mejor se adapte a tus necesidades de transporte.",
+          "Propón un precio justo acorde al servicio requerido.",
+        ],
+      },
+    ],
   },
   {
     img: imageStepThree,
-    step: 'Paso 3',
-    title: 'Selecciona el proveedor de servicio',
-    subtitle: '(Elige lo mejor para ti)',
+    step: "Paso 3",
+    title: "Selecciona el proveedor de servicio",
+    subtitle: "(Elige lo mejor para ti)",
     steps: [
       {
         details: [
-          'Revisa los perfiles y valoraciones de los prestadores disponibles para evaluar su fiabilidad y calidad de servicio.',
-          'Compara las ofertas y precios para seleccionar la opción que mejor se ajuste a tu presupuesto.',
-          'Toma una decisión informada seleccionando el prestador que cumpla con tus expectativas de coste y calidad.'
-        ]
-      }
-    ]
+          "Revisa los perfiles y valoraciones de los prestadores disponibles para evaluar su fiabilidad y calidad de servicio.",
+          "Compara las ofertas y precios para seleccionar la opción que mejor se ajuste a tu presupuesto.",
+          "Toma una decisión informada seleccionando el prestador que cumpla con tus expectativas de coste y calidad.",
+        ],
+      },
+    ],
   },
   {
     img: imageStepFour,
-    step: 'Paso 4',
-    title: 'Confirmación y pago del servicio',
-    subtitle: '(Pago del servicio)',
+    step: "Paso 4",
+    title: "Confirmación y pago del servicio",
+    subtitle: "(Pago del servicio)",
     steps: [
       {
         details: [
-          'Verifica todos los detalles del servicio, incluyendo fechas, horarios, y el tipo de vehículo seleccionado.',
-          'Confirma que estás de acuerdo con los términos del servicio, incluyendo las políticas de cancelación y seguro.',
-          'Realiza el pago del servicio a través del método disponible y asegúrate de recibir una confirmación de pago y una factura detallada.'
-        ]
-      }
-    ]
+          "Verifica todos los detalles del servicio, incluyendo fechas, horarios, y el tipo de vehículo seleccionado.",
+          "Confirma que estás de acuerdo con los términos del servicio, incluyendo las políticas de cancelación y seguro.",
+          "Realiza el pago del servicio a través del método disponible y asegúrate de recibir una confirmación de pago y una factura detallada.",
+        ],
+      },
+    ],
   },
   {
     img: imageStepFive,
-    step: 'Paso 5',
-    title: 'Confirmación final',
-    subtitle: '(Servicio programado)',
+    step: "Paso 5",
+    title: "Confirmación final",
+    subtitle: "(Servicio programado)",
     steps: [
       {
         details: [
-          'Envía un mensaje de texto para confirmar la reserva del servicio.',
-          'Recibirás una confirmación por parte del proveedor, asegurando que todo está preparado para el servicio.',
-          'Prepárate para el día del servicio, esperando la llegada del proveedor en la fecha y hora acordadas.'
-        ]
-      }
-
-    ]
+          "Envía un mensaje de texto para confirmar la reserva del servicio.",
+          "Recibirás una confirmación por parte del proveedor, asegurando que todo está preparado para el servicio.",
+          "Prepárate para el día del servicio, esperando la llegada del proveedor en la fecha y hora acordadas.",
+        ],
+      },
+    ],
   },
   {
     img: imageStepSix,
-    step: 'Paso 6',
-    title: 'Cancelación',
-    subtitle: '(Paso extra)',
+    step: "Paso 6",
+    title: "Cancelación",
+    subtitle: "(Paso extra)",
     steps: [
       {
-        title: 'Servicios Solicitados para el Mismo Día',
+        title: "Servicios Solicitados para el Mismo Día",
         details: [
-          'Más de una hora y media de anticipación: Reembolso completo',
-          'Menos de una hora y media de anticipación: Reembolso del 50%',
-          'Menos de 1 hora de anticipación: No hay reembolso'
-        ]
+          "Más de una hora y media de anticipación: Reembolso completo",
+          "Menos de una hora y media de anticipación: Reembolso del 50%",
+          "Menos de 1 hora de anticipación: No hay reembolso",
+        ],
       },
       {
-        title: 'Servicios Programados',
+        title: "Servicios Programados",
         details: [
-          'Anticipación máxima: Los servicios pueden ser programados con hasta un mes de anticipación.',
-          'Cancelación temprana:',
-          'Más de cuarenta y ocho horas de anticipación: Reembolso completo.',
-          'Entre veinticuatro y cuarenta y ocho horas de anticipación: Reembolso del 85%.',
-          'Menos de veinticuatro horas de anticipación: No hay reembolso.'
-        ]
-      }
-    ]
-  }
+          "Anticipación máxima: Los servicios pueden ser programados con hasta un mes de anticipación.",
+          "Cancelación temprana:",
+          "Más de cuarenta y ocho horas de anticipación: Reembolso completo.",
+          "Entre veinticuatro y cuarenta y ocho horas de anticipación: Reembolso del 85%.",
+          "Menos de veinticuatro horas de anticipación: No hay reembolso.",
+        ],
+      },
+    ],
+  },
 ]);
 const stepsServiceProvider = ref([
   {
     img: imageStepOneProvider,
-    step: 'Paso 1',
+    step: "Paso 1",
     title: "Registro y Confirmación",
     subtitle: "(Proceso para registrar y confirmar tu cuenta)",
     steps: [
@@ -218,24 +268,24 @@ const stepsServiceProvider = ref([
           "Completa el formulario de registro con tus datos personales.",
           "Al finalizar, presiona el botón 'Registrar'.",
           "Recibirás un mensaje de confirmación vía WhatsApp.",
-          "Ingresa el código de confirmación recibido para completar el registro."
-        ]
+          "Ingresa el código de confirmación recibido para completar el registro.",
+        ],
       },
       {
         title: "Proporciona los datos de tu vehículo:",
-        "details": [
+        details: [
           "Modelo del auto.",
           "Número de placa.",
           "Licencia de conducir.",
           "Seguro (en caso de tener).",
-          "Al menos una foto del auto."
-        ]
-      }
-    ]
+          "Al menos una foto del auto.",
+        ],
+      },
+    ],
   },
   {
     img: imageStepTwoProvider,
-    step: 'Paso 2',
+    step: "Paso 2",
     title: "Búsqueda de Servicios",
     subtitle: "(Cómo buscar y elegir servicios disponibles)",
     steps: [
@@ -245,14 +295,14 @@ const stepsServiceProvider = ref([
           "Busca entre los servicios disponibles el que mejor se adapte a tus necesidades (tamaño del flete/mudanza, lugar de origen y destino, precio propuesto).",
           "Verifica que puedes realizar el servicio y, antes de proponerte al cliente, puedes sugerir un precio por tu servicio.",
           "Puedes ver los servicios activos y pendientes en la barra lateral derecha, en la sección 'Mis servicios'.",
-          "Se generará un código de 4 dígitos para ambas partes, necesario para recibir tu pago al iniciar el servicio."
-        ]
-      }
-    ]
+          "Se generará un código de 4 dígitos para ambas partes, necesario para recibir tu pago al iniciar el servicio.",
+        ],
+      },
+    ],
   },
   {
     img: imageStepThreeProvider,
-    step: 'Paso 3',
+    step: "Paso 3",
     title: "Recepción de Pagos",
     subtitle: "(Métodos para recibir el pago de tu servicio)",
     steps: [
@@ -261,8 +311,8 @@ const stepsServiceProvider = ref([
         details: [
           "Pide al cliente que te proporcione el código de servicio.",
           "Ingresa a la app o al sitio web y selecciona la opción 'Ingresar código de servicio' en la barra lateral derecha.",
-          "Ingresa el código del cliente. Una vez ingresado, el servicio habrá comenzado y el pago se enviará a tu cuenta. Kivo retendrá el 10% del pago, y el resto será para ti."
-        ]
+          "Ingresa el código del cliente. Una vez ingresado, el servicio habrá comenzado y el pago se enviará a tu cuenta. Kivo retendrá el 10% del pago, y el resto será para ti.",
+        ],
       },
       {
         title: "Método 2",
@@ -270,20 +320,19 @@ const stepsServiceProvider = ref([
           "Al iniciar un servicio, se generará un código de cuatro dígitos para ti.",
           "Puedes ver el código del servicio en la pestaña 'Mis servicios'.",
           "Pide al cliente que ingrese a la app o al sitio web de Kivo y que introduzca tu código.",
-          "Una vez ingresado el código, el servicio habrá comenzado y el pago se realizará a tu cuenta."
-        ]
-      }
-    ]
-  }
-])
+          "Una vez ingresado el código, el servicio habrá comenzado y el pago se realizará a tu cuenta.",
+        ],
+      },
+    ],
+  },
+]);
 function toggleExpand(index, actor) {
-  if (actor === 'client') {
-    selectedStep.value = stepsClient.value[index]
+  if (actor === "client") {
+    selectedStep.value = stepsClient.value[index];
   } else {
-    selectedStep.value = stepsServiceProvider.value[index]
-
+    selectedStep.value = stepsServiceProvider.value[index];
   }
-  isDialogOpen.value = !isDialogOpen.value
+  isDialogOpen.value = !isDialogOpen.value;
 }
 </script>
 
@@ -447,7 +496,6 @@ function toggleExpand(index, actor) {
 }
 
 @media (max-width: 576px) {
-
   /* Estilos para pantallas pequeñas */
   .q-tab-panel {
     grid-template-columns: 1fr !important;
@@ -467,7 +515,6 @@ function toggleExpand(index, actor) {
 }
 
 @media (max-width: 767.98px) {
-
   /* Small devices (landscape phones, 576px and up) */
   .q-tab-panel {
     grid-template-columns: repeat(2, 1fr);
@@ -528,7 +575,6 @@ function toggleExpand(index, actor) {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-
   /* Medium devices (tablets, 768px and up) */
   .q-tabs {
     width: 70%;
@@ -557,12 +603,10 @@ function toggleExpand(index, actor) {
 }
 
 @media (min-width: 992px) and (max-width: 1525px) {
-
   /* Large devices (desktops, 992px and up) */
   .q-tabs {
     width: 60%;
   }
-
 
   .card-detail {
     left: 65px;
