@@ -5,7 +5,7 @@
         <!-- Imagen alineada a la izquierda -->
         <div>
           <img
-            v-if="!drawerOpen && $q.screen.lt.md"
+            v-if="!drawer && $q.screen.lt.md"
             :src="myIcon"
             class="logoSmall"
             :to="{ name: 'home' }"

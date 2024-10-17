@@ -11,7 +11,9 @@
           :offset="50"
           :scroll-target="scrollArea"
         >
-        <div class="content-card">
+          <div
+            :class="['content-card', { 'content-card-mini': !isMiniDrawer }]"
+          >
             <DetailClient
               v-for="client in clients"
               :key="client.id"
@@ -32,12 +34,13 @@
 
 <script setup>
 import DetailClient from "../components/searchService/DetailClient.vue";
-import { ref } from "vue";
+import { useDrawerStore } from "@/stores/mainStore/global-navbar-store.js";
+import { ref, computed } from "vue";
 
 defineOptions({
   name: "HomeSearchService",
 });
-
+const store = useDrawerStore();
 const clients = ref([
   {
     id: 1,
@@ -165,6 +168,10 @@ const clients = ref([
 ]);
 const scrollArea = ref(null);
 
+const isMiniDrawer = computed(() => {
+  return store.isMiniDrawer;
+});
+
 const onLoad = (index, done) => {
   console.log(index, done);
   setTimeout(() => {
@@ -226,10 +233,10 @@ const onLoad = (index, done) => {
 }
 
 .content-card {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 5px;
 }
 
 .scroll-indicator {
@@ -238,7 +245,7 @@ const onLoad = (index, done) => {
   left: 50%;
   transform: translateX(100%);
   font-size: 24px;
-  color: #fff;
+  color: var(--letter);
   background: #000;
   border-radius: 50%;
   width: 40px;
@@ -258,7 +265,10 @@ const onLoad = (index, done) => {
     gap: 20px;
   }
 }
-
-
-
+@media (max-width: 905px) {
+  .content-card-mini {
+    grid-template-columns: 1fr;
+    /* background: rebeccapurple; */
+  }
+}
 </style>
