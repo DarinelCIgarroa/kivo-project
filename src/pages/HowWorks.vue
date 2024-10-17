@@ -67,7 +67,7 @@
     </transition>
     <q-dialog
       v-model="isDialogOpen"
-      backdrop-filter="blur(5px)"
+      backdrop-filter="blur(5px) saturate(130%)"
       transition-show="rotate"
       transition-hide="rotate"
       persistent
@@ -531,7 +531,7 @@ function toggleExpand(index, actor) {
   .card-detail {
     left: 0;
     height: 100%;
-    background: gray;
+    /* background: gray; */
   }
 
   .card-detail__section {
