@@ -295,15 +295,15 @@ const peopleInformation = (section) => {
 
   .my-card {
     height: 100%;
-    width: 100%;
-    margin: 12px;
+    width: 95%;
+    margin: 5px;
     padding: 0px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     /* background: red; */
   }
-
+ 
   .text-title {
     font-size: 1.1rem;
   }

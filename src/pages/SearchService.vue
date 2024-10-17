@@ -252,18 +252,13 @@ const onLoad = (index, done) => {
 }
 @media (max-width: 576px) {
   .content-card {
-    /* background: red; */
     grid-template-columns: 1fr;
     justify-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
   }
 }
-@media (max-width: 1300px) {
-  .content-card {
-    gap: 40px;
-  }
-}
+
 
 
 </style>

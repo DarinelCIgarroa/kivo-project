@@ -170,27 +170,30 @@ const drawerClick = () => {
 body {
   font-family: "FontDefault", sans-serif;
 }
+.q-page {
+  background: var(--general);
+}
 
 .logo {
   width: 110px;
   height: 110px;
-  transition: width 0.6s ease, height 0.6s ease; /* Transición suave */
+  transition: width 0.6s ease, height 0.6s ease;
 }
 
 .logoSmall {
   width: 50px;
   height: 50px;
-  transition: width 0.5s ease, height 0.7s ease; /* Transición suave */
+  transition: width 0.5s ease, height 0.7s ease;
 }
 
 .q-drawer__label-item {
-  color: white;
+  color: var(--letter);
   font-size: 15px;
 }
 
 .my-menu-link {
-  color: white;
-  background: #293041;
+  color: var(--letter);
+  background: #404a64;
 }
 
 .q-drawer {
@@ -198,8 +201,6 @@ body {
   transition: padding 6s ease-in-out;
 }
 .drawer {
-  background: #293041;
-  transition: width 6s ease-in-out;
-  transition: padding 6s ease-in-out;
+  background: var(--drawer);
 }
 </style>

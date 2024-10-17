@@ -61,7 +61,6 @@ const openFormVehicle = () => {
   display: grid;
   width: 100%;
   height: 100%;
-  /* grid-template-columns: calc((100% - 20px) * 0.5) calc((100% - 20px) * 0.5); */
   grid-template-columns: 100%;
   grid-template-rows: auto;
   grid-template-areas:
@@ -69,7 +68,7 @@ const openFormVehicle = () => {
     "aditionalInformation"
     "vehicleInformation"
     "informationIncome";
-  gap: 10px;
+  gap: 0px;
   padding: 0px;
 }
 .card {
@@ -78,7 +77,8 @@ const openFormVehicle = () => {
   padding: 30px !important;
   border-radius: 20px;
   background: var(--card);
-  display: flex;
+  border: 0.1px solid #d6d6d6e1;
+  /* display: flex; */
 }
 
 .profile__container__section {
