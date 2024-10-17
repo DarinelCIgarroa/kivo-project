@@ -206,13 +206,19 @@ const closeDialog = () => {
   .q-dialog__inner--minimized {
     padding: 5px !important;
   }
+  .q-tab__label {
+    font-size: 12px !important;
+  }
+  .card-detail__details {
+    font-size: 12.5px;
+  }
 }
 
 @media (max-width: 767.98px) {
   .card-detail {
-    left: 0;
+    left: 0 !important;
     height: 100%;
-    /* background: gray; */
+    background: rgb(92, 195, 63);
   }
 
   .card-detail__section {
@@ -220,7 +226,6 @@ const closeDialog = () => {
     flex-direction: column;
     height: auto;
     padding: 0px;
-    /* background: aqua; */
   }
 
   .card-detail__steps {
@@ -243,15 +248,36 @@ const closeDialog = () => {
   .card-detail__info {
     padding: 5px;
     width: 100%;
-    /* background: antiquewhite; */
-  }
-
-  .card-detail__details {
-    font-size: 14px;
   }
 
   .card-detail__list__detail {
     padding: 2px;
+  }
+}
+@media ((min-width: 768px) and (max-width: 991px)) {
+  .card-detail {
+    background: aqua;
+    left: 0px !important;
+  }
+  .card-detail__steps {
+    width: 90% !important;
+  }
+  .card-detail__img {
+    width: 30%;
+    left: 0px;
+  }
+}
+@media ((min-width: 992px) and (max-width: 1200px)) {
+  .card-detail {
+    left: 50px !important;
+  }
+  .card-detail__steps {
+    width: 80%;
+  }
+  .card-detail__img[data-v-6309e2bc] {
+    left: 0px !important;
+    left: 215px;
+    width: 30%;
   }
 }
 </style>

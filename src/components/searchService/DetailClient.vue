@@ -3,7 +3,7 @@
     <transition appear enter-active-class="animated zoomIn delay-1s">
       <div v-if="showMainINformation" class="content-img">
         <q-img
-          src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"
+          :src="`https://ui-avatars.com/api/?name=${client.avatar}&size=128&background=8B3B62&color=000`"
           class="card-image"
         />
       </div>
@@ -17,6 +17,7 @@
         <q-item-section class="text-description">
           <q-item-label class="row">
             <q-icon
+              color="accent"
               class="q-px-xs iconForm"
               size="xs"
               name="my_location"
@@ -27,7 +28,12 @@
             </div>
           </q-item-label>
           <q-item-label class="row">
-            <q-icon class="q-px-xs iconForm" size="xs" name="place"></q-icon>
+            <q-icon
+              color="accent"
+              class="q-px-xs iconForm"
+              size="xs"
+              name="place"
+            ></q-icon>
             <div class="info">
               <span class="info-span">Destino: </span>
               <span class="q-ml-xs data-span">{{
@@ -37,7 +43,7 @@
           </q-item-label>
           <q-item-label class="row">
             <q-icon
-              color="dark"
+              color="accent"
               class="q-px-xs"
               size="xs"
               name="fa-solid fa-car"
@@ -49,16 +55,21 @@
           </q-item-label>
           <div class="changes-tab"></div>
         </q-item-section>
-
-        <q-item-section
-          class="row no-wrap justify-between items-center"
-          style="padding: 10px; flex-direction: initial"
-        >
-          <div class="price-section">
-            <span class="price-span data-span">$ {{ client.price }}</span>
+        <q-item-section class="content-action">
+          <div>
+            <q-btn
+              class="price-service"
+              rounded
+              :label="formatMoney(client.price)"
+            />
           </div>
-          <div class="button-section">
-            <q-btn color="primary" outline rounded label="Aceptar" />
+          <div>
+            <q-btn
+              class="confirm-service"
+              color="primary"
+              rounded
+              label="Confirmar Servicio"
+            />
           </div>
         </q-item-section>
       </div>
@@ -104,12 +115,20 @@
 
 <script setup>
 import { ref, toRef } from "vue";
+import { Money } from "@/utils/utils.js";
 
 const props = defineProps(["client"]);
 const client = toRef(props.client);
 
 const showMainINformation = ref(true);
 const showSecondaryInformation = ref(false);
+
+const formatMoney = (money) => {
+  const newMoney = Money(money);
+  const symbol = newMoney[0];
+  const value = newMoney.slice(1).trim();
+  return `${symbol} ${value}`;
+};
 
 const peopleInformation = (section) => {
   if (section == "mainInformation") {
@@ -123,23 +142,16 @@ const peopleInformation = (section) => {
 };
 </script>
 
-<style>
-/* .my-card {
+<style scoped>
+.my-card {
   display: flex;
   width: 80%;
   padding: 20px 0px 20px 0px;
   margin: 15px 10px 17px 112px;
   border-radius: 20px;
-  height: 20em;
-} */
-.my-card {
-  display: flex;
-  width: 80%;
-  padding: 20px 0px 36px 0px;
-  margin: 20px 0px 15px 110px;
-  border-radius: 20px;
-  height: 20em;
+  height: 19em;
 }
+
 .content-img {
   position: relative;
   width: 29%;
@@ -209,6 +221,9 @@ const peopleInformation = (section) => {
   display: flex;
   flex-direction: column;
 }
+.q-item__label {
+  margin: 3px;
+}
 
 .read-more-button {
   background: var(--primary);
@@ -221,23 +236,17 @@ const peopleInformation = (section) => {
   font-weight: bold;
   color: var(--dark);
 }
-.price-section {
-  flex: 1;
-  text-align: left;
-}
 
-.button-section {
-  text-align: right;
-}
-
-.price-span {
-  border-radius: 28px;
-  margin: 10px 0 0 6px !important;
-  background: rgba(4, 111, 96, 0.69);
-  /* background: var(--secondaryLight); */
+.price-service {
+  cursor: default;
+  background: var(--gold);
+  font-weight: 700;
+  transition: transform 0.3s ease, background-color 0.3s ease;
   color: var(--letter);
-  font-size: 1.3em;
-  padding: 10px 20px;
+}
+.price-service:hover {
+  transform: scale(1.05);
+  background: #0f8021;
 }
 
 .changes-section {
@@ -269,7 +278,43 @@ const peopleInformation = (section) => {
 .q-chip span {
   font-size: 13px;
 }
+.confirm-service {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.confirm-service:hover {
+  transform: scale(1.08);
+}
+.content-action {
+  /* background: #0f8021; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+}
+.price-service {
+  margin: 2px;
+}
+.confirm-service {
+  margin: 2px;
+}
 
+@media ((min-width: 0px) and (max-width: 884px)) {
+  .content-action {
+    /* background: saddlebrown; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .content-action {
+    /* background: saddlebrown; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .my-card {
+    padding: 10px !important;
+  }
+}
 @media (max-width: 1300px) {
   .q-item__label .info {
     display: flex;
