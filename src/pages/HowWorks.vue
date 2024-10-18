@@ -70,7 +70,6 @@
       backdrop-filter="blur(5px) saturate(130%)"
       transition-show="rotate"
       transition-hide="rotate"
-      persistent
     >
       <HowItWorksTabs
         :selectedStep="selectedStep"
