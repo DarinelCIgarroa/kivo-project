@@ -65,6 +65,7 @@
           </div>
           <div>
             <q-btn
+              style="font-size: 12px"
               class="confirm-service"
               color="primary"
               rounded
@@ -246,7 +247,6 @@ const peopleInformation = (section) => {
 }
 .price-service:hover {
   transform: scale(1.05);
-  background: #0f8021;
 }
 
 .changes-section {
@@ -292,10 +292,10 @@ const peopleInformation = (section) => {
   padding: 5px;
 }
 .price-service {
-  margin: 2px;
+  margin: 1px;
 }
 .confirm-service {
-  margin: 2px;
+  margin: 1px;
 }
 
 @media ((min-width: 0px) and (max-width: 884px)) {
@@ -313,6 +313,12 @@ const peopleInformation = (section) => {
   }
   .my-card {
     padding: 10px !important;
+  }
+  .price-service {
+    margin: 5px;
+  }
+  .confirm-service {
+    margin: 5px;
   }
 }
 @media (max-width: 1300px) {
@@ -346,7 +352,6 @@ const peopleInformation = (section) => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background: red; */
   }
 
   .text-title {

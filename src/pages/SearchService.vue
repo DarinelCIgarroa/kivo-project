@@ -177,7 +177,6 @@ onMounted(() => {
 });
 
 const onLoad = (index, done) => {
-  console.log("Onload", index, done);
   setTimeout(() => {
     clients.value.push(
       {
@@ -266,7 +265,7 @@ const onLoad = (index, done) => {
     grid-template-columns: 1fr;
     justify-items: center;
     justify-content: center;
-    gap: 20px;
+    /* gap: 20px; */
   }
   .content-card-mini {
     grid-template-columns: 1fr;
@@ -280,10 +279,9 @@ const onLoad = (index, done) => {
   }
 }
 
-@media (max-width: 905px) {
-  .content-card-mini {
-    grid-template-columns: 1fr;
-    /* background: rebeccapurple; */
+@media (min-width: 0px) and (max-width: 1300px) {
+  .content-card {
+    gap: 20px !important;
   }
 }
 </style>
