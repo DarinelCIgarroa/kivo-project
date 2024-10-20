@@ -8,10 +8,12 @@
       <div ref="scrollArea" class="data-client-detail col-12">
         <q-infinite-scroll
           @load="onLoad"
-          :offset="50"
+          :offset="40"
           :scroll-target="scrollArea"
         >
-        <div class="content-card">
+          <div
+            :class="['content-card', { 'content-card-mini': !isMiniDrawer }]"
+          >
             <DetailClient
               v-for="client in clients"
               :key="client.id"
@@ -32,19 +34,20 @@
 
 <script setup>
 import DetailClient from "../components/searchService/DetailClient.vue";
-import { ref } from "vue";
+import { useDrawerStore } from "@/stores/mainStore/global-navbar-store.js";
+import { ref, computed, onMounted } from "vue";
 
 defineOptions({
   name: "HomeSearchService",
 });
-
+const store = useDrawerStore();
 const clients = ref([
   {
     id: 1,
     name: "Lorenzo Cigarroa de los Santos",
     price: "850",
     transport_type: "Van",
-    avatar: null,
+    avatar: "Lorenzo Cigarroa",
     placeOrigin: "Madrid, España",
     placeDestination: "Barcelona, España",
     detailsArticles: [
@@ -76,7 +79,7 @@ const clients = ref([
     name: "Mirta Ocaña Lopez",
     price: "1300",
     transport_type: "Truck",
-    avatar: null,
+    avatar: "Mirta Ocaña",
     placeOrigin: "Buenos Aires, Argentina",
     placeDestination: "Mendoza, Argentina",
     detailsArticles: Array.from({ length: 20 }, (_, i) => ({
@@ -89,7 +92,7 @@ const clients = ref([
     name: "Felipe Gutierrez Nola",
     price: "1100",
     transport_type: "MiniVan",
-    avatar: null,
+    avatar: "Felipe Gutierrez",
     placeOrigin: "Lima, Perú",
     placeDestination: "Cuzco, Perú",
     detailsArticles: Array.from({ length: 20 }, (_, i) => ({
@@ -102,7 +105,7 @@ const clients = ref([
     name: "Carla Karian Mendez Agrup",
     price: "1600",
     transport_type: "Flatbed",
-    avatar: null,
+    avatar: "Carla Karian",
     placeOrigin: "México D.F., México",
     placeDestination: "Guadalajara, México",
     detailsArticles: Array.from({ length: 20 }, (_, i) => ({
@@ -115,7 +118,7 @@ const clients = ref([
     name: "Sergio Ramos Verllin",
     price: "1800",
     transport_type: "RefrigeratedTruck",
-    avatar: null,
+    avatar: "Sergio Ramos",
     placeOrigin: "Santiago, Chile",
     placeDestination: "Valparaíso, Chile",
     detailsArticles: Array.from({ length: 20 }, (_, i) => ({
@@ -128,7 +131,7 @@ const clients = ref([
     name: "Ana Perez Lopez",
     price: "1400",
     transport_type: "BoxTruck",
-    avatar: null,
+    avatar: "Ana Perez",
     placeOrigin: "Bogotá, Colombia",
     placeDestination: "Medellín, Colombia",
     detailsArticles: Array.from({ length: 20 }, (_, i) => ({
@@ -141,7 +144,7 @@ const clients = ref([
     name: "Jorge Ortega Paez",
     price: "950",
     transport_type: "SUV",
-    avatar: null,
+    avatar: "Jorge Ortega",
     placeOrigin: "Quito, Ecuador",
     placeDestination: "Guayaquil, Ecuador",
     detailsArticles: Array.from({ length: 20 }, (_, i) => ({
@@ -154,7 +157,7 @@ const clients = ref([
     name: "Lucía Vargas",
     price: "2000",
     transport_type: "Cargo Plane",
-    avatar: null,
+    avatar: "Lucía Vargas",
     placeOrigin: "Caracas, Venezuela",
     placeDestination: "Maracaibo, Venezuela",
     detailsArticles: Array.from({ length: 20 }, (_, i) => ({
@@ -165,8 +168,15 @@ const clients = ref([
 ]);
 const scrollArea = ref(null);
 
+const isMiniDrawer = computed(() => {
+  return store.isMiniDrawer;
+});
+
+onMounted(() => {
+  scrollArea.value = document.querySelector(".data-client-detail");
+});
+
 const onLoad = (index, done) => {
-  console.log(index, done);
   setTimeout(() => {
     clients.value.push(
       {
@@ -174,7 +184,7 @@ const onLoad = (index, done) => {
         name: "Lorenzo Cigarroa de los Santos",
         price: "850",
         transport_type: "Van",
-        avatar: null,
+        avatar: "Lorenzo Cigarroa",
         placeOrigin: "Madrid, España",
         placeDestination: "Barcelona, España",
         detailsArticles: ["Cajas de libros", "Bicicleta"],
@@ -184,7 +194,7 @@ const onLoad = (index, done) => {
         name: "Lorenzo Cigarroa de los Santos",
         price: "850",
         transport_type: "Van",
-        avatar: null,
+        avatar: "Lorenzo Cigarroa",
         placeOrigin: "Madrid, España",
         placeDestination: "Barcelona, España",
         detailsArticles: ["Cajas de libros", "Bicicleta"],
@@ -194,7 +204,7 @@ const onLoad = (index, done) => {
         name: "María Rodríguez",
         price: "750",
         transport_type: "Carro",
-        avatar: null,
+        avatar: "María Rodrígue",
         placeOrigin: "Sevilla, España",
         placeDestination: "Valencia, España",
         detailsArticles: ["Ropa", "Electrónicos"],
@@ -204,7 +214,7 @@ const onLoad = (index, done) => {
         name: "Carlos Pérez",
         price: "950",
         transport_type: "Camión",
-        avatar: null,
+        avatar: "Carlos Pérez",
         placeOrigin: "Barcelona, España",
         placeDestination: "Madrid, España",
         detailsArticles: ["Muebles", "Electrodomésticos"],
@@ -218,7 +228,7 @@ const onLoad = (index, done) => {
 
 <style scoped>
 .data-client-detail {
-  /* max-height: 90.6vh; */
+  max-height: 90vh;
   width: 100%;
   overflow: auto;
   scrollbar-width: thin;
@@ -226,10 +236,10 @@ const onLoad = (index, done) => {
 }
 
 .content-card {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 5px;
 }
 
 .scroll-indicator {
@@ -238,7 +248,7 @@ const onLoad = (index, done) => {
   left: 50%;
   transform: translateX(100%);
   font-size: 24px;
-  color: #fff;
+  color: var(--letter);
   background: #000;
   border-radius: 50%;
   width: 40px;
@@ -250,15 +260,28 @@ const onLoad = (index, done) => {
   animation: scrollIndicator 1.5s infinite;
   z-index: 1000;
 }
-@media (max-width: 576px) {
+@media ((min-width: 0px) and (max-width: 575px)) {
   .content-card {
     grid-template-columns: 1fr;
     justify-items: center;
     justify-content: center;
-    gap: 20px;
+    /* gap: 20px; */
+  }
+  .content-card-mini {
+    grid-template-columns: 1fr;
+    /* background: rebeccapurple; */
+  }
+}
+@media (max-width: 576px) {
+  .content-card-mini {
+    grid-template-columns: 1fr;
+    /* background: rebeccapurple; */
   }
 }
 
-
-
+@media (min-width: 0px) and (max-width: 1300px) {
+  .content-card {
+    gap: 20px !important;
+  }
+}
 </style>

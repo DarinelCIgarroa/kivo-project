@@ -16,9 +16,9 @@ export const useNavbarStore = defineStore("clienteDetail", {
   },
 });
 
-export const useDrawerStore = defineStore('drawer', {
+export const useDrawerStore = defineStore("drawer", {
   state: () => ({
-    isMiniDrawer: false,
+    isMiniDrawer: true,
   }),
   actions: {
     miniDrawer() {

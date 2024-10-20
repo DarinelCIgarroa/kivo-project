@@ -3,7 +3,7 @@
     <transition appear enter-active-class="animated zoomIn delay-1s">
       <div v-if="showMainINformation" class="content-img">
         <q-img
-          src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"
+          :src="`https://ui-avatars.com/api/?name=${client.avatar}&size=128&background=8B3B62&color=fff`"
           class="card-image"
         />
       </div>
@@ -17,7 +17,8 @@
         <q-item-section class="text-description">
           <q-item-label class="row">
             <q-icon
-              class="q-px-xs iconForm"
+              color="accent"
+              class="q-px-xs"
               size="xs"
               name="my_location"
             ></q-icon>
@@ -27,7 +28,12 @@
             </div>
           </q-item-label>
           <q-item-label class="row">
-            <q-icon class="q-px-xs iconForm" size="xs" name="place"></q-icon>
+            <q-icon
+              color="accent"
+              class="q-px-xs"
+              size="xs"
+              name="place"
+            ></q-icon>
             <div class="info">
               <span class="info-span">Destino: </span>
               <span class="q-ml-xs data-span">{{
@@ -37,7 +43,7 @@
           </q-item-label>
           <q-item-label class="row">
             <q-icon
-              color="dark"
+              color="accent"
               class="q-px-xs"
               size="xs"
               name="fa-solid fa-car"
@@ -49,16 +55,23 @@
           </q-item-label>
           <div class="changes-tab"></div>
         </q-item-section>
-
-        <q-item-section
-          class="row no-wrap justify-between items-center"
-          style="padding: 10px; flex-direction: initial"
-        >
-          <div class="price-section">
-            <span class="price-span data-span">$ {{ client.price }}</span>
+        <q-item-section class="content-action">
+          <div>
+            <q-btn
+              class="price-service"
+              rounded
+              :label="formatMoney(client.price)"
+            />
           </div>
-          <div class="button-section">
-            <q-btn color="primary" outline  label="Aceptar" />
+          <div>
+            <q-btn
+              style="font-size: 14px"
+              class="confirm-service"
+              color="primary"
+              rounded
+              label="Detalles"
+              @click="serviceDetail"
+            />
           </div>
         </q-item-section>
       </div>
@@ -100,17 +113,39 @@
       </div>
     </div>
   </q-card>
+  <q-dialog v-model="showServiceDetail">
+    <ServiceDetailsComponent
+      :client="client"
+      @mapService="showMapService"
+    ></ServiceDetailsComponent>
+  </q-dialog>
+  <!-- Dialogo que contiene el componente del mapa -->
+  <q-dialog v-model="showMap" style="width: 100vh; height: 100vh">
+    <ServiceRouteMap></ServiceRouteMap>
+  </q-dialog>
 </template>
 
 <script setup>
-import { ref, toRef } from "vue";
+import { ref, toRef, watch, nextTick } from "vue";
+import { Money } from "@/utils/utils.js";
+import ServiceDetailsComponent from "@/components/searchService/ServiceDetails.vue";
+import ServiceRouteMap from "@/components/searchService/ServiceRouteMap.vue";
+// import { Loader } from "@googlemaps/js-api-loader";
 
 const props = defineProps(["client"]);
-const client = toRef(props.client);
 
+const client = toRef(props.client);
 const showMainINformation = ref(true);
 const showSecondaryInformation = ref(false);
+const showServiceDetail = ref(false);
+const showMap = ref(false);
 
+const formatMoney = (money) => {
+  const newMoney = Money(money);
+  const symbol = newMoney[0];
+  const value = newMoney.slice(1).trim();
+  return `${symbol} ${value}`;
+};
 const peopleInformation = (section) => {
   if (section == "mainInformation") {
     showMainINformation.value = true;
@@ -121,25 +156,44 @@ const peopleInformation = (section) => {
   showSecondaryInformation.value = true;
   return;
 };
+const serviceDetail = () => {
+  showServiceDetail.value = true;
+};
+// const showMapService = () => {
+//   console.log("showMapServiceee");
+//   showMap.value = true;
+
+//   // Iniciar el mapa cuando se muestre la tarjeta
+//   setTimeout(() => {
+//     const loader = new Loader({
+//       apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY, // Asegúrate de tener esta variable en tu archivo .env
+//       version: "weekly",
+//     });
+
+//     loader.load().then(() => {
+//       new google.maps.Map(document.getElementById("myMap"), {
+//         center: { lat: 54.0682082, lng: -3.6191708 },
+//         zoom: 7,
+//       });
+//     });
+//   }, 100); // Timeout para asegurar que el elemento myMap esté renderizado antes de inicializar el mapa
+// };
+const showMapService = () => {
+  console.log("Activando función showMapService");
+  showMap.value = true; // Esto hará que el diálogo se muestre y pase `showMap` al componente del mapa
+};
 </script>
 
-<style>
-/* .my-card {
+<style scoped>
+.my-card {
   display: flex;
   width: 80%;
   padding: 20px 0px 20px 0px;
   margin: 15px 10px 17px 112px;
   border-radius: 20px;
-  height: 20em;
-} */
-.my-card {
-  display: flex;
-  width: 80%;
-  padding: 20px 0px 36px 0px;
-  margin: 20px 0px 15px 110px;
-  border-radius: 20px;
-  height: 20em;
+  height: 19em;
 }
+
 .content-img {
   position: relative;
   width: 29%;
@@ -209,6 +263,9 @@ const peopleInformation = (section) => {
   display: flex;
   flex-direction: column;
 }
+.q-item__label {
+  margin: 3px;
+}
 
 .read-more-button {
   background: var(--primary);
@@ -221,23 +278,16 @@ const peopleInformation = (section) => {
   font-weight: bold;
   color: var(--dark);
 }
-.price-section {
-  flex: 1;
-  text-align: left;
-}
 
-.button-section {
-  text-align: right;
-}
-
-.price-span {
-  border-radius: 10px;
-  margin: 10px 0 0 6px;
-  background: rgba(4, 111, 96, 0.69);;
-  /* background: var(--secondaryLight); */
+.price-service {
+  cursor: default;
+  background: var(--gold);
+  font-weight: 700;
+  transition: transform 0.3s ease, background-color 0.3s ease;
   color: var(--letter);
-  font-size: 1.5em;
-  padding: 10px;
+}
+.price-service:hover {
+  transform: scale(1.05);
 }
 
 .changes-section {
@@ -269,7 +319,49 @@ const peopleInformation = (section) => {
 .q-chip span {
   font-size: 13px;
 }
+.confirm-service {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.confirm-service:hover {
+  transform: scale(1.08);
+}
+.content-action {
+  /* background: #0f8021; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+}
+.price-service {
+  margin: 1px;
+}
+.confirm-service {
+  margin: 1px;
+}
 
+@media ((min-width: 0px) and (max-width: 884px)) {
+  .content-action {
+    /* background: saddlebrown; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .content-action {
+    /* background: saddlebrown; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .my-card {
+    padding: 10px !important;
+  }
+  .price-service {
+    margin: 5px;
+  }
+  .confirm-service {
+    margin: 5px;
+  }
+}
 @media (max-width: 1300px) {
   .q-item__label .info {
     display: flex;
@@ -301,9 +393,8 @@ const peopleInformation = (section) => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background: red; */
   }
- 
+
   .text-title {
     font-size: 1.1rem;
   }
