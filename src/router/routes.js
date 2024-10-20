@@ -30,7 +30,7 @@ const routes = [
       {
         path: "my-services",
         name: "my-services",
-        component: () => import("pages/IndexPage.vue"),
+        component: () => import("pages/services/dashboard-service.vue"),
       },
     ],
   },
