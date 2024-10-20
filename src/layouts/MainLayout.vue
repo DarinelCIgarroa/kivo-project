@@ -2,7 +2,6 @@
   <q-layout view="hHh Lpr lff" container style="height: 100vh" class="shadow-2">
     <q-header class="drawer">
       <q-toolbar class="row items-center justify-between q-gutter-sm">
-        <!-- Imagen alineada a la izquierda -->
         <div>
           <img
             v-if="!drawer && $q.screen.lt.md"
@@ -11,8 +10,6 @@
             :to="{ name: 'home' }"
           />
         </div>
-
-        <!-- Botón de menú alineado a la derecha -->
         <q-btn
           flat
           dense
@@ -142,7 +139,7 @@
     </q-drawer>
 
     <q-page-container>
-      <q-page class="q-px-lg">
+      <q-page class="q-px-md">
         <router-view></router-view>
       </q-page>
     </q-page-container>
@@ -166,7 +163,7 @@ const drawerClick = () => {
 };
 </script>
 
-<style >
+<style>
 body {
   font-family: "FontDefault", sans-serif;
 }
@@ -200,6 +197,7 @@ body {
   transition: width 6s ease;
   transition: padding 6s ease-in-out;
 }
+
 .drawer {
   background: var(--drawer);
 }

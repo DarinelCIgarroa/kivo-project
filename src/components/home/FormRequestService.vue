@@ -179,11 +179,11 @@ const phone = ref("");
 const dense = ref(false);
 const time = ref("");
 
-const emit = defineEmits(['codeValidation'])
+const emit = defineEmits(["codeValidation"]);
 
 const onReset = () => {
   serviceDate.value = null;
-}
+};
 
 const filterDestinations = (val, update) => {
   update(async () => {
@@ -197,12 +197,12 @@ const filterDestinations = (val, update) => {
       console.log(error);
     }
   });
-}
+};
 
 const onSubmit = () => {
-  console.log('onSubmit');
-  emit('codeValidation')
-}
+  console.log("onSubmit");
+  emit("codeValidation");
+};
 
 watch(placeDestination, (newValue) => {
   if (newValue === null) {

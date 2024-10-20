@@ -3,7 +3,7 @@
     <transition appear enter-active-class="animated zoomIn delay-1s">
       <div v-if="showMainINformation" class="content-img">
         <q-img
-          :src="`https://ui-avatars.com/api/?name=${client.avatar}&size=128&background=8B3B62&color=000`"
+          :src="`https://ui-avatars.com/api/?name=${client.avatar}&size=128&background=8B3B62&color=fff`"
           class="card-image"
         />
       </div>
@@ -18,7 +18,7 @@
           <q-item-label class="row">
             <q-icon
               color="accent"
-              class="q-px-xs iconForm"
+              class="q-px-xs"
               size="xs"
               name="my_location"
             ></q-icon>
@@ -30,7 +30,7 @@
           <q-item-label class="row">
             <q-icon
               color="accent"
-              class="q-px-xs iconForm"
+              class="q-px-xs"
               size="xs"
               name="place"
             ></q-icon>
@@ -65,11 +65,12 @@
           </div>
           <div>
             <q-btn
-              style="font-size: 12px"
+              style="font-size: 14px"
               class="confirm-service"
               color="primary"
               rounded
-              label="Confirmar Servicio"
+              label="Detalles"
+              @click="serviceDetail"
             />
           </div>
         </q-item-section>
@@ -112,17 +113,32 @@
       </div>
     </div>
   </q-card>
+  <q-dialog v-model="showServiceDetail">
+    <ServiceDetailsComponent
+      :client="client"
+      @mapService="showMapService"
+    ></ServiceDetailsComponent>
+  </q-dialog>
+  <!-- Dialogo que contiene el componente del mapa -->
+  <q-dialog v-model="showMap" style="width: 100vh; height: 100vh">
+    <ServiceRouteMap></ServiceRouteMap>
+  </q-dialog>
 </template>
 
 <script setup>
-import { ref, toRef } from "vue";
+import { ref, toRef, watch, nextTick } from "vue";
 import { Money } from "@/utils/utils.js";
+import ServiceDetailsComponent from "@/components/searchService/ServiceDetails.vue";
+import ServiceRouteMap from "@/components/searchService/ServiceRouteMap.vue";
+// import { Loader } from "@googlemaps/js-api-loader";
 
 const props = defineProps(["client"]);
-const client = toRef(props.client);
 
+const client = toRef(props.client);
 const showMainINformation = ref(true);
 const showSecondaryInformation = ref(false);
+const showServiceDetail = ref(false);
+const showMap = ref(false);
 
 const formatMoney = (money) => {
   const newMoney = Money(money);
@@ -130,7 +146,6 @@ const formatMoney = (money) => {
   const value = newMoney.slice(1).trim();
   return `${symbol} ${value}`;
 };
-
 const peopleInformation = (section) => {
   if (section == "mainInformation") {
     showMainINformation.value = true;
@@ -140,6 +155,32 @@ const peopleInformation = (section) => {
   showMainINformation.value = false;
   showSecondaryInformation.value = true;
   return;
+};
+const serviceDetail = () => {
+  showServiceDetail.value = true;
+};
+// const showMapService = () => {
+//   console.log("showMapServiceee");
+//   showMap.value = true;
+
+//   // Iniciar el mapa cuando se muestre la tarjeta
+//   setTimeout(() => {
+//     const loader = new Loader({
+//       apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY, // Asegúrate de tener esta variable en tu archivo .env
+//       version: "weekly",
+//     });
+
+//     loader.load().then(() => {
+//       new google.maps.Map(document.getElementById("myMap"), {
+//         center: { lat: 54.0682082, lng: -3.6191708 },
+//         zoom: 7,
+//       });
+//     });
+//   }, 100); // Timeout para asegurar que el elemento myMap esté renderizado antes de inicializar el mapa
+// };
+const showMapService = () => {
+  console.log("Activando función showMapService");
+  showMap.value = true; // Esto hará que el diálogo se muestre y pase `showMap` al componente del mapa
 };
 </script>
 
