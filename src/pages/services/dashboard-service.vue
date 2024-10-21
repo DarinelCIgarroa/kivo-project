@@ -1,181 +1,231 @@
 <template>
-  <q-layout view="hHh Lpr fff">
-    <q-page class="">
-      <div class="my-services">
-        <div class="my-service-headed col-12">
-          <q-tabs
-            indicator-color="transparent"
-            active-color="white"
-            class="bg-primary text-grey-5 shadow-3"
+  <q-page class="q-pa-md">
+    <q-card class="my-services row">
+      <q-card-section class="service-container col-12">
+        <div class="card-income">Ingreso</div>
+        <div class="card-sale">Ventas Totales</div>
+        <div class="card-annual-sale">Ingreso Anual</div>
+      </q-card-section>
+      <q-card-section class="table-container col-12">
+        <div>
+          <div class="card-table text-h6 text-grey-8">Clientes</div>
+          <q-table
+            :rows="rows"
+            :columns="columns"
+            row-key="id"
+            :rows-per-page-options="[5, 10, 25]"
+            :pagination="pagination"
+            @request="onRequest"
+            :loading="loading"
+            flat
+            bordered
           >
-            <q-tab name="header" label="Mis servicios"></q-tab>
-          </q-tabs>
+            <template v-slot:body-cell-status="props">
+              <q-td :props="props">
+                <!-- Dropdown para seleccionar el estado -->
+                <q-select
+                  v-model="props.row.status"
+                  :options="statusOptions"
+                  outlined
+                  dense
+                />
+              </q-td>
+            </template>
+
+            <template v-slot:body-cell-delete="props">
+              <q-td :props="props">
+                <!-- Botón para eliminar cliente -->
+                <q-btn
+                  color="negative"
+                  icon="delete"
+                  label="Eliminar"
+                  @click="deleteClient(props.row.id)"
+                  flat
+                />
+              </q-td>
+            </template>
+          </q-table>
         </div>
-      </div>
-
-      <q-card>
-        <q-card-section>
-          <div class="service-container">
-            <div class="card-income">Ingreso</div>
-            <div class="card-sale">Ventas Totales</div>
-
-            <div class="card-annual-sale">Ingreso Anual</div>
-          </div>
-         
-        </q-card-section>
-      </q-card>
-      <q-card>
-        <q-card-section>
-      <div class="table-container col-12">
-            <div class="card-table">Clientes</div>
-            <q-table
-              :rows="filteredRows"
-              :columns="columns"
-              row-key="id"
-              :rows-per-page-options="[5, 10, 25]"
-              :pagination="pagination"
-              @request="onRequest"
-              :loading="loading"
-              flat
-              bordered
-            >
-            </q-table>
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-page>
-  </q-layout>
+      </q-card-section>
+    </q-card>
+  </q-page>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      // Columnas de la tabla
-      columns: [
-        { name: "id", label: "ID", field: "id", align: "left", sortable: true },
-        {
-          name: "name",
-          label: "Nombre",
-          field: "name",
-          align: "left",
-          sortable: true,
-        },
-        {
-          name: "email",
-          label: "Email",
-          field: "email",
-          align: "left",
-          sortable: true,
-        },
-        {
-          name: "cuota",
-          label: "Cuota",
-          field: "cuota",
-          align: "left",
-          sortable: true,
-        },
-        {
-          name: "vehiculo",
-          label: "Vehiculo",
-          field: "vehiculo",
-          align: "left",
-          sortable: true,
-        },
-        {
-          name: "status",
-          label: "Status",
-          field: "status",
-          align: "left",
-          sortable: true,
-        },
-        {
-          name: "delete",
-          label: "Delete",
-          field: "delete",
-          align: "left",
-          sortable: true,
-        },
-      ],
-      // Datos de ejemplo
-      rows: [
-        { id: 1, name: "John Doe", email: "john@example.com" },
-        { id: 2, name: "Jane Smith", email: "jane@example.com" },
-        { id: 3, name: "Bob Johnson", email: "bob@example.com" },
-        { id: 4, name: "Alice Walker", email: "alice@example.com" },
-        { id: 5, name: "Chris Evans", email: "chris@example.com" },
-        { id: 6, name: "Bruce Wayne", email: "bruce@example.com" },
-        { id: 7, name: "Clark Kent", email: "clark@example.com" },
-      ],
-      search: "",
-      pagination: {
-        page: 1,
-        rowsPerPage: 5,
-        sortBy: "name",
-        descending: false,
-      },
-      loading: false, // Controla si la tabla está cargando datos
-    };
+<script setup>
+import { ref } from "vue";
+
+// Opciones de estado
+const statusOptions = [
+  { label: "Pendiente", value: "Pendiente" },
+  { label: "Cancelado", value: "Cancelado" },
+  { label: "Pagado", value: "Pagado" },
+];
+
+// Definir columnas
+const columns = ref([
+  { name: "id", label: "ID", field: "id", align: "left", sortable: true },
+  {
+    name: "name",
+    label: "Nombre",
+    field: "name",
+    align: "left",
+    sortable: true,
   },
-  computed: {
-    // Filtra las filas basadas en la búsqueda
-    filteredRows() {
-      if (!this.search) {
-        return this.rows;
-      }
-      const searchLower = this.search.toLowerCase();
-      return this.rows.filter((row) => {
-        return (
-          row.name.toLowerCase().includes(searchLower) ||
-          row.email.toLowerCase().includes(searchLower) ||
-          String(row.id).includes(searchLower)
-        );
-      });
-    },
+  {
+    name: "email",
+    label: "Email",
+    field: "email",
+    align: "left",
+    sortable: true,
   },
-  methods: {
-    onSearch() {
-      this.pagination.page = 1; // Reinicia a la primera página cuando hay una búsqueda
-    },
-    onRequest(props) {
-      const { page, rowsPerPage, sortBy, descending } = props.pagination;
-      this.pagination.page = page;
-      this.pagination.rowsPerPage = rowsPerPage;
-      this.pagination.sortBy = sortBy;
-      this.pagination.descending = descending;
-      // Aquí puedes agregar lógica para obtener datos de una API o base de datos si es necesario
-      this.loading = false; // Puedes cambiar esto para hacer que cargue dinámicamente
-    },
+  {
+    name: "cuota",
+    label: "Cuota",
+    field: "cuota",
+    align: "left",
+    sortable: true,
   },
+  {
+    name: "vehiculo",
+    label: "Vehiculo",
+    field: "vehiculo",
+    align: "left",
+    sortable: true,
+  },
+  {
+    name: "status",
+    label: "Status",
+    field: "status",
+    align: "left",
+    sortable: false, // No es necesario ordenar por esta columna
+  },
+  {
+    name: "delete",
+    label: "Delete",
+    field: "delete",
+    align: "left",
+    sortable: false,
+  },
+]);
+
+// Definir filas (datos de ejemplo)
+const rows = ref([
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    cuota: "$500",
+    status: "Pendiente",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane@example.com",
+    cuota: "$500",
+    status: "Pagado",
+  },
+  {
+    id: 3,
+    name: "Bob Johnson",
+    email: "bob@example.com",
+    cuota: "$500",
+    status: "Cancelado",
+  },
+  {
+    id: 4,
+    name: "Alice Walker",
+    email: "alice@example.com",
+    cuota: "$500",
+    status: "Pendiente",
+  },
+  {
+    id: 5,
+    name: "Chris Evans",
+    email: "chris@example.com",
+    cuota: "$500",
+    status: "Pagado",
+  },
+  {
+    id: 6,
+    name: "Bruce Wayne",
+    email: "bruce@example.com",
+    cuota: "$500",
+    status: "Cancelado",
+  },
+  {
+    id: 7,
+    name: "Clark Kent",
+    email: "clark@example.com",
+    cuota: "$500",
+    status: "Pendiente",
+  },
+]);
+
+// Variables reactivas para paginación
+const pagination = ref({
+  page: 1,
+  rowsPerPage: 5,
+  sortBy: "name",
+  descending: false,
+});
+const loading = ref(false);
+
+// Método para manejar la solicitud de cambio de paginación, orden, etc.
+const onRequest = (props) => {
+  const { page, rowsPerPage, sortBy, descending } = props.pagination;
+  pagination.value.page = page;
+  pagination.value.rowsPerPage = rowsPerPage;
+  pagination.value.sortBy = sortBy;
+  pagination.value.descending = descending;
+  loading.value = false; // Simulación de carga (puede ser dinámico si se obtiene de una API)
+};
+
+// Método para eliminar cliente
+const deleteClient = (id) => {
+  const index = rows.value.findIndex((row) => row.id === id);
+  if (index !== -1) {
+    rows.value.splice(index, 1); // Eliminar cliente de la lista
+  }
 };
 </script>
 
 <style scoped>
-.service-container {
-  width: 100%;
-  max-width: 1000px;
-  margin: 100px auto;
+.my-services {
+  background: aqua;
+  padding: 20px;
   display: grid;
-  grid-gap: 20px; /* Espaciado entre elementos */
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
-  grid-template-rows: auto; /* 3 filas iguales */
+  grid-template-columns: 1fr 2fr; /* Una columna más pequeña que la otra */
+  grid-gap: 20px;
+  width: 100%; /* Asegúrate de que el grid ocupe el 100% del ancho */
+}
+
+.service-container {
+  background: yellow;
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Asegura que los contenedores se distribuyan bien */
 }
 
 .service-container > div {
   background: #fff;
   padding: 20px;
   border-radius: 4px;
+  margin-bottom: 10px;
 }
 
 .table-container {
-  grid-gap: 20px;
- 
+  background: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  width: 100%; /* Asegúrate de que la tabla ocupe el 100% */
 }
 
 .q-tabs {
   width: 40%;
   border-radius: 15px;
 }
+
 .my-service-headed {
   display: flex;
   justify-content: center;
@@ -183,14 +233,7 @@ export default {
   width: 100%;
   margin-bottom: 10px;
 }
-.my-services {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-width: 100%;
-  margin-top: 10px;
-}
+
 .q-input {
   margin-bottom: 16px;
 }
