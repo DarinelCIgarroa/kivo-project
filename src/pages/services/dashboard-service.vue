@@ -1,12 +1,15 @@
 <template>
   <q-page class="q-pa-md">
-    <q-card class="my-services row">
-      <q-card-section class="service-container col-12">
+    <q-card class="my-services">
+      <!-- Primera fila: contenedor de servicios -->
+      <q-card-section class="service-container">
         <div class="card-income">Ingreso</div>
         <div class="card-sale">Ventas Totales</div>
         <div class="card-annual-sale">Ingreso Anual</div>
       </q-card-section>
-      <q-card-section class="table-container col-12">
+
+      <!-- Segunda fila: tabla de clientes -->
+      <q-card-section class="table-container">
         <div>
           <div class="card-table text-h6 text-grey-8">Clientes</div>
           <q-table
@@ -20,9 +23,9 @@
             flat
             bordered
           >
+            <!-- Columnas personalizadas (opcional) -->
             <template v-slot:body-cell-status="props">
               <q-td :props="props">
-                <!-- Dropdown para seleccionar el estado -->
                 <q-select
                   v-model="props.row.status"
                   :options="statusOptions"
@@ -34,11 +37,10 @@
 
             <template v-slot:body-cell-delete="props">
               <q-td :props="props">
-                <!-- Botón para eliminar cliente -->
                 <q-btn
                   color="negative"
                   icon="delete"
-                  label="Eliminar"
+                  round
                   @click="deleteClient(props.row.id)"
                   flat
                 />
@@ -50,6 +52,7 @@
     </q-card>
   </q-page>
 </template>
+
 
 <script setup>
 import { ref } from "vue";
@@ -188,37 +191,44 @@ const deleteClient = (id) => {
   }
 };
 </script>
-
 <style scoped>
+/* El contenedor principal que define el grid con áreas */
 .my-services {
-  background: aqua;
-  padding: 20px;
   display: grid;
-  grid-template-columns: 1fr 2fr; /* Una columna más pequeña que la otra */
+  grid-template-rows: auto 1fr; /* Dos filas: una para los servicios y otra para la tabla */
+  grid-template-areas:
+    "services"
+    "table";
   grid-gap: 20px;
-  width: 100%; /* Asegúrate de que el grid ocupe el 100% del ancho */
+  width: 100%;
+  height: 100%; /* Asegurar que todo ocupe el espacio vertical disponible */
 }
 
+/* Primera fila: contenedor de servicios */
 .service-container {
-  background: yellow;
-  width: 100% !important;
+  grid-area: services; /* Asignar esta área a los servicios */
   display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Asegura que los contenedores se distribuyan bien */
+  flex-direction: row; /* Distribuir los contenedores en fila */
+  justify-content: space-around;
+  height: 100%;
 }
 
 .service-container > div {
   background: #fff;
   padding: 20px;
   border-radius: 4px;
-  margin-bottom: 10px;
+  margin-right: 10px;
+  flex: 1; /* Asegurar que los contenedores se distribuyan proporcionalmente */
 }
 
+/* Segunda fila: la tabla de clientes */
 .table-container {
+  grid-area: table; /* Asignar esta área a la tabla */
   background: #fff;
   padding: 20px;
   border-radius: 4px;
-  width: 100%; /* Asegúrate de que la tabla ocupe el 100% */
+  display: block;
+  width: 100%; /* La tabla debe ocupar todo el ancho disponible */
 }
 
 .q-tabs {
