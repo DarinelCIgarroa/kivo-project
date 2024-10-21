@@ -112,8 +112,7 @@
         </q-tooltip>
       </div>
     </div>
-  </q-card>
-  <q-dialog v-model="showServiceDetail">
+    <q-dialog v-model="showServiceDetail">
     <ServiceDetailsComponent
       :client="client"
       @mapService="showMapService"
@@ -123,10 +122,12 @@
   <q-dialog v-model="showMap" style="width: 100vh; height: 100vh">
     <ServiceRouteMap></ServiceRouteMap>
   </q-dialog>
+  </q-card>
+ 
 </template>
 
 <script setup>
-import { ref, toRef, watch, nextTick } from "vue";
+import { ref, toRef } from "vue";
 import { Money } from "@/utils/utils.js";
 import ServiceDetailsComponent from "@/components/searchService/ServiceDetails.vue";
 import ServiceRouteMap from "@/components/searchService/ServiceRouteMap.vue";

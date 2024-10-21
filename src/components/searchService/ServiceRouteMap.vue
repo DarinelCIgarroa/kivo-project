@@ -15,7 +15,7 @@
 import { onMounted, ref } from "vue";
 import { Loader } from "@googlemaps/js-api-loader";
 
-const name = "ServiceRouteMap";
+
 const originPlaceId = "ChIJtRKjR83-0YURSRoKZak2sSs";
 const destinationPlaceId = "ChIJX-vd5kgAzoURe-vvgkEJ7Rg";
 let directionsRenderer, directionsService, map;

@@ -133,7 +133,6 @@ const emit = defineEmits(["mapService"]);
 const props = defineProps(["client"]);
 const expandedDetails = ref(true);
 const expandedArticles = ref(false);
-const showMap = ref(false);
 const client = props.client;
 
 const showMapService = () => {
