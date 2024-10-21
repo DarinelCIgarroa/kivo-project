@@ -1,15 +1,15 @@
 <template>
   <q-page class="q-pa-md">
-    <q-card class="my-services">
+    <div class="my-services">
       <!-- Primera fila: contenedor de servicios -->
-      <q-card-section class="service-container">
+      <div class="service-container">
         <div class="card-income">Ingreso</div>
         <div class="card-sale">Ventas Totales</div>
         <div class="card-annual-sale">Ingreso Anual</div>
-      </q-card-section>
+      </div>
 
       <!-- Segunda fila: tabla de clientes -->
-      <q-card-section class="table-container">
+      <div class="table-container">
         <div>
           <div class="card-table text-h6 text-grey-8">Clientes</div>
           <q-table
@@ -35,24 +35,19 @@
               </q-td>
             </template>
 
-            <template v-slot:body-cell-delete="props">
+            <template v-slot:body-cell-actions="props">
               <q-td :props="props">
-                <q-btn
-                  color="negative"
-                  icon="delete"
-                  round
-                  @click="deleteClient(props.row.id)"
-                  flat
-                />
+                <q-btn color="primary" icon="visibility" flat />
+                <q-btn color="accent" icon="edit" flat />
+                <q-btn color="negative" icon="delete" flat />
               </q-td>
             </template>
           </q-table>
         </div>
-      </q-card-section>
-    </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
-
 
 <script setup>
 import { ref } from "vue";
@@ -102,13 +97,7 @@ const columns = ref([
     align: "left",
     sortable: false, // No es necesario ordenar por esta columna
   },
-  {
-    name: "delete",
-    label: "Delete",
-    field: "delete",
-    align: "left",
-    sortable: false,
-  },
+  { name: "actions", label: "Acciones", field: "actions", align: "left" },
 ]);
 
 // Definir filas (datos de ejemplo)
@@ -184,12 +173,12 @@ const onRequest = (props) => {
 };
 
 // Método para eliminar cliente
-const deleteClient = (id) => {
-  const index = rows.value.findIndex((row) => row.id === id);
-  if (index !== -1) {
-    rows.value.splice(index, 1); // Eliminar cliente de la lista
-  }
-};
+// const deleteClient = (id) => {
+//   const index = rows.value.findIndex((row) => row.id === id);
+//   if (index !== -1) {
+//     rows.value.splice(index, 1); // Eliminar cliente de la lista
+//   }
+// };
 </script>
 <style scoped>
 /* El contenedor principal que define el grid con áreas */
@@ -214,7 +203,7 @@ const deleteClient = (id) => {
 }
 
 .service-container > div {
-  background: #fff;
+  background: var(--card);
   padding: 20px;
   border-radius: 4px;
   margin-right: 10px;
