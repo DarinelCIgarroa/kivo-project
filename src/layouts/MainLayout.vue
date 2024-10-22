@@ -143,16 +143,23 @@
         <router-view></router-view>
       </q-page>
     </q-page-container>
+    <q-dialog class="map-container" v-model="showMap">
+      <GoogleMap />
+    </q-dialog>
   </q-layout>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import myIcon from "@/assets/logo-kivo.svg";
 import { useDrawerStore } from "@/stores/mainStore/global-navbar-store";
+import { useMapStore } from "@/stores/google-map/map-store";
 
+const mapStore = useMapStore();
 const drawerStore = useDrawerStore();
 const drawer = ref(true);
+
+const showMap = computed(() => mapStore.isMapVisible);
 
 const miniDrawer = () => {
   drawerStore.miniDrawer();
