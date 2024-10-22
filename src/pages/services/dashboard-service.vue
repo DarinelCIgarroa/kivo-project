@@ -20,15 +20,25 @@
             <!-- Monto de ayer -->
           </div>
 
-          <div class="q-mt-md text-bold">
-            <div class="text-subtitle2">Diferencia:</div>
-            <div
-              :class="{
-                'text-positive': percentageDifference > 0,
-                'text-negative': percentageDifference < 0,
-              }"
-            >
-              {{ percentageDifferenceText }}
+          <!-- Sección de la diferencia porcentual con barra de progreso -->
+        <div class="q-mt-md">
+          <div class="text-subtitle2 text-bold">Diferencia:</div>
+          <q-linear-progress
+            :value="percentageDifference / 100"
+            color="green"
+            track-color="lightgrey"
+            :size="20"
+            rounded
+            class="q-mt-sm"
+          />
+          <div
+            class="percentage-text q-mt-sm"
+            :class="{
+              'text-positive': percentageDifference > 0,
+              'text-negative': percentageDifference < 0,
+            }"
+          >
+            {{ percentageDifferenceText }}
             </div>
           </div>
         </div>
@@ -50,15 +60,25 @@
             <!-- Ingreso del mes anterior -->
           </div>
 
-          <div class="q-mt-md text-bold">
-            <div class="text-subtitle2">Diferencia:</div>
-            <div
-              :class="{
-                'text-positive': monthlyPercentageDifference > 0,
-                'text-negative': monthlyPercentageDifference < 0,
-              }"
-            >
-              {{ monthlyPercentageDifferenceText }}
+          <!-- Diferencia porcentual con barra de progreso -->
+        <div class="q-mt-md">
+          <div class="text-subtitle2 text-bold">Diferencia:</div>
+          <q-linear-progress
+            :value="monthlyPercentageDifference / 100"
+            color="green"
+            track-color="lightgrey"
+            :size="20"
+            rounded
+            class="q-mt-sm"
+          />
+          <div
+            class="percentage-text q-mt-sm"
+            :class="{
+              'text-positive': monthlyPercentageDifference > 0,
+              'text-negative': monthlyPercentageDifference < 0,
+            }"
+          >
+            {{ monthlyPercentageDifferenceText }}
             </div>
           </div>
         </div>
@@ -403,6 +423,11 @@ const openStatusSelect = () => {
 
 .q-mt-md {
   margin-top: 20px;
+}
+.percentage-text {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
 }
 
 /* Segunda fila: la tabla de clientes */
