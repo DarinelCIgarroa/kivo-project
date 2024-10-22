@@ -54,22 +54,22 @@ const selectedStep = toRef(props.selectedStep);
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
+  background: var(--card);
   width: 30%; /* Ancho del contenedor de la imagen */
   height: auto;
   position: relative;
   z-index: 1;
   border-top-left-radius: 20px !important;
   border-bottom-left-radius: 20px !important;
-  overflow: visible; /* Permitir que la imagen sobresalga */
+  overflow: visible;
   left: 3px;
 }
 
 .card-detail__img {
-  width: 25em; /* Aumentamos el tamaño de la imagen */
+  width: 20em;
   height: auto;
   object-fit: contain;
-  margin-left: -90%; /* Mover la imagen hacia la izquierda para que sobresalga sin perder el centrado */
+  margin-left: -90%;
 }
 
 .card-detail__header {
@@ -80,13 +80,50 @@ const selectedStep = toRef(props.selectedStep);
 }
 
 .card-detail__steps {
-  background: white;
+  background: var(--card);
   width: 70%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-top-right-radius: 20px !important; /* Borde redondeado en la esquina superior derecha */
-  border-bottom-right-radius: 20px !important; /* Borde redondeado en la esquina inferior derecha */
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+@media (max-width: 600px) {
+  .card-detail {
+    width: 100%;
+    min-width: 100%;
+    padding: 10px;
+    flex-direction: column;
+    border-radius: 15px;
+  }
+  .card-detail__content__img {
+    padding: 10px;
+    position: static;
+    width: 100%;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    left: 0px;
+  }
+  .card-detail__img {
+    width: 15em; /* Aumentamos el tamaño de la imagen */
+    height: auto;
+    object-fit: contain;
+    margin-left: 0%;
+  }
+  .card-detail__steps {
+    background: var(--card);
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top-right-radius: 0px; /* Borde redondeado en la esquina superior derecha */
+    border-bottom-right-radius: 0px; /* Borde redondeado en la esquina inferior derecha */
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
 }
 </style>
