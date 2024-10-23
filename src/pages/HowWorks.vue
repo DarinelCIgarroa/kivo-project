@@ -90,7 +90,7 @@ import imageStepFour from "@/assets/img/homeHowWorks/step-4-client.svg";
 import imageStepFive from "@/assets/img/homeHowWorks/step-5-client.svg";
 import imageStepSix from "@/assets/img/homeHowWorks/step-6-client.svg";
 
-import imageStepOneProvider from "@/assets/img/homeHowWorks/step-1-provider3.svg";
+import imageStepOneProvider from "@/assets/img/homeHowWorks/step-1-provider.svg";
 import imageStepTwoProvider from "@/assets/img/homeHowWorks/step-2-provider.svg";
 import imageStepThreeProvider from "@/assets/img/homeHowWorks/step-3-provider.svg";
 
