@@ -81,7 +81,6 @@
             <q-chip
               v-for="(article, index) in client.detailsArticles"
               :key="index"
-              v-model="cookies"
               color="grey-4"
               text-color="dark"
             >

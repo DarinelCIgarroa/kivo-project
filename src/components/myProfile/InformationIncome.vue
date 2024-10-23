@@ -20,10 +20,12 @@
     <div class="card__content-chart col-12"></div>
   </q-card>
 </template>
+
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import ApexCharts from "apexcharts";
 
+let chart = null;
 const chartOptions = ref({
   chart: {
     type: "area",
@@ -67,7 +69,6 @@ const chartOptions = ref({
       size: 8,
     },
   },
-  // colors: ['#7a1b4a', 'BDBAB9'],
   title: {
     text: "Últimos Dos Meses",
     align: "center",
@@ -107,8 +108,18 @@ onMounted(() => {
   });
 
   observer.observe(chartContainer);
-  let chart = new ApexCharts(chartContainer, chartOptions.value);
+
+  // Inicializamos el gráfico
+  chart = new ApexCharts(chartContainer, chartOptions.value);
   chart.render();
+});
+
+// Destruimos el gráfico al desmontar el componente
+onBeforeUnmount(() => {
+  if (chart) {
+    chart.destroy();
+    chart = null;
+  }
 });
 </script>
 
@@ -116,10 +127,6 @@ onMounted(() => {
 .card--direction-column {
   flex-direction: column;
 }
-
-/* .card__content-chart {
-  height: 100%;
-} */
 
 @media (max-width: 600px) {
   .card__content-chart {
