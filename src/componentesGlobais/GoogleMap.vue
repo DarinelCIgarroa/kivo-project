@@ -11,20 +11,31 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 // Importaciones necesarias
+=======
+>>>>>>> main
 import { onMounted } from "vue";
 import { Loader } from "@googlemaps/js-api-loader";
 import { useMapStore } from "@/stores/google-map/map-store";
 
+<<<<<<< HEAD
 // Definición de constantes y referencias
+=======
+>>>>>>> main
 const originPlaceId = "ChIJtRKjR83-0YURSRoKZak2sSs";
 const destinationPlaceId = "ChIJX-vd5kgAzoURe-vvgkEJ7Rg";
 const mapStore = useMapStore();
 
+<<<<<<< HEAD
 // Variables globales para Google Maps
 let directionsRenderer, directionsService, map;
 
 // Cargar el mapa al montar el componente
+=======
+let directionsRenderer, directionsService, map;
+
+>>>>>>> main
 onMounted(() => {
   const loader = new Loader({
     apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -49,7 +60,11 @@ function initializeMap() {
       },
       {
         featureType: "transit",
+<<<<<<< HEAD
         stylers: [{ visibility: "on" }], // Líneas de transporte público
+=======
+        stylers: [{ visibility: "off" }], // Líneas de transporte público
+>>>>>>> main
       },
     ],
     mapTypeControl: false, // Control de tipo de mapa

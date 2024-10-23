@@ -9,17 +9,6 @@
           :src="`https://ui-avatars.com/api/?name=${client.avatar}&size=128&background=8B3B62&color=fff`"
         />
       </div>
-      <!-- <q-btn
-        fab
-        icon="place"
-        class="absolute"
-        style="
-          right: 165px;
-          transform: translateY(181%);
-          background: var(--gold);
-          color: white;
-        "
-      /> -->
     </q-card-section>
     <q-card-section class="q-mt-sm">
       <q-expansion-item v-model="expandedDetails">
@@ -128,18 +117,19 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { useMapStore } from "@/stores/google-map/map-store";
 
-const emit = defineEmits(["mapService"]);
+const mapStore = useMapStore();
 const props = defineProps(["client"]);
 const expandedDetails = ref(true);
 const expandedArticles = ref(false);
-const showMap = ref(false);
 const client = props.client;
 
 const showMapService = () => {
-  emit("mapService");
+  mapStore.showMap();
 };
 </script>
+
 <style scoped>
 .my-card-service-details {
   border-radius: 10px;

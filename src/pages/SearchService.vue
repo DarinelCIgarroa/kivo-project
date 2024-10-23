@@ -73,7 +73,6 @@ const clients = ref([
       { name: "Mochilas", number: 2 },
     ],
   },
-  // Ejemplos adicionales con números aleatorios y tipos de artículos:
   {
     id: 2,
     name: "Mirta Ocaña Lopez",
