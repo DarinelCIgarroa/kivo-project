@@ -25,7 +25,7 @@
       @click.capture="drawerClick"
       transition-show="slide-right"
       transition-hide="slide-left"
-      transition-duration="900"
+      transition-duration="400"
       :breakpoint="768"
       class="drawer"
     >
@@ -143,7 +143,7 @@
         <router-view></router-view>
       </q-page>
     </q-page-container>
-    <q-dialog class="map-container" v-model="showMap">
+    <q-dialog class="map-container" v-model="showMap" persistent>
       <GoogleMap />
     </q-dialog>
   </q-layout>

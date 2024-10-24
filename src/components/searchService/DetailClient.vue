@@ -81,7 +81,6 @@
         <q-chip
           v-for="(article, index) in client.detailsArticles"
           :key="index"
-          v-model="cookies"
           color="grey-4"
           text-color="dark"
         >
@@ -119,7 +118,7 @@
 </template>
 
 <script setup>
-import { ref, toRef, onMounted } from "vue";
+import { ref, toRef } from "vue";
 import { Money } from "@/utils/utils.js";
 import ServiceDetailsComponent from "@/components/searchService/ServiceDetails.vue";
 
@@ -149,9 +148,6 @@ const peopleInformation = (section) => {
 const serviceDetail = () => {
   showServiceDetail.value = true;
 };
-onMounted(() => {
-  console.log("estoy render DatailClient");
-});
 </script>
 
 <style scoped>
