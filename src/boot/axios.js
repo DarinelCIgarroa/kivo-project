@@ -4,7 +4,7 @@ import axios from "axios";
 
 // Configura Axios para usar la URL base desde las variables de entorno
 const api = axios.create({
-  // baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export default boot(({ app }) => {
